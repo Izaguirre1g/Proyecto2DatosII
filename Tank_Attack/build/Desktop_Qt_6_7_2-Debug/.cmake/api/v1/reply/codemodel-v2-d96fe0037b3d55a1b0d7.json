@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-bd2978cc8ae6cf0fec36.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Tank_Attack",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Tank_Attack::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Tank_Attack-Debug-f05fbda1b545a258bb8b.json",
+					"name" : "Tank_Attack",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Tank_Attack_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Tank_Attack_autogen-Debug-17dde2c441489da82bbe.json",
+					"name" : "Tank_Attack_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Tank_Attack_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Tank_Attack_autogen_timestamp_deps-Debug-d6a28c80fda473b0fa1f.json",
+					"name" : "Tank_Attack_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-Debug",
+		"source" : "/home/jose/Proyecto2DatosII/Tank_Attack"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

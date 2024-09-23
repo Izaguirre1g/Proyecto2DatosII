@@ -2,21 +2,20 @@
 #include "Dijkstra.h"
 #include <climits> // Para representar infinito
 #include <iostream>
+#include <vector>  // Para usar std::vector
+#include <algorithm> // Para std::reverse
+
 using namespace std;
 
 void dijkstra(Grafo& grafo, int inicio) {
     int numNodos = grafo.obtenerNumNodos();
-    int* distancia = new int[numNodos];
-    bool* visitado = new bool[numNodos];
+    vector<int> distancia(numNodos, INT_MAX);
+    vector<int> predecesores(numNodos, -1); // Para reconstruir el camino
+    vector<bool> visitado(numNodos, false);
 
-    // Inicializar distancias y visitado
-    for (int i = 0; i < numNodos; ++i) {
-        distancia[i] = INT_MAX;
-        visitado[i] = false;
-    }
+    // Inicializar distancias y predecesores
     distancia[inicio] = 0;
 
-    // Algoritmo de Dijkstra
     for (int i = 0; i < numNodos - 1; ++i) {
         int minDist = INT_MAX;
         int minNodo = -1;
@@ -29,6 +28,8 @@ void dijkstra(Grafo& grafo, int inicio) {
             }
         }
 
+        if (minNodo == -1) break; // Todos los nodos están visitados
+
         // Marcar el nodo como visitado
         visitado[minNodo] = true;
 
@@ -38,6 +39,7 @@ void dijkstra(Grafo& grafo, int inicio) {
             if (!visitado[j] && peso > 0 && distancia[minNodo] != INT_MAX
                 && distancia[minNodo] + peso < distancia[j]) {
                 distancia[j] = distancia[minNodo] + peso;
+                predecesores[j] = minNodo; // Registrar el predecesor
             }
         }
     }
@@ -45,10 +47,22 @@ void dijkstra(Grafo& grafo, int inicio) {
     // Imprimir distancias
     cout << "Distancias desde el nodo " << inicio << ":\n";
     for (int i = 0; i < numNodos; ++i) {
-        cout << "Nodo " << i << ": " << distancia[i] << endl;
+        cout << "Nodo " << i << ": " << (distancia[i] == INT_MAX ? "Infinito" : to_string(distancia[i])) << endl;
     }
 
-    // Liberar memoria
-    delete[] distancia;
-    delete[] visitado;
+    // Imprimir el camino más corto desde el nodo inicial a todos los nodos
+    for (int destino = 0; destino < numNodos; ++destino) {
+        if (distancia[destino] < INT_MAX) {
+            cout << "Camino más corto al nodo " << destino << ":\n";
+            vector<int> camino;
+            for (int v = destino; v != -1; v = predecesores[v]) {
+                camino.push_back(v);
+            }
+            reverse(camino.begin(), camino.end());
+            for (int nodo : camino) {
+                cout << nodo << " ";
+            }
+            cout << "\n";
+        }
+    }
 }

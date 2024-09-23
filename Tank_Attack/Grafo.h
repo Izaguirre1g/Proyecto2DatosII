@@ -1,4 +1,3 @@
-// Grafo.h
 #ifndef GRAFO_H
 #define GRAFO_H
 
@@ -22,6 +21,10 @@ public:
     int obtenerNumNodos() const;
     int obtenerPeso(int nodo1, int nodo2) const;
     int heuristica(int nodo1, int nodo2);
+
+    // Métodos para obtener las coordenadas
+    int obtenerPosX(int nodo) const;
+    int obtenerPosY(int nodo) const;
 
     ~Grafo();
 };

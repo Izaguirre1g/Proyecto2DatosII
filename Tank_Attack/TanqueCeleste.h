@@ -1,16 +1,22 @@
+// TanqueCeleste.h
 #ifndef TANQUECELESTE_H
 #define TANQUECELESTE_H
 
 #include "Tanque.h"
+#include "Grafo.h"
 
 class TanqueCeleste : public Tanque {
 public:
-    TanqueCeleste();
+    TanqueCeleste(Grafo& grafo);
 
-protected:
+//protected:
     void comportamientoEspecial() const override;
-    void moverConBFS();
-    void moverAleatoriamente();
+
+private:
+    void moverConBFS() const; // Marcar como const si no modifica el estado
+    void moverAleatoriamente() const; // Marcar como const si no modifica el estado
+
+    Grafo& grafo;
 };
 
-#endif //TANQUECELESTE_H
+#endif // TANQUECELESTE_H

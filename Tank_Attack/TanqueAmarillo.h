@@ -5,7 +5,7 @@
 
 class TanqueAmarillo : public Tanque {
 public:
-    TanqueAmarillo();
+    TanqueAmarillo(Grafo& grafo);
 
 protected:
     void comportamientoEspecial() const override;

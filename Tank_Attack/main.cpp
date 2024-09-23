@@ -1,3 +1,4 @@
+/*
 #include "mainwindow.h"
 #include <QApplication>
 #include <QDebug>
@@ -38,4 +39,53 @@ int main(int argc, char *argv[])
 
     w.show();
     return a.exec();
+}
+*/
+
+
+
+#include <iostream>
+#include "Grafo.h"
+#include "TanqueAzul.h"
+#include "TanqueRojo.h"
+
+int main() {
+    // Crear un grafo con 5 nodos
+    Grafo grafo(5);
+
+    // Asignar posiciones a los nodos
+    grafo.asignarPosicion(0, 0, 0);
+    grafo.asignarPosicion(1, 10, 0);
+    grafo.asignarPosicion(2, 10, 10);
+    grafo.asignarPosicion(3, 0, 10);
+    grafo.asignarPosicion(4, 5, 5);
+
+    // Conectar nodos con distancias
+    grafo.conectarConDistancia(0, 1);
+    grafo.conectarConDistancia(1, 2);
+    grafo.conectarConDistancia(2, 3);
+    grafo.conectarConDistancia(3, 0);
+    grafo.conectarConDistancia(4, 0);
+    grafo.conectarConDistancia(4, 1);
+    grafo.conectarConDistancia(4, 2);
+    grafo.conectarConDistancia(4, 3);
+
+    // Crear instancias de tanques
+    TanqueAzul tanqueAzul(grafo);
+    TanqueRojo tanqueRojo(grafo);
+
+    // Asignar posiciones iniciales a los tanques
+    tanqueAzul.mover(10, 10);
+    tanqueRojo.mover(3, 3);
+
+    // Imprimir información sobre los tanques
+    std::cout << tanqueAzul.obtenerDescripcion() << std::endl;
+    std::cout << "Posición actual del tanque azul: (" << tanqueAzul.obtenerPosX() << ", " << tanqueAzul.obtenerPosY() << ")" << std::endl;
+    std::cout << "Nodo más cercano al tanque azul: " << tanqueAzul.obtenerPosicionActual() << std::endl;
+
+    std::cout << tanqueRojo.obtenerDescripcion() << std::endl;
+    std::cout << "Posición actual del tanque rojo: (" << tanqueRojo.obtenerPosX() << ", " << tanqueRojo.obtenerPosY() << ")" << std::endl;
+    std::cout << "Nodo más cercano al tanque rojo: " << tanqueRojo.obtenerPosicionActual() << std::endl;
+
+    return 0;
 }

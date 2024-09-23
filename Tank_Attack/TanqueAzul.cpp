@@ -1,28 +1,23 @@
 #include "TanqueAzul.h"
-#include <iostream>
+#include "BFS.h" // Asegúrate de incluir la declaración de bfs
 #include <cstdlib>
 #include <ctime>
 
-TanqueAzul::TanqueAzul() : Tanque(ColorTanque::Azul) {
-    //Inicializar la semilla para generación de números aleatorios
-    std::srand(std::time(nullptr));
-}
+TanqueAzul::TanqueAzul(Grafo& grafo)
+    : Tanque(ColorTanque::Azul, grafo) {}
 
 void TanqueAzul::comportamientoEspecial() const {
-    //Elegir entre BFS y movimiento aleatorio
     if (std::rand() % 2 == 0) {
-        //moverConBFS();
+        moverConBFS();
     } else {
-        //moverAleatoriamente();
+        moverAleatoriamente();
     }
 }
 
-void TanqueAzul::moverConBFS() {
-    std::cout << "El tanque azul se mueve usando BFS." << std::endl;
-    // Aquí va la lógica de BFS
+void TanqueAzul::moverConBFS() const {
+    bfs(grafo, posX, posY); // Asegúrate de que posX y posY sean accesibles
 }
 
-void TanqueAzul::moverAleatoriamente() {
-    std::cout << "El tanque azul se mueve aleatoriamente." << std::endl;
-    // Aquí va la lógica del movimiento aleatorio
+void TanqueAzul::moverAleatoriamente() const {
+    // Implementa la lógica de movimiento aleatorio aquí
 }

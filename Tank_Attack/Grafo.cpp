@@ -69,9 +69,28 @@ int Grafo::heuristica(int nodo1, int nodo2) {
     return static_cast<int>(std::sqrt(deltaX * deltaX + deltaY * deltaY));
 }
 
+int Grafo::obtenerPosX(int nodo) const {
+    if (nodo >= 0 && nodo < numNodos) {
+        return posicionesX[nodo];
+    }
+    std::cout << "Nodo fuera de rango.\n";
+    return -1; // Valor por defecto en caso de error
+}
+
+int Grafo::obtenerPosY(int nodo) const {
+    if (nodo >= 0 && nodo < numNodos) {
+        return posicionesY[nodo];
+    }
+    std::cout << "Nodo fuera de rango.\n";
+    return -1; // Valor por defecto en caso de error
+}
+
+
 Grafo::~Grafo() {
     for (int i = 0; i < numNodos; ++i) {
         delete[] matrizAdyacencia[i];
     }
     delete[] matrizAdyacencia;
+    delete[] posicionesX;
+    delete[] posicionesY;
 }

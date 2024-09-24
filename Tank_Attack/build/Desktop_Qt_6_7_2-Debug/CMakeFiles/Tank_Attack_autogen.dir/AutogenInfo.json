@@ -382,6 +382,12 @@
 			null
 		],
 		[
+			"/home/jose/Proyecto2DatosII/Tank_Attack/GrafoWidget.h",
+			"MU",
+			"EWIEGA46WW/moc_GrafoWidget.cpp",
+			null
+		],
+		[
 			"/home/jose/Proyecto2DatosII/Tank_Attack/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
@@ -450,6 +456,7 @@
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/AStar.cpp", "MU", null ],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/Dijkstra.cpp", "MU", null ],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/Grafo.cpp", "MU", null ],
+		[ "/home/jose/Proyecto2DatosII/Tank_Attack/GrafoWidget.cpp", "MU", null ],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/main.cpp", "MU", null ],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/mainwindow.cpp", "MU", null ]
 	],

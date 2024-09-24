@@ -26,6 +26,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Grafo.h Grafo.cpp
         Dijkstra.h Dijkstra.cpp
         AStar.h AStar.cpp
+        GrafoWidget.h GrafoWidget.cpp GrafoWidget.ui
 
 
 

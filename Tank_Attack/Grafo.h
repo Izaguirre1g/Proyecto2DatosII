@@ -1,4 +1,3 @@
-// Grafo.h
 #ifndef GRAFO_H
 #define GRAFO_H
 
@@ -15,14 +14,24 @@ private:
 public:
     Grafo(int n);
 
+    // Métodos para asignar y conectar nodos
     void asignarPosicion(int nodo, int x, int y);
     void conectarNodos(int nodo1, int nodo2, int peso);
     void conectarConDistancia(int nodo1, int nodo2);
-    void mostrarMatriz();
-    int obtenerNumNodos() const;
+
+    // Getters
+    int getNumNodos() const;
+    int getPosicionX(int nodo) const;
+    int getPosicionY(int nodo) const;
     int obtenerPeso(int nodo1, int nodo2) const;
+
+    // Heurística para A*
     int heuristica(int nodo1, int nodo2);
 
+    // Mostrar la matriz de adyacencia (opcional)
+    void mostrarMatriz();
+
+    // Destructor
     ~Grafo();
 };
 

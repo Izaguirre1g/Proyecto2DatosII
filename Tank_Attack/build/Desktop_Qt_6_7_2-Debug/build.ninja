@@ -97,6 +97,14 @@ build CMakeFiles/Tank_Attack.dir/AStar.cpp.o: CXX_COMPILER__Tank_Attack_unscanne
   OBJECT_DIR = CMakeFiles/Tank_Attack.dir
   OBJECT_FILE_DIR = CMakeFiles/Tank_Attack.dir
 
+build CMakeFiles/Tank_Attack.dir/GrafoWidget.cpp.o: CXX_COMPILER__Tank_Attack_unscanned_Debug /home/jose/Proyecto2DatosII/Tank_Attack/GrafoWidget.cpp || cmake_object_order_depends_target_Tank_Attack
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Tank_Attack.dir/GrafoWidget.cpp.o.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-Debug/Tank_Attack_autogen/include -isystem /home/jose/Qt/6.7.2/gcc_64/include/QtCore -isystem /home/jose/Qt/6.7.2/gcc_64/include -isystem /home/jose/Qt/6.7.2/gcc_64/mkspecs/linux-g++ -isystem /home/jose/Qt/6.7.2/gcc_64/include/QtWidgets -isystem /home/jose/Qt/6.7.2/gcc_64/include/QtGui
+  OBJECT_DIR = CMakeFiles/Tank_Attack.dir
+  OBJECT_FILE_DIR = CMakeFiles/Tank_Attack.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Tank_Attack
@@ -105,7 +113,7 @@ build CMakeFiles/Tank_Attack.dir/AStar.cpp.o: CXX_COMPILER__Tank_Attack_unscanne
 #############################################
 # Link the executable Tank_Attack
 
-build Tank_Attack: CXX_EXECUTABLE_LINKER__Tank_Attack_Debug CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/mocs_compilation.cpp.o CMakeFiles/Tank_Attack.dir/main.cpp.o CMakeFiles/Tank_Attack.dir/mainwindow.cpp.o CMakeFiles/Tank_Attack.dir/Grafo.cpp.o CMakeFiles/Tank_Attack.dir/Dijkstra.cpp.o CMakeFiles/Tank_Attack.dir/AStar.cpp.o | /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Widgets.so.6.7.2 /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Gui.so.6.7.2 /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Core.so.6.7.2 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so || Tank_Attack_autogen Tank_Attack_autogen_timestamp_deps
+build Tank_Attack: CXX_EXECUTABLE_LINKER__Tank_Attack_Debug CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/mocs_compilation.cpp.o CMakeFiles/Tank_Attack.dir/main.cpp.o CMakeFiles/Tank_Attack.dir/mainwindow.cpp.o CMakeFiles/Tank_Attack.dir/Grafo.cpp.o CMakeFiles/Tank_Attack.dir/Dijkstra.cpp.o CMakeFiles/Tank_Attack.dir/AStar.cpp.o CMakeFiles/Tank_Attack.dir/GrafoWidget.cpp.o | /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Widgets.so.6.7.2 /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Gui.so.6.7.2 /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Core.so.6.7.2 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so || Tank_Attack_autogen Tank_Attack_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_LIBRARIES = -Wl,-rpath,/home/jose/Qt/6.7.2/gcc_64/lib:  /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Widgets.so.6.7.2  /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Gui.so.6.7.2  /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Core.so.6.7.2  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libOpenGL.so
   OBJECT_DIR = CMakeFiles/Tank_Attack.dir
@@ -190,7 +198,7 @@ build Tank_Attack_autogen_timestamp_deps: phony
 #############################################
 # Utility command for Tank_Attack_autogen
 
-build Tank_Attack_autogen: phony CMakeFiles/Tank_Attack_autogen Tank_Attack_autogen/include/ui_mainwindow.h Tank_Attack_autogen/timestamp Tank_Attack_autogen/mocs_compilation.cpp Tank_Attack_autogen_timestamp_deps
+build Tank_Attack_autogen: phony CMakeFiles/Tank_Attack_autogen Tank_Attack_autogen/include/ui_mainwindow.h Tank_Attack_autogen/include/ui_GrafoWidget.h Tank_Attack_autogen/timestamp Tank_Attack_autogen/mocs_compilation.cpp Tank_Attack_autogen_timestamp_deps
 
 
 #############################################
@@ -207,7 +215,7 @@ build Tank_Attack_autogen/timestamp Tank_Attack_autogen/mocs_compilation.cpp | $
 #############################################
 # Phony custom command for CMakeFiles/Tank_Attack_autogen
 
-build CMakeFiles/Tank_Attack_autogen Tank_Attack_autogen/include/ui_mainwindow.h | ${cmake_ninja_workdir}CMakeFiles/Tank_Attack_autogen ${cmake_ninja_workdir}Tank_Attack_autogen/include/ui_mainwindow.h: phony Tank_Attack_autogen/timestamp || Tank_Attack_autogen_timestamp_deps
+build CMakeFiles/Tank_Attack_autogen Tank_Attack_autogen/include/ui_mainwindow.h Tank_Attack_autogen/include/ui_GrafoWidget.h | ${cmake_ninja_workdir}CMakeFiles/Tank_Attack_autogen ${cmake_ninja_workdir}Tank_Attack_autogen/include/ui_mainwindow.h ${cmake_ninja_workdir}Tank_Attack_autogen/include/ui_GrafoWidget.h: phony Tank_Attack_autogen/timestamp || Tank_Attack_autogen_timestamp_deps
 
 # =============================================================================
 # Target aliases.

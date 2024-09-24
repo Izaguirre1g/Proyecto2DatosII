@@ -1,0 +1,12 @@
+# ninja log v6
+2	241	1727046392671853745	Tank_Attack_autogen/timestamp	170211bb64fc8748
+2	241	1727046392671853745	Tank_Attack_autogen/mocs_compilation.cpp	170211bb64fc8748
+2	241	1727046392671853745	/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-MinSizeRel/Tank_Attack_autogen/timestamp	170211bb64fc8748
+2	241	1727046392671853745	/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-MinSizeRel/Tank_Attack_autogen/mocs_compilation.cpp	170211bb64fc8748
+243	506	1727046392677853858	CMakeFiles/Tank_Attack.dir/Dijkstra.cpp.o	487d9550f43026f6
+243	667	1727046392676853839	CMakeFiles/Tank_Attack.dir/Grafo.cpp.o	c46e81aefbbe3689
+243	668	1727046392677853858	CMakeFiles/Tank_Attack.dir/AStar.cpp.o	4b114a694ec91ce4
+242	1251	1727046392676853839	CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/mocs_compilation.cpp.o	83a2a0b2e1cb1414
+242	1319	1727046392676853839	CMakeFiles/Tank_Attack.dir/mainwindow.cpp.o	934a19c70f34378d
+242	1701	1727046392676853839	CMakeFiles/Tank_Attack.dir/main.cpp.o	da04516328bc9b32
+1701	1976	1727046394135881144	Tank_Attack	8d4dbadcafbcd735

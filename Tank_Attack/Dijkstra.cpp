@@ -5,7 +5,7 @@
 using namespace std;
 
 void dijkstra(Grafo& grafo, int inicio) {
-    int numNodos = grafo.obtenerNumNodos();
+    int numNodos = grafo.getNumNodos();
     int* distancia = new int[numNodos];
     bool* visitado = new bool[numNodos];
 

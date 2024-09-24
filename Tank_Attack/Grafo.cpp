@@ -1,7 +1,7 @@
-// Grafo.cpp
 #include "Grafo.h"
-
+using namespace std;
 Grafo::Grafo(int n) : numNodos(n) {
+    // Inicializar la matriz de adyacencia
     matrizAdyacencia = new int*[numNodos];
     for (int i = 0; i < numNodos; ++i) {
         matrizAdyacencia[i] = new int[numNodos];
@@ -9,21 +9,10 @@ Grafo::Grafo(int n) : numNodos(n) {
             matrizAdyacencia[i][j] = 0;
         }
     }
+
+    // Inicializar las posiciones X e Y de los nodos
     posicionesX = new int[numNodos];
     posicionesY = new int[numNodos];
-}
-
-// Método que devuelve el número de nodos
-int Grafo::obtenerNumNodos() const {
-    return numNodos;
-}
-
-// Nuevo método para acceder a la matriz de adyacencia
-int Grafo::obtenerPeso(int nodo1, int nodo2) const {
-    if (nodo1 >= 0 && nodo1 < numNodos && nodo2 >= 0 && nodo2 < numNodos) {
-        return matrizAdyacencia[nodo1][nodo2];
-    }
-    return -1; // Devuelve -1 si los nodos no son válidos
 }
 
 void Grafo::asignarPosicion(int nodo, int x, int y) {
@@ -31,7 +20,7 @@ void Grafo::asignarPosicion(int nodo, int x, int y) {
         posicionesX[nodo] = x;
         posicionesY[nodo] = y;
     } else {
-        std::cout << "Nodo fuera de rango.\n";
+        cout << "Nodo fuera de rango.\n";
     }
 }
 
@@ -39,7 +28,7 @@ void Grafo::conectarNodos(int nodo1, int nodo2, int peso) {
     if (nodo1 >= 0 && nodo1 < numNodos && nodo2 >= 0 && nodo2 < numNodos) {
         matrizAdyacencia[nodo1][nodo2] = peso;
     } else {
-        std::cout << "Nodos fuera de rango.\n";
+        cout << "Nodos fuera de rango.\n";
     }
 }
 
@@ -50,23 +39,48 @@ void Grafo::conectarConDistancia(int nodo1, int nodo2) {
         int distancia = static_cast<int>(std::sqrt(deltaX * deltaX + deltaY * deltaY));
         conectarNodos(nodo1, nodo2, distancia);
     } else {
-        std::cout << "Nodos fuera de rango.\n";
+        cout << "Nodos fuera de rango.\n";
     }
 }
 
-void Grafo::mostrarMatriz() {
-    for (int i = 0; i < numNodos; ++i) {
-        for (int j = 0; j < numNodos; ++j) {
-            std::cout << matrizAdyacencia[i][j] << " ";
-        }
-        std::cout << std::endl;
+int Grafo::getNumNodos() const {
+    return numNodos;
+}
+
+int Grafo::getPosicionX(int nodo) const {
+    if (nodo >= 0 && nodo < numNodos) {
+        return posicionesX[nodo];
     }
+    return -1; // Error: nodo fuera de rango
+}
+
+int Grafo::getPosicionY(int nodo) const {
+    if (nodo >= 0 && nodo < numNodos) {
+        return posicionesY[nodo];
+    }
+    return -1; // Error: nodo fuera de rango
+}
+
+int Grafo::obtenerPeso(int nodo1, int nodo2) const {
+    if (nodo1 >= 0 && nodo1 < numNodos && nodo2 >= 0 && nodo2 < numNodos) {
+        return matrizAdyacencia[nodo1][nodo2];
+    }
+    return -1; // Error: nodos fuera de rango
 }
 
 int Grafo::heuristica(int nodo1, int nodo2) {
     int deltaX = posicionesX[nodo2] - posicionesX[nodo1];
     int deltaY = posicionesY[nodo2] - posicionesY[nodo1];
     return static_cast<int>(std::sqrt(deltaX * deltaX + deltaY * deltaY));
+}
+
+void Grafo::mostrarMatriz() {
+    for (int i = 0; i < numNodos; ++i) {
+        for (int j = 0; j < numNodos; ++j) {
+            cout << matrizAdyacencia[i][j] << " ";
+        }
+        cout << endl;
+    }
 }
 
 Grafo::~Grafo() {
@@ -77,3 +91,4 @@ Grafo::~Grafo() {
     delete[] posicionesX;
     delete[] posicionesY;
 }
+

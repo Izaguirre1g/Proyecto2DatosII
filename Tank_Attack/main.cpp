@@ -1,41 +1,31 @@
 #include "mainwindow.h"
-#include <QApplication>
-#include <QDebug>
 #include "Grafo.h"
-int main(int argc, char *argv[])
-{
+#include <QApplication>
+
+int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
-    MainWindow w;
 
-    // Crear y configurar el grafo
-    Grafo grafo(5);
-    grafo.asignarPosicion(0, 0, 0);
-    grafo.asignarPosicion(1, 2, 3);
-    grafo.asignarPosicion(2, 5, 1);
-    grafo.asignarPosicion(3, 6, 4);
-    grafo.asignarPosicion(4, 8, 2);
+    // Crear un grafo con 5 nodos
+    Grafo* grafo = new Grafo(5);
 
-    // Conectar nodos
-    grafo.conectarNodos(0, 1, 10);
-    grafo.conectarNodos(0, 2, 5);
-    grafo.conectarNodos(1, 3, 2);
-    grafo.conectarNodos(2, 3, 8);
-    grafo.conectarNodos(3, 4, 6);
+    // Asignar posiciones a los nodos
+    grafo->asignarPosicion(0, 50, 50);
+    grafo->asignarPosicion(1, 150, 100);
+    grafo->asignarPosicion(2, 250, 150);
+    grafo->asignarPosicion(3, 350, 200);
+    grafo->asignarPosicion(4, 450, 250);
 
-    // Mostrar matriz de adyacencia
-    w.mostrarResultado("Matriz de adyacencia:\n");
-    grafo.mostrarMatriz(w); // Necesitarás modificar esta función para que acepte un parámetro
+    // Conectar los nodos (según tus conexiones)
+    grafo->conectarNodos(0, 1, 1);
+    grafo->conectarNodos(1, 2, 1);
+    grafo->conectarNodos(2, 3, 1);
+    grafo->conectarNodos(3, 4, 1);
+    grafo->conectarNodos(0, 4, 1);
 
-    // Ejecutar Dijkstra
-    QString dijkstraResult = "Ejecutando Dijkstra desde el nodo 0:\n";
-    dijkstraResult += grafo.ejecutarDijkstra(0); // Método que deberías crear para obtener el resultado
-    w.mostrarResultado(dijkstraResult);
-
-    // Ejecutar A*
-    QString aStarResult = "Ejecutando A* desde el nodo 0 al nodo 4:\n";
-    aStarResult += grafo.ejecutarAStar(0, 4); // Método que deberías crear para obtener el resultado
-    w.mostrarResultado(aStarResult);
-
+    // Crear la ventana principal pasando el grafo
+    MainWindow w(grafo);
     w.show();
+
     return a.exec();
 }
+

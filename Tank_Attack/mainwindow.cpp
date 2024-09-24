@@ -1,17 +1,14 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
+#include "ui_mainwindow.h"  // Asegúrate de tener este include
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)  // Inicializa el puntero 'ui'
 {
-    ui->setupUi(this);
-}
-void MainWindow::mostrarResultado(const QString &resultado) {
-    //ui->textEdit->append(resultado); // Asegúrate de que 'textEdit' es el nombre correcto del widget
+    ui->setupUi(this);  // Configurar la interfaz de usuario
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+    delete ui;  // Liberar la memoria asignada para 'ui'
 }

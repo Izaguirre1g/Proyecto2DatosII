@@ -1,22 +1,13 @@
-// TanqueAzul.h
 #ifndef TANQUEAZUL_H
 #define TANQUEAZUL_H
 
 #include "Tanque.h"
-#include "Grafo.h"
 
 class TanqueAzul : public Tanque {
 public:
-    TanqueAzul(Grafo& grafo);
+    TanqueAzul(Grafo* grafo, int nodoInicial);
 
-protected:
-    void comportamientoEspecial() const override;
-
-private:
-    void moverConBFS() const; // Marcar como const si no modifica el estado
-    void moverAleatoriamente() const; // Marcar como const si no modifica el estado
-
-    //Grafo& grafo;
+    void mover() override;
 };
 
 #endif // TANQUEAZUL_H

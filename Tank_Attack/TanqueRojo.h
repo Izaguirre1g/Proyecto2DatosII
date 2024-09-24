@@ -5,12 +5,9 @@
 
 class TanqueRojo : public Tanque {
 public:
-    TanqueRojo(Grafo& grafo);
+    TanqueRojo(Grafo* grafo, int nodoInicial);
 
-protected:
-    void comportamientoEspecial() const override;
-    void moverConDijkstra();
-    void moverAleatoriamente();
+    void mover() override;
 };
 
-#endif //TANQUEROJO_H
+#endif // TANQUEROJO_H

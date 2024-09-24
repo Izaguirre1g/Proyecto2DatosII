@@ -1,22 +1,21 @@
-// TanqueCeleste.cpp
 #include "TanqueCeleste.h"
-#include "BFS.h" // Asegúrate de incluir la declaración de bfs
+#include "BFS.h"
+#include <cstdlib> // Para rand()
 
-TanqueCeleste::TanqueCeleste(Grafo& grafo)
-    : Tanque(ColorTanque::Celeste, grafo), grafo(grafo) {}
+TanqueCeleste::TanqueCeleste(Grafo* grafo, int nodoInicial) : Tanque(grafo, nodoInicial) {}
 
-void TanqueCeleste::comportamientoEspecial() const {
-    if (std::rand() % 2 == 0) {
-        moverConBFS();
+void TanqueCeleste::mover() {
+    if (rand() % 2 == 0) {
+        std::cout << "Movimiento aleatorio de celeste" << std::endl;
+        // Movimiento aleatorio
+        int numNodos = grafo->obtenerNumNodos();
+        nodoActual = rand() % numNodos;
     } else {
-        moverAleatoriamente();
+        std::cout << "Movimiento mediante BFS de celeste" << std::endl;
+        // Movimiento mediante BFS
+        if (nodoObjetivo != -1) {
+            bfs(*grafo, nodoActual, nodoObjetivo);
+            nodoActual = nodoObjetivo; // Para simplificar, asumimos que el tanque llega al objetivo
+        }
     }
-}
-
-void TanqueCeleste::moverConBFS() const {
-    bfs(grafo, posX, posY); // Asegúrate de que posX y posY sean accesibles
-}
-
-void TanqueCeleste::moverAleatoriamente() const {
-    // Implementa la lógica de movimiento aleatorio aquí
 }

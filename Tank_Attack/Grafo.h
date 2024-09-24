@@ -17,7 +17,8 @@ public:
     // Métodos para asignar y conectar nodos
     void asignarPosicion(int nodo, int x, int y);
     void conectarNodos(int nodo1, int nodo2, int peso);
-    void conectarConDistancia(int nodo1, int nodo2);
+    //void conectarConDistancia(int nodo1, int nodo2);
+    void generarMatriz(int ancho, int alto, int espaciado); // Generar los nodos como una matriz
 
     // Getters
     int getNumNodos() const;

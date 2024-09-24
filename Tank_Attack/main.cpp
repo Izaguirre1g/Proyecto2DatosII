@@ -5,24 +5,19 @@
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-    // Crear un grafo con 5 nodos
-    Grafo* grafo = new Grafo(5);
+    // Calcular la cantidad de nodos que caben en un área de 1050x720 con espaciado de 30
+    int ancho = 1050;
+    int alto = 720;
+    int espaciado = 30;
+    int numNodos = (ancho / espaciado) * (alto / espaciado);  // Número total de nodos
 
-    // Asignar posiciones a los nodos
-    grafo->asignarPosicion(0, 50, 50);
-    grafo->asignarPosicion(1, 150, 100);
-    grafo->asignarPosicion(2, 250, 150);
-    grafo->asignarPosicion(3, 350, 200);
-    grafo->asignarPosicion(4, 450, 250);
+    // Crear un grafo con el número calculado de nodos
+    Grafo* grafo = new Grafo(numNodos);
 
-    // Conectar los nodos (según tus conexiones)
-    grafo->conectarNodos(0, 1, 1);
-    grafo->conectarNodos(1, 2, 1);
-    grafo->conectarNodos(2, 3, 1);
-    grafo->conectarNodos(3, 4, 1);
-    grafo->conectarNodos(0, 4, 1);
+    // Generar la matriz de nodos en el espacio
+    grafo->generarMatriz(ancho, alto, espaciado);
 
-    // Crear la ventana principal pasando el grafo
+    // Crear la ventana principal y pasarle el grafo
     MainWindow w(grafo);
     w.show();
 

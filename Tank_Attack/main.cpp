@@ -6,9 +6,9 @@ int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
     // Calcular la cantidad de nodos que caben en un área de 1050x720 con espaciado de 30
-    int ancho = 1050;
-    int alto = 720;
-    int espaciado = 30;
+    int ancho = 1075;
+    int alto = 580;
+    int espaciado = 22;
     int numNodos = (ancho / espaciado) * (alto / espaciado);  // Número total de nodos
 
     // Crear un grafo con el número calculado de nodos

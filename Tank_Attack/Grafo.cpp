@@ -34,7 +34,7 @@ void Grafo::conectarNodos(int nodo1, int nodo2, int peso) {
     }
 }
 
-// Generar los nodos como una matriz en un área dada
+// Generar los nodos como una matriz en un área dada y conectarlos en 8 direcciones
 void Grafo::generarMatriz(int ancho, int alto, int espaciado) {
     int filas = alto / espaciado;
     int columnas = ancho / espaciado;
@@ -57,6 +57,24 @@ void Grafo::generarMatriz(int ancho, int alto, int espaciado) {
             if (i > 0) {
                 conectarNodos(nodo, nodo - columnas, 1);
                 conectarNodos(nodo - columnas, nodo, 1);  // Conexión bidireccional
+            }
+
+            // Conectar en las 4 direcciones diagonales
+            if (i > 0 && j > 0) {  // Arriba-izquierda
+                conectarNodos(nodo, nodo - columnas - 1, 1);
+                conectarNodos(nodo - columnas - 1, nodo, 1);
+            }
+            if (i > 0 && j < columnas - 1) {  // Arriba-derecha
+                conectarNodos(nodo, nodo - columnas + 1, 1);
+                conectarNodos(nodo - columnas + 1, nodo, 1);
+            }
+            if (i < filas - 1 && j > 0) {  // Abajo-izquierda
+                conectarNodos(nodo, nodo + columnas - 1, 1);
+                conectarNodos(nodo + columnas - 1, nodo, 1);
+            }
+            if (i < filas - 1 && j < columnas - 1) {  // Abajo-derecha
+                conectarNodos(nodo, nodo + columnas + 1, 1);
+                conectarNodos(nodo + columnas + 1, nodo, 1);
             }
 
             nodo++;

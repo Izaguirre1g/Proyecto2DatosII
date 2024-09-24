@@ -10,7 +10,10 @@ MainWindow::MainWindow(Grafo* grafo, QWidget *parent)
     // Asignar el grafo al widget para que lo dibuje
     grafoWidget->setGrafo(grafo);
 
-    // Establecer el widget de grafo como el widget central de la ventana
+    // Establecer el tamaño de la ventana para que sea más grande que el widget
+    setFixedSize(1050, 720);  // Ajusta el tamaño según sea necesario
+
+    // Establecer el widget como el widget central de la ventana
     setCentralWidget(grafoWidget);
 }
 

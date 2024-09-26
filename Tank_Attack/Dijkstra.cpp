@@ -2,20 +2,54 @@
 #include "Dijkstra.h"
 #include <climits> // Para representar infinito
 #include <iostream>
-#include <vector>  // Para usar std::vector
-#include <algorithm> // Para std::reverse
+
+#define MAX_NODOS 1000 // Número máximo de nodos permitidos en el grafo
 
 using namespace std;
 
+class Matriz {
+public:
+    int matrizAdyacencia[MAX_NODOS][MAX_NODOS]; // Matriz de adyacencia
+    int numNodos;
+
+    Matriz(int nodos) : numNodos(nodos) {
+        // Inicializar todas las conexiones como 0 (sin aristas)
+        for (int i = 0; i < numNodos; ++i) {
+            for (int j = 0; j < numNodos; ++j) {
+                matrizAdyacencia[i][j] = 0;
+            }
+        }
+    }
+
+    void agregarArista(int origen, int destino, int peso) {
+        matrizAdyacencia[origen][destino] = peso;
+        matrizAdyacencia[destino][origen] = peso; // Si el grafo es no dirigido
+    }
+
+    int obtenerPeso(int origen, int destino) {
+        return matrizAdyacencia[origen][destino];
+    }
+
+    int obtenerNumNodos() {
+        return numNodos;
+    }
+};
+
 void dijkstra(Grafo& grafo, int inicio) {
     int numNodos = grafo.obtenerNumNodos();
-    vector<int> distancia(numNodos, INT_MAX);
-    vector<int> predecesores(numNodos, -1); // Para reconstruir el camino
-    vector<bool> visitado(numNodos, false);
+    int distancia[MAX_NODOS];  // Distancias mínimas
+    int predecesores[MAX_NODOS]; // Para reconstruir el camino
+    bool visitado[MAX_NODOS]; // Si el nodo ha sido visitado
 
-    // Inicializar distancias y predecesores
-    distancia[inicio] = 0;
+    // Inicializar distancias, predecesores y visitados
+    for (int i = 0; i < numNodos; ++i) {
+        distancia[i] = INT_MAX; // Infinito
+        predecesores[i] = -1;   // Ningún predecesor al inicio
+        visitado[i] = false;    // Ningún nodo visitado al inicio
+    }
+    distancia[inicio] = 0; // Distancia a sí mismo es 0
 
+    // Ciclo principal de Dijkstra
     for (int i = 0; i < numNodos - 1; ++i) {
         int minDist = INT_MAX;
         int minNodo = -1;
@@ -28,14 +62,14 @@ void dijkstra(Grafo& grafo, int inicio) {
             }
         }
 
-        if (minNodo == -1) break; // Todos los nodos están visitados
+        if (minNodo == -1) break; // Todos los nodos están visitados o inaccesibles
 
         // Marcar el nodo como visitado
         visitado[minNodo] = true;
 
         // Actualizar las distancias de los nodos adyacentes
         for (int j = 0; j < numNodos; ++j) {
-            int peso = grafo.obtenerPeso(minNodo, j);  // Usar obtenerPeso()
+            int peso = grafo.obtenerPeso(minNodo, j);
             if (!visitado[j] && peso > 0 && distancia[minNodo] != INT_MAX
                 && distancia[minNodo] + peso < distancia[j]) {
                 distancia[j] = distancia[minNodo] + peso;
@@ -44,7 +78,7 @@ void dijkstra(Grafo& grafo, int inicio) {
         }
     }
 
-    // Imprimir distancias
+    // Imprimir distancias desde el nodo inicial
     cout << "Distancias desde el nodo " << inicio << ":\n";
     for (int i = 0; i < numNodos; ++i) {
         cout << "Nodo " << i << ": " << (distancia[i] == INT_MAX ? "Infinito" : to_string(distancia[i])) << endl;
@@ -54,13 +88,17 @@ void dijkstra(Grafo& grafo, int inicio) {
     for (int destino = 0; destino < numNodos; ++destino) {
         if (distancia[destino] < INT_MAX) {
             cout << "Camino más corto al nodo " << destino << ":\n";
-            vector<int> camino;
+            int camino[MAX_NODOS];
+            int indice = 0;
+
+            // Reconstruir el camino
             for (int v = destino; v != -1; v = predecesores[v]) {
-                camino.push_back(v);
+                camino[indice++] = v;
             }
-            reverse(camino.begin(), camino.end());
-            for (int nodo : camino) {
-                cout << nodo << " ";
+
+            // Imprimir el camino en orden inverso
+            for (int i = indice - 1; i >= 0; --i) {
+                cout << camino[i] << " ";
             }
             cout << "\n";
         }

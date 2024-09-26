@@ -28,6 +28,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         TanqueRojo.h TanqueCeleste.h TanqueAzul.h TanqueAmarillo.h Tanque.h Grafo.h Dijkstra.h AStar.h
         TanqueRojo.cpp TanqueCeleste.cpp TanqueAzul.cpp TanqueAmarillo.cpp Tanque.cpp Grafo.cpp Dijkstra.cpp AStar.cpp
+        BFS.h
+        BFS.cpp
+        GrafoWidget.h
+        GrafoWidget.cpp
+
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Tank_Attack APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

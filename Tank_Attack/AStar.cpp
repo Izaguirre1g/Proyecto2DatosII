@@ -57,4 +57,6 @@ void aEstrella(Grafo& grafo, int inicio, int objetivo) {
 
     // Liberar memoria
     delete[] distancia;
+    delete[] costoEstimado;
+    delete[] visitado;
 }

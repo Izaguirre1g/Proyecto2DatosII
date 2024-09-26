@@ -1,4 +1,4 @@
-// Dijkstra.cpp
+// DijkstraFusionado.cpp
 #include "Dijkstra.h"
 #include <climits> // Para representar infinito
 #include <iostream>
@@ -37,9 +37,11 @@ public:
 
 void dijkstra(Grafo& grafo, int inicio) {
     int numNodos = grafo.obtenerNumNodos();
-    int distancia[MAX_NODOS];  // Distancias mínimas
-    int predecesores[MAX_NODOS]; // Para reconstruir el camino
-    bool visitado[MAX_NODOS]; // Si el nodo ha sido visitado
+
+    // Usamos memoria dinámica para los arrays
+    int* distancia = new int[numNodos];  // Distancias mínimas
+    int* predecesores = new int[numNodos]; // Para reconstruir el camino
+    bool* visitado = new bool[numNodos]; // Si el nodo ha sido visitado
 
     // Inicializar distancias, predecesores y visitados
     for (int i = 0; i < numNodos; ++i) {
@@ -88,7 +90,7 @@ void dijkstra(Grafo& grafo, int inicio) {
     for (int destino = 0; destino < numNodos; ++destino) {
         if (distancia[destino] < INT_MAX) {
             cout << "Camino más corto al nodo " << destino << ":\n";
-            int camino[MAX_NODOS];
+            int* camino = new int[numNodos]; // Usar memoria dinámica para el camino
             int indice = 0;
 
             // Reconstruir el camino
@@ -101,6 +103,13 @@ void dijkstra(Grafo& grafo, int inicio) {
                 cout << camino[i] << " ";
             }
             cout << "\n";
+
+            delete[] camino; // Liberar la memoria del camino
         }
     }
+
+    // Liberar memoria
+    delete[] distancia;
+    delete[] predecesores;
+    delete[] visitado;
 }

@@ -370,6 +370,12 @@
 			null
 		],
 		[
+			"/home/jose/Proyecto2DatosII/Tank_Attack/BFS.h",
+			"MU",
+			"EWIEGA46WW/moc_BFS.cpp",
+			null
+		],
+		[
 			"/home/jose/Proyecto2DatosII/Tank_Attack/Dijkstra.h",
 			"MU",
 			"EWIEGA46WW/moc_Dijkstra.cpp",
@@ -454,6 +460,7 @@
 	"SOURCES" : 
 	[
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/AStar.cpp", "MU", null ],
+		[ "/home/jose/Proyecto2DatosII/Tank_Attack/BFS.cpp", "MU", null ],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/Dijkstra.cpp", "MU", null ],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/Grafo.cpp", "MU", null ],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/GrafoWidget.cpp", "MU", null ],

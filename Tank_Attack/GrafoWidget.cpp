@@ -1,7 +1,10 @@
 #include "GrafoWidget.h"
 #include <QPainter>
+#include <QPixmap>
 
-GrafoWidget::GrafoWidget(QWidget *parent) : QWidget(parent), grafo(nullptr) {}
+GrafoWidget::GrafoWidget(QWidget *parent) : QWidget(parent), grafo(nullptr) {
+    setFixedSize(1050,720);
+}
 
 void GrafoWidget::setGrafo(Grafo* grafo) {
     this->grafo = grafo;
@@ -9,17 +12,26 @@ void GrafoWidget::setGrafo(Grafo* grafo) {
 }
 
 void GrafoWidget::paintEvent(QPaintEvent *event) {
-    if (!grafo) return;  // Si no hay grafo, no dibujamos nada
+    //if (!grafo) return;  // Si no hay grafo, no dibujamos nada
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
+
+    // Cargar y dibujar la imagen de fondo (background.png)
+    QPixmap background(":/battlefield.jpg");  // Ajusta la ruta según tu proyecto
+    if (!background.isNull()) {
+        painter.drawPixmap(0, 0, width(), height(), background);
+    } else {
+        qDebug() << "Error: No se pudo cargar la imagen.";
+    }
+
 
     // Dibujar los nodos
     int numNodos = grafo->getNumNodos();
     for (int i = 0; i < numNodos; ++i) {
         int x = grafo->getPosicionX(i);
         int y = grafo->getPosicionY(i);
-        painter.setBrush(Qt::blue);
+        painter.setBrush(Qt::green);
         painter.drawEllipse(QPoint(x, y), 10, 10);  // Dibujar el nodo como un círculo
     }
 

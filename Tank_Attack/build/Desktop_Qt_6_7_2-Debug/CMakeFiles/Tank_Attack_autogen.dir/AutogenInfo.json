@@ -355,7 +355,8 @@
 		"/home/jose/Qt/6.7.2/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsVersionlessTargets.cmake",
 		"/home/jose/Qt/6.7.2/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsMacros.cmake",
 		"/home/jose/Qt/6.7.2/gcc_64/lib/cmake/Qt6Widgets/Qt6WidgetsPlugins.cmake",
-		"/home/jose/Qt/Tools/CMake/share/cmake-3.29/Modules/GNUInstallDirs.cmake"
+		"/home/jose/Qt/Tools/CMake/share/cmake-3.29/Modules/GNUInstallDirs.cmake",
+		"/home/jose/Proyecto2DatosII/Tank_Attack/resource.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "/home/jose/Proyecto2DatosII/Tank_Attack",
 	"CROSS_CONFIG" : false,

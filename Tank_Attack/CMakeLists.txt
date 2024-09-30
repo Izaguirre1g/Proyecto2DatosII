@@ -35,6 +35,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         TanqueRojo.h TanqueRojo.cpp
 
 
+        ../Imagenes/battlefield.jpg
+
+
+        resource.qrc
+
+
 
 
     )

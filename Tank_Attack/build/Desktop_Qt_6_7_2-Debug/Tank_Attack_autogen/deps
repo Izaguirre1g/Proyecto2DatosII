@@ -10,6 +10,7 @@ Tank_Attack_autogen/timestamp: \
 	/home/jose/Proyecto2DatosII/Tank_Attack/Grafo.h \
 	/home/jose/Proyecto2DatosII/Tank_Attack/GrafoWidget.cpp \
 	/home/jose/Proyecto2DatosII/Tank_Attack/GrafoWidget.h \
+	/home/jose/Proyecto2DatosII/Tank_Attack/Prueba.qrc \
 	/home/jose/Proyecto2DatosII/Tank_Attack/Tanque.cpp \
 	/home/jose/Proyecto2DatosII/Tank_Attack/Tanque.h \
 	/home/jose/Proyecto2DatosII/Tank_Attack/TanqueAmarillo.cpp \
@@ -27,6 +28,7 @@ Tank_Attack_autogen/timestamp: \
 	/home/jose/Proyecto2DatosII/Tank_Attack/main.cpp \
 	/home/jose/Proyecto2DatosII/Tank_Attack/mainwindow.cpp \
 	/home/jose/Proyecto2DatosII/Tank_Attack/mainwindow.h \
+	/home/jose/Proyecto2DatosII/Tank_Attack/resource.qrc \
 	/home/jose/Qt/6.7.2/gcc_64/include/QtCore/q20functional.h \
 	/home/jose/Qt/6.7.2/gcc_64/include/QtCore/q20memory.h \
 	/home/jose/Qt/6.7.2/gcc_64/include/QtCore/q20type_traits.h \

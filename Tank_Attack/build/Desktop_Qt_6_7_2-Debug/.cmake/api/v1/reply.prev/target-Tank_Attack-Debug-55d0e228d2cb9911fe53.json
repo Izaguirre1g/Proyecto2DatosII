@@ -71,13 +71,13 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 76,
+				"line" : 82,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 1,
-				"line" : 59,
+				"line" : 65,
 				"parent" : 0
 			},
 			{
@@ -294,18 +294,20 @@
 				19,
 				21,
 				23,
-				25
+				25,
+				32,
+				33
 			]
 		}
 	],
 	"dependencies" : 
 	[
 		{
-			"id" : "Tank_Attack_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
-		},
-		{
 			"backtrace" : 0,
 			"id" : "Tank_Attack_autogen::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "Tank_Attack_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
 		}
 	],
 	"id" : "Tank_Attack::@6890427a1f51a3e7e1df",
@@ -392,7 +394,9 @@
 				19,
 				21,
 				23,
-				25
+				25,
+				32,
+				33
 			]
 		},
 		{
@@ -410,8 +414,8 @@
 				20,
 				22,
 				24,
-				26,
-				27
+				29,
+				30
 			]
 		},
 		{
@@ -420,14 +424,25 @@
 			[
 				4,
 				13,
-				28
+				27,
+				28,
+				31
+			]
+		},
+		{
+			"name" : "Resources",
+			"sourceIndexes" : 
+			[
+				26
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				29
+				34,
+				35,
+				36
 			]
 		}
 	],
@@ -578,6 +593,21 @@
 			"sourceGroupIndex" : 0
 		},
 		{
+			"backtrace" : 4,
+			"path" : "/home/jose/Proyecto2DatosII/Imagenes/battlefield.jpg",
+			"sourceGroupIndex" : 3
+		},
+		{
+			"backtrace" : 4,
+			"path" : "Prueba.qrc",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 4,
+			"path" : "resource.qrc",
+			"sourceGroupIndex" : 2
+		},
+		{
 			"backtrace" : 0,
 			"isGenerated" : true,
 			"path" : "build/Desktop_Qt_6_7_2-Debug/Tank_Attack_autogen/include/ui_mainwindow.h",
@@ -597,9 +627,35 @@
 		},
 		{
 			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "build/Desktop_Qt_6_7_2-Debug/Tank_Attack_autogen/EWIEGA46WW/qrc_Prueba.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "build/Desktop_Qt_6_7_2-Debug/Tank_Attack_autogen/EWIEGA46WW/qrc_resource.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
 			"isGenerated" : true,
 			"path" : "build/Desktop_Qt_6_7_2-Debug/Tank_Attack_autogen/timestamp.rule",
-			"sourceGroupIndex" : 3
+			"sourceGroupIndex" : 4
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/Desktop_Qt_6_7_2-Debug/Tank_Attack_autogen/EWIEGA46WW/qrc_Prueba.cpp.rule",
+			"sourceGroupIndex" : 4
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/Desktop_Qt_6_7_2-Debug/Tank_Attack_autogen/EWIEGA46WW/qrc_resource.cpp.rule",
+			"sourceGroupIndex" : 4
 		}
 	],
 	"type" : "EXECUTABLE"

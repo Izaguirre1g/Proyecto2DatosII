@@ -9,6 +9,7 @@
 #include "TanqueRojo.h"
 #include <QApplication>
 using namespace std;
+
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
@@ -46,7 +47,7 @@ int main(int argc, char *argv[]) {
 
     // Función para mostrar la posición actual del tanque
     auto mostrarPosicion = [](const Tanque& tanque, const std::string& nombre) {
-        cout << nombre << " está en el nodo " << tanque.obtenerNodoActual() << std::endl;
+        cout << nombre << " está en el nodo " << tanque.obtenerNodoActual() << endl;
     };
 
     // Mostrar posiciones antes de mover

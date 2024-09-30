@@ -412,6 +412,12 @@
 			null
 		],
 		[
+			"/home/jose/Proyecto2DatosII/Tank_Attack/TanqueCeleste.h",
+			"MU",
+			"EWIEGA46WW/moc_TanqueCeleste.cpp",
+			null
+		],
+		[
 			"/home/jose/Proyecto2DatosII/Tank_Attack/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
@@ -489,6 +495,11 @@
 			null
 		],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/TanqueAzul.cpp", "MU", null ],
+		[
+			"/home/jose/Proyecto2DatosII/Tank_Attack/TanqueCeleste.cpp",
+			"MU",
+			null
+		],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/main.cpp", "MU", null ],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/mainwindow.cpp", "MU", null ]
 	],

@@ -31,6 +31,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Tanque.h Tanque.cpp
         TanqueAmarillo.h TanqueAmarillo.cpp
         TanqueAzul.h TanqueAzul.cpp
+        TanqueCeleste.h TanqueCeleste.cpp
 
 
 

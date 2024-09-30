@@ -71,13 +71,13 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 74,
+				"line" : 76,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 1,
-				"line" : 57,
+				"line" : 59,
 				"parent" : 0
 			},
 			{
@@ -292,7 +292,9 @@
 				15,
 				17,
 				19,
-				21
+				21,
+				23,
+				25
 			]
 		}
 	],
@@ -388,7 +390,9 @@
 				15,
 				17,
 				19,
-				21
+				21,
+				23,
+				25
 			]
 		},
 		{
@@ -405,7 +409,9 @@
 				18,
 				20,
 				22,
-				23
+				24,
+				26,
+				27
 			]
 		},
 		{
@@ -414,14 +420,14 @@
 			[
 				4,
 				13,
-				24
+				28
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				25
+				29
 			]
 		}
 	],
@@ -547,6 +553,28 @@
 			"backtrace" : 4,
 			"compileGroupIndex" : 0,
 			"path" : "TanqueAzul.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "TanqueCeleste.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "TanqueCeleste.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "TanqueRojo.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "TanqueRojo.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

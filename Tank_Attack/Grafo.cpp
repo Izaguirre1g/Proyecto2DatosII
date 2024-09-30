@@ -1,6 +1,8 @@
 #include "Grafo.h"
 #include <cmath>
 #include <iostream>
+#include <random>
+using namespace std;
 
 Grafo::Grafo(int n) : numNodos(n) {
     // Inicializar la matriz de adyacencia
@@ -17,12 +19,20 @@ Grafo::Grafo(int n) : numNodos(n) {
     posicionesY = new int[numNodos];
 }
 
+// Generar números aleatorios en un rango dado
+int Grafo::generarPesoAleatorio(int min, int max) {
+    static random_device rd;  // Dispositivo de entropía para semilla
+    static mt19937 gen(rd());  // Generador Mersenne Twister
+    uniform_int_distribution<> dis(min, max);  // Distribución uniforme entre min y max
+    return dis(gen);  // Genera un número aleatorio
+}
+
 void Grafo::asignarPosicion(int nodo, int x, int y) {
     if (nodo >= 0 && nodo < numNodos) {
         posicionesX[nodo] = x;
         posicionesY[nodo] = y;
     } else {
-        std::cout << "Nodo fuera de rango.\n";
+        cout << "Nodo fuera de rango.\n";
     }
 }
 
@@ -30,7 +40,7 @@ void Grafo::conectarNodos(int nodo1, int nodo2, int peso) {
     if (nodo1 >= 0 && nodo1 < numNodos && nodo2 >= 0 && nodo2 < numNodos) {
         matrizAdyacencia[nodo1][nodo2] = peso;
     } else {
-        std::cout << "Nodos fuera de rango.\n";
+        cout << "Nodos fuera de rango.\n";
     }
 }
 
@@ -39,6 +49,7 @@ void Grafo::generarMatriz(int ancho, int alto, int espaciado) {
     int filas = alto / espaciado;
     int columnas = ancho / espaciado;
     int nodo = 0;
+    int pesoAleatorio = generarPesoAleatorio(1,990);
 
     for (int i = 0; i < filas; ++i) {
         for (int j = 0; j < columnas; ++j) {
@@ -49,32 +60,32 @@ void Grafo::generarMatriz(int ancho, int alto, int espaciado) {
 
             // Conectar con el nodo de la izquierda
             if (j > 0) {
-                conectarNodos(nodo, nodo - 1, 1);
-                conectarNodos(nodo - 1, nodo, 1);  // Conexión bidireccional
+                conectarNodos(nodo, nodo - 1, pesoAleatorio);
+                conectarNodos(nodo - 1, nodo, pesoAleatorio);  // Conexión bidireccional
             }
 
             // Conectar con el nodo de arriba
             if (i > 0) {
-                conectarNodos(nodo, nodo - columnas, 1);
-                conectarNodos(nodo - columnas, nodo, 1);  // Conexión bidireccional
+                conectarNodos(nodo, nodo - columnas, pesoAleatorio);
+                conectarNodos(nodo - columnas, nodo, pesoAleatorio);  // Conexión bidireccional
             }
 
             // Conectar en las 4 direcciones diagonales
             if (i > 0 && j > 0) {  // Arriba-izquierda
-                conectarNodos(nodo, nodo - columnas - 1, 1);
-                conectarNodos(nodo - columnas - 1, nodo, 1);
+                conectarNodos(nodo, nodo - columnas - 1, pesoAleatorio);
+                conectarNodos(nodo - columnas - 1, nodo, pesoAleatorio);
             }
             if (i > 0 && j < columnas - 1) {  // Arriba-derecha
-                conectarNodos(nodo, nodo - columnas + 1, 1);
-                conectarNodos(nodo - columnas + 1, nodo, 1);
+                conectarNodos(nodo, nodo - columnas + 1, pesoAleatorio);
+                conectarNodos(nodo - columnas + 1, nodo, pesoAleatorio);
             }
             if (i < filas - 1 && j > 0) {  // Abajo-izquierda
-                conectarNodos(nodo, nodo + columnas - 1, 1);
-                conectarNodos(nodo + columnas - 1, nodo, 1);
+                conectarNodos(nodo, nodo + columnas - 1, pesoAleatorio);
+                conectarNodos(nodo + columnas - 1, nodo, pesoAleatorio);
             }
             if (i < filas - 1 && j < columnas - 1) {  // Abajo-derecha
-                conectarNodos(nodo, nodo + columnas + 1, 1);
-                conectarNodos(nodo + columnas + 1, nodo, 1);
+                conectarNodos(nodo, nodo + columnas + 1, pesoAleatorio);
+                conectarNodos(nodo + columnas + 1, nodo, pesoAleatorio);
             }
 
             nodo++;

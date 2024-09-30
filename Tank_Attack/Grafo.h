@@ -19,6 +19,7 @@ public:
     void conectarNodos(int nodo1, int nodo2, int peso);
     //void conectarConDistancia(int nodo1, int nodo2);
     void generarMatriz(int ancho, int alto, int espaciado); // Generar los nodos como una matriz
+    int generarPesoAleatorio(int min, int max);
 
     // Getters
     int getNumNodos() const;

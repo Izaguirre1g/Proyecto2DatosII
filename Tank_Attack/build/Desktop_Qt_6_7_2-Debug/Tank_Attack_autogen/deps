@@ -14,6 +14,8 @@ Tank_Attack_autogen/timestamp: \
 	/home/jose/Proyecto2DatosII/Tank_Attack/Tanque.h \
 	/home/jose/Proyecto2DatosII/Tank_Attack/TanqueAmarillo.cpp \
 	/home/jose/Proyecto2DatosII/Tank_Attack/TanqueAmarillo.h \
+	/home/jose/Proyecto2DatosII/Tank_Attack/TanqueAzul.cpp \
+	/home/jose/Proyecto2DatosII/Tank_Attack/TanqueAzul.h \
 	/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-Debug/.qtc/package-manager/auto-setup.cmake \
 	/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-Debug/CMakeFiles/3.29.3/CMakeCXXCompiler.cmake \
 	/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-Debug/CMakeFiles/3.29.3/CMakeSystem.cmake \

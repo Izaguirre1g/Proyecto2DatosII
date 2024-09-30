@@ -30,6 +30,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         BFS.h BFS.cpp
         Tanque.h Tanque.cpp
         TanqueAmarillo.h TanqueAmarillo.cpp
+        TanqueAzul.h TanqueAzul.cpp
 
 
 

@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-b7a53fc3b510d9d6416f.json",
+					"jsonFile" : "directory-.-Debug-923808dfa8c915806ce9.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Tank_Attack::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Tank_Attack-Debug-56b9db88d9b11e4fb2df.json",
+					"jsonFile" : "target-Tank_Attack-Debug-96e1ffdef774294ec15d.json",
 					"name" : "Tank_Attack",
 					"projectIndex" : 0
 				},

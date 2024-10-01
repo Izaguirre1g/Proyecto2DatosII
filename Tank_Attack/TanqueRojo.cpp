@@ -1,4 +1,4 @@
-#include "TanqueRojo.h"
+/*#include "TanqueRojo.h"
 #include "Dijkstra.h"
 #include <cstdlib> // Para rand()
 
@@ -18,4 +18,4 @@ void TanqueRojo::mover() {
         int numNodos = grafo->getNumNodos();
         nodoActual = rand() % numNodos;
     }
-}
+}*/

@@ -1,4 +1,4 @@
-#ifndef TANQUEAZUL_H
+/*#ifndef TANQUEAZUL_H
 #define TANQUEAZUL_H
 
 #include "Tanque.h"
@@ -10,4 +10,4 @@ public:
     void mover() override;
 };
 
-#endif // TANQUEAZUL_H
+#endif // TANQUEAZUL_H*/

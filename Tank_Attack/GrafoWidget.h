@@ -9,13 +9,21 @@ class GrafoWidget : public QWidget {
 
 public:
     explicit GrafoWidget(QWidget *parent = nullptr);
-    void setGrafo(Grafo* grafo);  // Método para asignar el grafo que queremos dibujar
+    void setGrafo(Grafo* grafo);
 
 protected:
-    void paintEvent(QPaintEvent *event) override;  // Sobrescribimos el método para dibujar
+    void paintEvent(QPaintEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    Grafo* grafo;  // Puntero al grafo que queremos dibujar
+    Grafo* grafo;
+    int nodoInicial;      // Nodo inicial seleccionado
+    int nodoFinal;        // Nodo final seleccionado
+    bool seleccionInicial;  // Saber si estamos seleccionando el nodo inicial o final
+
+    int* camino=nullptr;          // Puntero al arreglo del camino calculado por Dijkstra
+    int longitudCamino=0;   // Longitud del camino calculado
+
 };
 
 #endif // GRAFOWIDGET_H

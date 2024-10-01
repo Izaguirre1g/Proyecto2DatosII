@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     // Crear la ventana principal y pasarle el grafo
     MainWindow w(grafo);
     w.show();
-
+/*
     // Simulación de los tanques
     TanqueAzul tanqueAzul(grafo, 0);
     TanqueCeleste tanqueCeleste(grafo, 1);
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
     mostrarPosicion(tanqueCeleste, "Tanque Celeste");
     mostrarPosicion(tanqueAmarillo, "Tanque Amarillo");
     mostrarPosicion(tanqueRojo, "Tanque Rojo");
-
+*/
     // Ejecutar la aplicación Qt
     return a.exec();
 }

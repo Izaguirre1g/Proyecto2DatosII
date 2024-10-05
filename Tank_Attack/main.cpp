@@ -8,6 +8,7 @@
 #include "TanqueAmarillo.h"
 #include "TanqueRojo.h"
 #include <QApplication>
+using namespace std;
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
@@ -16,9 +17,9 @@ int main(int argc, char *argv[]) {
     srand(static_cast<unsigned>(time(0)));
 
     // Calcular la cantidad de nodos que caben en un área de 1050x720 con espaciado de 30
-    int ancho = 1075;
-    int alto = 580;
-    int espaciado = 22;
+    int ancho = 1050;
+    int alto = 720;
+    int espaciado = 50;
     int numNodos = (ancho / espaciado) * (alto / espaciado);  // Número total de nodos
 
     // Crear un grafo con el número calculado de nodos
@@ -46,11 +47,11 @@ int main(int argc, char *argv[]) {
 
     // Función para mostrar la posición actual del tanque
     auto mostrarPosicion = [](const Tanque& tanque, const std::string& nombre) {
-        std::cout << nombre << " está en el nodo " << tanque.obtenerNodoActual() << std::endl;
+        cout << nombre << " está en el nodo " << tanque.obtenerNodoActual() << endl;
     };
 
     // Mostrar posiciones antes de mover
-    std::cout << "Antes de mover:" << std::endl;
+    cout << "Antes de mover:" << std::endl;
     mostrarPosicion(tanqueAzul, "Tanque Azul");
     mostrarPosicion(tanqueCeleste, "Tanque Celeste");
     mostrarPosicion(tanqueAmarillo, "Tanque Amarillo");
@@ -63,7 +64,7 @@ int main(int argc, char *argv[]) {
     tanqueRojo.mover();
 
     // Mostrar posiciones después de mover
-    std::cout << "\nDespués de mover:" << std::endl;
+    cout << "\nDespués de mover:" << endl;
     mostrarPosicion(tanqueAzul, "Tanque Azul");
     mostrarPosicion(tanqueCeleste, "Tanque Celeste");
     mostrarPosicion(tanqueAmarillo, "Tanque Amarillo");

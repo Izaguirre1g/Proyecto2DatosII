@@ -37,8 +37,6 @@ public:
 
 void dijkstra(Grafo& grafo, int inicio) {
     int numNodos = grafo.obtenerNumNodos();
-
-    // Usamos memoria dinámica para los arrays
     int* distancia = new int[numNodos];  // Distancias mínimas
     int* predecesores = new int[numNodos]; // Para reconstruir el camino
     bool* visitado = new bool[numNodos]; // Si el nodo ha sido visitado
@@ -49,7 +47,7 @@ void dijkstra(Grafo& grafo, int inicio) {
         predecesores[i] = -1;   // Ningún predecesor al inicio
         visitado[i] = false;    // Ningún nodo visitado al inicio
     }
-    distancia[inicio] = 0; // Distancia a sí mismo es 0
+    distancia[inicio] = 0; // La distancia al nodo inicial es 0
 
     // Ciclo principal de Dijkstra
     for (int i = 0; i < numNodos - 1; ++i) {
@@ -64,7 +62,10 @@ void dijkstra(Grafo& grafo, int inicio) {
             }
         }
 
-        if (minNodo == -1) break; // Todos los nodos están visitados o inaccesibles
+        if (minNodo == -1) {
+            std::cerr << "Error: No se puede continuar, no hay nodos accesibles.\n";
+            break;  // Todos los nodos accesibles ya están procesados
+        }
 
         // Marcar el nodo como visitado
         visitado[minNodo] = true;
@@ -81,15 +82,15 @@ void dijkstra(Grafo& grafo, int inicio) {
     }
 
     // Imprimir distancias desde el nodo inicial
-    cout << "Distancias desde el nodo " << inicio << ":\n";
+    std::cout << "Distancias desde el nodo " << inicio << ":\n";
     for (int i = 0; i < numNodos; ++i) {
-        cout << "Nodo " << i << ": " << (distancia[i] == INT_MAX ? "Infinito" : to_string(distancia[i])) << endl;
+        std::cout << "Nodo " << i << ": " << (distancia[i] == INT_MAX ? "Infinito" : std::to_string(distancia[i])) << std::endl;
     }
 
     // Imprimir el camino más corto desde el nodo inicial a todos los nodos
     for (int destino = 0; destino < numNodos; ++destino) {
         if (distancia[destino] < INT_MAX) {
-            cout << "Camino más corto al nodo " << destino << ":\n";
+            std::cout << "Camino más corto al nodo " << destino << ":\n";
             int* camino = new int[numNodos]; // Usar memoria dinámica para el camino
             int indice = 0;
 
@@ -100,9 +101,9 @@ void dijkstra(Grafo& grafo, int inicio) {
 
             // Imprimir el camino en orden inverso
             for (int i = indice - 1; i >= 0; --i) {
-                cout << camino[i] << " ";
+                std::cout << camino[i] << " ";
             }
-            cout << "\n";
+            std::cout << "\n";
 
             delete[] camino; // Liberar la memoria del camino
         }

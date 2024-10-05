@@ -65,6 +65,7 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode) {
         std::cout << "Nodo actual: " << nodoActual << " (Distancia: " << distancias[nodoActual] << ")\n";
 
         if (nodoActual == destinationNode) {
+            std::cout << "Destino alcanzado en BFS\n";
             break;
         }
 
@@ -77,8 +78,10 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode) {
         }
     }
 
-    // Imprimir el camino al nodo de destino
-    if (distancias[destinationNode] != -1) {
+    // Verificar si alcanzamos el destino
+    if (distancias[destinationNode] == -1) {
+        std::cerr << "No se pudo alcanzar el nodo destino desde el nodo inicial.\n";
+    } else {
         std::cout << "Camino al nodo " << destinationNode << ":\n";
         int camino[MAX_NODOS];
         int indice = 0;
@@ -91,7 +94,5 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode) {
             std::cout << camino[i] << " ";
         }
         std::cout << "\n";
-    } else {
-        std::cout << "No se puede alcanzar el nodo " << destinationNode << " desde el nodo " << startNode << ".\n";
     }
 }

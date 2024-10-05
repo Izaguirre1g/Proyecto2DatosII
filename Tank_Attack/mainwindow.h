@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "Grafo.h"  // Incluir el archivo de encabezado de Grafo
+#include "Grafo.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -14,16 +14,12 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    // Constructor que recibe el puntero a Grafo y un QWidget parent
     explicit MainWindow(Grafo* grafo, QWidget *parent = nullptr);
     ~MainWindow();
 
-    // Método para mostrar resultados en la interfaz
-    void mostrarResultado(const QString &resultado);
-
 private:
-    Ui::MainWindow *ui;  // Puntero a la interfaz de usuario
-    Grafo* grafo;        // Puntero a la instancia de Grafo
+    Ui::MainWindow *ui;
+    Grafo* grafo;  // Puntero al grafo
 };
 
 #endif // MAINWINDOW_H

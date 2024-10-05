@@ -1,23 +1,47 @@
 #include "mainwindow.h"
 #include "GrafoWidget.h"
+#include <cmath>
 
 MainWindow::MainWindow(Grafo* grafo, QWidget *parent)
-    : QMainWindow(parent), grafo(grafo) {  // Inicializamos el puntero a Grafo
+    : QMainWindow(parent), grafo(grafo) {
 
-    // Crear el widget de grafo
     GrafoWidget* grafoWidget = new GrafoWidget(this);
-
-    // Asignar el grafo al widget para que lo dibuje
     grafoWidget->setGrafo(grafo);
 
-    // Establecer el tamaño de la ventana para que sea más grande que el widget
-    setFixedSize(1050, 720);  // Ajusta el tamaño según sea necesario
+    // Calcular el centro del grafo en términos de coordenadas de pantalla
+    int centroX = width() / 2;
+    int centroY = height() / 2;
 
-    // Establecer el widget como el widget central de la ventana
+    // Encontrar el nodo más cercano al centro
+    int nodoCercanoAlCentro = -1;
+    double distanciaMinima = std::numeric_limits<double>::max();
+    int numNodos = grafo->getNumNodos();
+
+    for (int i = 0; i < numNodos; ++i) {
+        int x = grafo->getPosicionX(i);
+        int y = grafo->getPosicionY(i);
+        double distancia = std::sqrt(std::pow(x - centroX, 2) + std::pow(y - centroY, 2));
+
+        if (distancia < distanciaMinima) {
+            distanciaMinima = distancia;
+            nodoCercanoAlCentro = i;
+        }
+    }
+
+    // Crear los tanques y hacer que todos empiecen en el nodo más cercano al centro
+    TanqueAmarillo* tanqueAmarillo = new TanqueAmarillo(grafo, nodoCercanoAlCentro);
+    TanqueAzul* tanqueAzul = new TanqueAzul(grafo, nodoCercanoAlCentro);
+    TanqueCeleste* tanqueCeleste = new TanqueCeleste(grafo, nodoCercanoAlCentro);
+    TanqueRojo* tanqueRojo = new TanqueRojo(grafo, nodoCercanoAlCentro);
+
+    // Pasar los tanques al GrafoWidget
+    grafoWidget->setTanques(tanqueAmarillo, tanqueAzul, tanqueCeleste, tanqueRojo);
+
+    // Establecer el tamaño de la ventana
+    setFixedSize(1050, 720);
     setCentralWidget(grafoWidget);
 }
 
 MainWindow::~MainWindow() {
-    // No es necesario eliminar el grafo aquí, porque no lo creamos en MainWindow.
-    // Si lo creaste en otra parte, puedes eliminarlo ahí.
+    // Liberar memoria si es necesario
 }

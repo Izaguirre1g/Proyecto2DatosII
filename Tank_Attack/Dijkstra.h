@@ -4,8 +4,6 @@
 
 #include "Grafo.h"
 
-int* dijkstra(Grafo& grafo, int inicio, int fin, int& longitudCamino);  // Declaración de la nueva función dijkstra
-
+void dijkstra(Grafo& grafo, int inicio);
 
 #endif
-

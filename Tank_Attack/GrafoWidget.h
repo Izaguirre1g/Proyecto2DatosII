@@ -3,6 +3,11 @@
 
 #include <QWidget>
 #include "Grafo.h"
+#include "TanqueAmarillo.h"
+#include "TanqueAzul.h"
+#include "TanqueCeleste.h"
+#include "TanqueRojo.h"
+#include <QPixmap>  // Agrega esto para manejar las imágenes
 
 class GrafoWidget : public QWidget {
     Q_OBJECT
@@ -10,6 +15,7 @@ class GrafoWidget : public QWidget {
 public:
     explicit GrafoWidget(QWidget *parent = nullptr);
     void setGrafo(Grafo* grafo);
+    void setTanques(TanqueAmarillo* amarillo, TanqueAzul* azul, TanqueCeleste* celeste, TanqueRojo* rojo);  // Asignar los tanques
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -17,13 +23,23 @@ protected:
 
 private:
     Grafo* grafo;
-    int nodoInicial;      // Nodo inicial seleccionado
-    int nodoFinal;        // Nodo final seleccionado
-    bool seleccionInicial;  // Saber si estamos seleccionando el nodo inicial o final
+    int nodoInicial;
+    int nodoFinal;
+    bool seleccionInicial;
 
-    int* camino=nullptr;          // Puntero al arreglo del camino calculado por Dijkstra
-    int longitudCamino=0;   // Longitud del camino calculado
+    int turnoActual;  // Para gestionar los turnos de los tanques
+    TanqueAmarillo* tanqueAmarillo;
+    TanqueAzul* tanqueAzul;
+    TanqueCeleste* tanqueCeleste;
+    TanqueRojo* tanqueRojo;
 
+    // Añade QPixmaps para los tanques
+    QPixmap imgTanqueAmarillo;
+    QPixmap imgTanqueAzul;
+    QPixmap imgTanqueCeleste;
+    QPixmap imgTanqueRojo;
+
+    void siguienteTurno();  // Avanzar al siguiente turno
 };
 
 #endif // GRAFOWIDGET_H

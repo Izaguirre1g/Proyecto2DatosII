@@ -1,4 +1,4 @@
-/*#include "TanqueAzul.h"
+#include "TanqueAzul.h"
 #include "BFS.h"
 #include <cstdlib> // Para rand()
 
@@ -19,4 +19,3 @@ void TanqueAzul::mover() {
         }
     }
 }
-*/

@@ -7,7 +7,15 @@
 	"CROSS_CONFIG" : false,
 	"GENERATOR" : "Ninja",
 	"INCLUDE_DIR" : "/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/include",
-	"INPUTS" : [ "/home/jose/Proyecto2DatosII/Tank_Attack/battlefield.jpg" ],
+	"INPUTS" : 
+	[
+		"/home/jose/Proyecto2DatosII/Tank_Attack/battlefield.jpg",
+		"/home/jose/Proyecto2DatosII/Imagenes/Celeste.png",
+		"/home/jose/Proyecto2DatosII/Imagenes/battlefield.jpg",
+		"/home/jose/Proyecto2DatosII/Imagenes/Azul.png",
+		"/home/jose/Proyecto2DatosII/Imagenes/Rojo.png",
+		"/home/jose/Proyecto2DatosII/Imagenes/Amarillo.png"
+	],
 	"LOCK_FILE" : "/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/CMakeFiles/Tank_Attack_autogen.dir/AutoRcc_resource_EWIEGA46WW_Lock.lock",
 	"MULTI_CONFIG" : false,
 	"OPTIONS" : [ "--no-zstd", "-name", "resource" ],

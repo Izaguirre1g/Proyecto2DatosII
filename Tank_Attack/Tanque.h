@@ -1,4 +1,4 @@
-/*#ifndef TANQUE_H
+#ifndef TANQUE_H
 #define TANQUE_H
 
 #include "Grafo.h"
@@ -18,4 +18,4 @@ public:
     void setNodoObjetivo(int nodoObjetivo); // Método para establecer el nodo objetivo
 };
 
-#endif // TANQUE_H*/
+#endif // TANQUE_H

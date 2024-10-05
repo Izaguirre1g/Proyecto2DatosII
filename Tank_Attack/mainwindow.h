@@ -4,15 +4,22 @@
 #include <QMainWindow>
 #include "Grafo.h"
 
+QT_BEGIN_NAMESPACE
+namespace Ui {
+class MainWindow;
+}
+QT_END_NAMESPACE
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    explicit MainWindow(Grafo* grafo, QWidget *parent = nullptr);  // Constructor que recibe el puntero a Grafo
+    explicit MainWindow(Grafo* grafo, QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
-    Grafo* grafo;  // Guardamos una referencia al grafo
+    Ui::MainWindow *ui;
+    Grafo* grafo;  // Puntero al grafo
 };
 
 #endif // MAINWINDOW_H

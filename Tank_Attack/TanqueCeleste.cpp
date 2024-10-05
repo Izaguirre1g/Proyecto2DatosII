@@ -1,4 +1,4 @@
-/*#include "TanqueCeleste.h"
+#include "TanqueCeleste.h"
 #include "BFS.h"
 #include <cstdlib> // Para rand()
 
@@ -18,4 +18,4 @@ void TanqueCeleste::mover() {
             nodoActual = nodoObjetivo; // Para simplificar, asumimos que el tanque llega al objetivo
         }
     }
-}*/
+}

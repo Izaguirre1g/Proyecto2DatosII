@@ -71,13 +71,13 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 82,
+				"line" : 86,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 1,
-				"line" : 65,
+				"line" : 69,
 				"parent" : 0
 			},
 			{
@@ -299,7 +299,7 @@
 				21,
 				23,
 				25,
-				31
+				32
 			]
 		}
 	],
@@ -402,7 +402,7 @@
 				21,
 				23,
 				25,
-				31
+				32
 			]
 		},
 		{
@@ -420,8 +420,8 @@
 				20,
 				22,
 				24,
-				28,
-				29
+				29,
+				30
 			]
 		},
 		{
@@ -431,22 +431,23 @@
 				4,
 				13,
 				27,
-				30
+				31
 			]
 		},
 		{
 			"name" : "Resources",
 			"sourceIndexes" : 
 			[
-				26
+				26,
+				28
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				32,
-				33
+				33,
+				34
 			]
 		}
 	],
@@ -605,6 +606,11 @@
 			"backtrace" : 4,
 			"path" : "resource.qrc",
 			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 4,
+			"path" : "/home/jose/Proyecto2DatosII/Imagenes/Rojo.png",
+			"sourceGroupIndex" : 3
 		},
 		{
 			"backtrace" : 0,

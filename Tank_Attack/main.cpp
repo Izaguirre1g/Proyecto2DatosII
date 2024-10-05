@@ -17,9 +17,9 @@ int main(int argc, char *argv[]) {
     srand(static_cast<unsigned>(time(0)));
 
     // Calcular la cantidad de nodos que caben en un área de 1050x720 con espaciado de 30
-    int ancho = 1075;
-    int alto = 580;
-    int espaciado = 22;
+    int ancho = 1050;
+    int alto = 720;
+    int espaciado = 50;
     int numNodos = (ancho / espaciado) * (alto / espaciado);  // Número total de nodos
 
     // Crear un grafo con el número calculado de nodos
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     // Crear la ventana principal y pasarle el grafo
     MainWindow w(grafo);
     w.show();
-/*
+
     // Simulación de los tanques
     TanqueAzul tanqueAzul(grafo, 0);
     TanqueCeleste tanqueCeleste(grafo, 1);
@@ -69,8 +69,7 @@ int main(int argc, char *argv[]) {
     mostrarPosicion(tanqueCeleste, "Tanque Celeste");
     mostrarPosicion(tanqueAmarillo, "Tanque Amarillo");
     mostrarPosicion(tanqueRojo, "Tanque Rojo");
-*/
+
     // Ejecutar la aplicación Qt
     return a.exec();
 }
-

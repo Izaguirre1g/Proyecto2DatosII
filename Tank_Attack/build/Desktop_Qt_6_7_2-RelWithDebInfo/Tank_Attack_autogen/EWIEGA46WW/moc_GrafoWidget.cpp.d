@@ -1,6 +1,11 @@
 /home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/EWIEGA46WW/moc_GrafoWidget.cpp: /home/jose/Proyecto2DatosII/Tank_Attack/GrafoWidget.h \
   /home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/moc_predefs.h \
   /home/jose/Proyecto2DatosII/Tank_Attack/Grafo.h \
+  /home/jose/Proyecto2DatosII/Tank_Attack/Tanque.h \
+  /home/jose/Proyecto2DatosII/Tank_Attack/TanqueAmarillo.h \
+  /home/jose/Proyecto2DatosII/Tank_Attack/TanqueAzul.h \
+  /home/jose/Proyecto2DatosII/Tank_Attack/TanqueCeleste.h \
+  /home/jose/Proyecto2DatosII/Tank_Attack/TanqueRojo.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/q20functional.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/q20memory.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/q20type_traits.h \
@@ -118,6 +123,7 @@
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qversiontagging.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qxptype_traits.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qyieldcpu.h \
+  /home/jose/Qt/6.7.2/gcc_64/include/QtGui/QPixmap \
   /home/jose/Qt/6.7.2/gcc_64/include/QtGui/qaction.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtGui/qbitmap.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtGui/qbrush.h \

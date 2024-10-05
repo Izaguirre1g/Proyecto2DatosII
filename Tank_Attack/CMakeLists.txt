@@ -39,6 +39,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
 
         resource.qrc
+        ../Imagenes/Rojo.png
+        ../Imagenes/Rojo.png
+
+
 
 
 

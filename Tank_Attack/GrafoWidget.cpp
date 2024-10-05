@@ -72,25 +72,26 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
     if (tanqueAmarillo) {
         int x = grafo->getPosicionX(tanqueAmarillo->obtenerNodoActual());
         int y = grafo->getPosicionY(tanqueAmarillo->obtenerNodoActual());
-        painter.drawPixmap(x - imgTanqueAmarillo.width() / 2, y - imgTanqueAmarillo.height() / 2, imgTanqueAmarillo);
+        //painter.drawPixmap(x - imgTanqueAmarillo.width() / 2, y - imgTanqueAmarillo.height() / 2, imgTanqueAmarillo);
+        painter.drawPixmap(890, 54, imgTanqueAmarillo);
     }
 
     if (tanqueAzul) {
         int x = grafo->getPosicionX(tanqueAzul->obtenerNodoActual());
         int y = grafo->getPosicionY(tanqueAzul->obtenerNodoActual());
-        painter.drawPixmap(x - imgTanqueAzul.width() / 2, y - imgTanqueAzul.height() / 2, imgTanqueAzul);
+        painter.drawPixmap(100, 54, imgTanqueAzul);
     }
 
     if (tanqueCeleste) {
         int x = grafo->getPosicionX(tanqueCeleste->obtenerNodoActual());
         int y = grafo->getPosicionY(tanqueCeleste->obtenerNodoActual());
-        painter.drawPixmap(x - imgTanqueCeleste.width() / 2, y - imgTanqueCeleste.height() / 2, imgTanqueCeleste);
+        painter.drawPixmap(100, 554, imgTanqueCeleste);
     }
 
     if (tanqueRojo) {
         int x = grafo->getPosicionX(tanqueRojo->obtenerNodoActual());
         int y = grafo->getPosicionY(tanqueRojo->obtenerNodoActual());
-        painter.drawPixmap(x - imgTanqueRojo.width() / 2, y - imgTanqueRojo.height() / 2, imgTanqueRojo);
+        painter.drawPixmap(890, 554, imgTanqueRojo);
     }
 }
 

@@ -20,7 +20,7 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);
 
     // Dibujar imagen de fondo
-    QPixmap background(":/Imagenes/battlefield.jpg");
+    QPixmap background(":/battlefield.jpg");//Asi debe ser la ruta para que funcione correctamente la imagen
     painter.drawPixmap(0, 0, width(), height(), background);
 
     // Dibujar el camino si existe

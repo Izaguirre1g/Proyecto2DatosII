@@ -23,6 +23,7 @@ public:
 
     // Mostrar la matriz de adyacencia
     void mostrarMatriz();
+    int encontrarNodoCercano(int nodo1, int nodo2);
 
     // Heurística para A* o cálculos de distancia
     int heuristica(int nodo1, int nodo2);
@@ -35,6 +36,7 @@ public:
     int obtenerPosY(int nodo) const;
     int getPosicionX(int nodo) const; // Alias de obtenerPosX (opcional)
     int getPosicionY(int nodo) const; // Alias de obtenerPosY (opcional)
+
 
     // Destructor
     ~Grafo();

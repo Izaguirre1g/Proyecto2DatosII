@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>  // Incluir la clase QTimer
 #include "Grafo.h"
 
 QT_BEGIN_NAMESPACE
@@ -17,9 +18,13 @@ public:
     explicit MainWindow(Grafo* grafo, QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void finalizarJuego();  // Slot que cierra la ventana y muestra el mensaje
+
 private:
     Ui::MainWindow *ui;
     Grafo* grafo;  // Puntero al grafo
+    QTimer* timer;  // Puntero al temporizador
 };
 
 #endif // MAINWINDOW_H

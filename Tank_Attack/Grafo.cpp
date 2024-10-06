@@ -82,6 +82,25 @@ void Grafo::generarMatriz(int ancho, int alto, int espaciado) {
     }
 }
 
+int Grafo::encontrarNodoCercano(int x, int y) {
+    int nodoCercano = -1;
+    double distanciaMinima = std::numeric_limits<double>::max();
+
+    for (int i = 0; i < numNodos; ++i) {
+        int nodoX = getPosicionX(i);
+        int nodoY = getPosicionY(i);
+        double distancia = std::sqrt(std::pow(x - nodoX, 2) + std::pow(y - nodoY, 2));
+
+        if (distancia < distanciaMinima) {
+            distanciaMinima = distancia;
+            nodoCercano = i;
+        }
+    }
+
+    return nodoCercano;
+}
+
+
 int Grafo::heuristica(int nodo1, int nodo2) {
     if (nodo1 >= 0 && nodo1 < numNodos && nodo2 >= 0 && nodo2 < numNodos) {
         // Calculamos la distancia euclidiana entre nodo1 y nodo2

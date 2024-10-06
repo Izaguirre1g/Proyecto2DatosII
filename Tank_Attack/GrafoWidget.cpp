@@ -64,11 +64,10 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
         int x2 = grafo->getPosicionX(nodoFinal);
         int y2 = grafo->getPosicionY(nodoFinal);
 
-        // Dibuja la línea entre los nodos seleccionados
         painter.drawLine(QPoint(x1, y1), QPoint(x2, y2));
     }
 
-    // Dibujar los tanques en sus posiciones actuales
+    // Dibujar los tanques en sus posiciones actuales (en los nodos correspondientes)
     if (tanqueAmarillo) {
         int x = grafo->getPosicionX(tanqueAmarillo->obtenerNodoActual());
         int y = grafo->getPosicionY(tanqueAmarillo->obtenerNodoActual());
@@ -93,6 +92,7 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
         painter.drawPixmap(x - imgTanqueRojo.width() / 2, y - imgTanqueRojo.height() / 2, imgTanqueRojo);
     }
 }
+
 
 void GrafoWidget::mousePressEvent(QMouseEvent *event) {
     if (!grafo) return;

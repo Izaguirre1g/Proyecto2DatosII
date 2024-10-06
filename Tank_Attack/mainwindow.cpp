@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "GrafoWidget.h"
 #include <cmath>
+#include <QTimer>  // Incluir QTimer
+#include <iostream>  // Para imprimir en consola
 
 MainWindow::MainWindow(Grafo* grafo, QWidget *parent)
     : QMainWindow(parent), grafo(grafo) {
@@ -8,31 +10,27 @@ MainWindow::MainWindow(Grafo* grafo, QWidget *parent)
     GrafoWidget* grafoWidget = new GrafoWidget(this);
     grafoWidget->setGrafo(grafo);
 
-    // Calcular el centro del grafo en términos de coordenadas de pantalla
-    int centroX = width() / 2;
-    int centroY = height() / 2;
+    // Definir las posiciones visuales iniciales de los tanques
+    int posAmarilloX = 150;
+    int posAmarilloY = 150;
+    int posAzulX = 150;
+    int posAzulY = 450;
+    int posCelesteX = 350;
+    int posCelesteY = 150;
+    int posRojoX = 350;
+    int posRojoY = 450;
 
-    // Encontrar el nodo más cercano al centro
-    int nodoCercanoAlCentro = -1;
-    double distanciaMinima = std::numeric_limits<double>::max();
-    int numNodos = grafo->obtenerNumNodos();
+    // Encontrar los nodos más cercanos a estas posiciones
+    int nodoAmarillo = grafo->encontrarNodoCercano(posAmarilloX, posAmarilloY);
+    int nodoAzul = grafo->encontrarNodoCercano(posAzulX, posAzulY);
+    int nodoCeleste = grafo->encontrarNodoCercano(posCelesteX, posCelesteY);
+    int nodoRojo = grafo->encontrarNodoCercano(posRojoX, posRojoY);
 
-    for (int i = 0; i < numNodos; ++i) {
-        int x = grafo->getPosicionX(i);
-        int y = grafo->getPosicionY(i);
-        double distancia = std::sqrt(std::pow(x - centroX, 2) + std::pow(y - centroY, 2));
-
-        if (distancia < distanciaMinima) {
-            distanciaMinima = distancia;
-            nodoCercanoAlCentro = i;
-        }
-    }
-
-    // Crear los tanques y hacer que todos empiecen en el nodo más cercano al centro
-    TanqueAmarillo* tanqueAmarillo = new TanqueAmarillo(grafo, nodoCercanoAlCentro);
-    TanqueAzul* tanqueAzul = new TanqueAzul(grafo, nodoCercanoAlCentro);
-    TanqueCeleste* tanqueCeleste = new TanqueCeleste(grafo, nodoCercanoAlCentro);
-    TanqueRojo* tanqueRojo = new TanqueRojo(grafo, nodoCercanoAlCentro);
+    // Crear los tanques y asignarles sus posiciones iniciales (nodos correspondientes)
+    TanqueAmarillo* tanqueAmarillo = new TanqueAmarillo(grafo, nodoAmarillo);
+    TanqueAzul* tanqueAzul = new TanqueAzul(grafo, nodoAzul);
+    TanqueCeleste* tanqueCeleste = new TanqueCeleste(grafo, nodoCeleste);
+    TanqueRojo* tanqueRojo = new TanqueRojo(grafo, nodoRojo);
 
     // Pasar los tanques al GrafoWidget
     grafoWidget->setTanques(tanqueAmarillo, tanqueAzul, tanqueCeleste, tanqueRojo);
@@ -40,8 +38,24 @@ MainWindow::MainWindow(Grafo* grafo, QWidget *parent)
     // Establecer el tamaño de la ventana
     setFixedSize(1050, 720);
     setCentralWidget(grafoWidget);
+
+    // Iniciar el temporizador
+    timer = new QTimer(this);  // Crear el temporizador
+    connect(timer, &QTimer::timeout, this, &MainWindow::finalizarJuego);  // Conectar el temporizador con el slot
+    timer->start(300000);  // Establecer que se ejecute en 5 minutos (300,000 ms)
 }
 
 MainWindow::~MainWindow() {
     // Liberar memoria si es necesario
+}
+
+void MainWindow::finalizarJuego() {
+    // Detener el temporizador
+    timer->stop();
+
+    // Imprimir el mensaje en consola
+    std::cout << "Juego finalizado" << std::endl;
+
+    // Cerrar la ventana
+    close();
 }

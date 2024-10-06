@@ -6,7 +6,7 @@
 using namespace std;
 
 void aEstrella(Grafo& grafo, int inicio, int objetivo) {
-    int numNodos = grafo.getNumNodos();
+    int numNodos = grafo.obtenerNumNodos();
     int* distancia = new int[numNodos];
     int* costoEstimado = new int[numNodos];
     bool* visitado = new bool[numNodos];

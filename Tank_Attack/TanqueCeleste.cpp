@@ -8,7 +8,7 @@ void TanqueCeleste::mover() {
     if (rand() % 2 == 0) {
         std::cout << "Movimiento aleatorio de celeste" << std::endl;
         // Movimiento aleatorio
-        int numNodos = grafo->getNumNodos();
+        int numNodos = grafo->obtenerNumNodos();
         nodoActual = rand() % numNodos;
     } else {
         std::cout << "Movimiento mediante BFS de celeste" << std::endl;

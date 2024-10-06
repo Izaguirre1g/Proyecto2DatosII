@@ -47,7 +47,7 @@ public:
 };
 
 void bfs(const Grafo& grafo, int startNode, int destinationNode) {
-    int numNodos = grafo.getNumNodos();
+    int numNodos = grafo.obtenerNumNodos();
     int distancias[MAX_NODOS];  // Arreglo para las distancias
     int predecesores[MAX_NODOS];  // Arreglo para los predecesores
 

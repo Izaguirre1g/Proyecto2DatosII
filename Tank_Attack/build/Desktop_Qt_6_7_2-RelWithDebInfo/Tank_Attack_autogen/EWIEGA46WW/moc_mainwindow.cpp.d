@@ -1,6 +1,7 @@
 /home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/EWIEGA46WW/moc_mainwindow.cpp: /home/jose/Proyecto2DatosII/Tank_Attack/mainwindow.h \
   /home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/moc_predefs.h \
   /home/jose/Proyecto2DatosII/Tank_Attack/Grafo.h \
+  /home/jose/Qt/6.7.2/gcc_64/include/QtCore/QTimer \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/q20functional.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/q20memory.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/q20type_traits.h \
@@ -14,6 +15,7 @@
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qatomic.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qatomic_cxx11.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qbasicatomic.h \
+  /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qbasictimer.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qbindingstorage.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qbytearray.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qbytearrayalgorithms.h \
@@ -102,6 +104,7 @@
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qtdeprecationmarkers.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qtenvironmentvariables.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qtextstream.h \
+  /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qtimer.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qtmetamacros.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qtnoop.h \
   /home/jose/Qt/6.7.2/gcc_64/include/QtCore/qtpreprocessorsupport.h \

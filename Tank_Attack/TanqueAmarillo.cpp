@@ -15,7 +15,7 @@ void TanqueAmarillo::mover() {
     } else {
         std::cout << "Movimiento aleatorio de amarillo" << std::endl;
         // Movimiento aleatorio (20% de probabilidad)
-        int numNodos = grafo->getNumNodos();
+        int numNodos = grafo->obtenerNumNodos();
         nodoActual = rand() % numNodos;
     }
 }

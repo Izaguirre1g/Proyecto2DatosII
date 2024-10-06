@@ -8,7 +8,7 @@ void TanqueAzul::mover() {
     if (rand() % 2 == 0) {
         std::cout << "Movimiento aleatorio de azul" << std::endl;
         // Movimiento aleatorio
-        int numNodos = grafo->getNumNodos();
+        int numNodos = grafo->obtenerNumNodos();
         nodoActual = rand() % numNodos;
     } else {
         std::cout << "Movimiento mediante BFS de azul" << std::endl;

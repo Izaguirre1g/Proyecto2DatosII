@@ -8,10 +8,10 @@ GrafoWidget::GrafoWidget(QWidget *parent)
     : QWidget(parent), grafo(nullptr), seleccionInicial(true), turnoActual(0), nodoInicial(-1), nodoFinal(-1) {
 
     // Cargar las imágenes de los tanques
-    imgTanqueAmarillo.load(":/Imagenes/Amarillo.png");
-    imgTanqueAzul.load(":/Imagenes/Azul.png");
-    imgTanqueCeleste.load(":/Imagenes/Celeste.png");
-    imgTanqueRojo.load(":/Imagenes/Rojo.png");
+    imgTanqueAmarillo.load(":Imagenes/Amarillo.png");
+    imgTanqueAzul.load(":Imagenes/Azul.png");
+    imgTanqueCeleste.load(":Imagenes/Celeste.png");
+    imgTanqueRojo.load(":Imagenes/Rojo.png");
 
     // Verificar si las imágenes se cargaron correctamente
     if (imgTanqueAmarillo.isNull()) {
@@ -47,7 +47,7 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);
 
     // Cargar la imagen de fondo
-    QPixmap background(":/Imagenes/battlefield.jpg");
+    QPixmap background(":Imagenes/battlefield.jpg");
     if (!background.isNull()) {
         painter.drawPixmap(0, 0, width(), height(), background);
     }
@@ -64,36 +64,35 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
         int x2 = grafo->getPosicionX(nodoFinal);
         int y2 = grafo->getPosicionY(nodoFinal);
 
-        // Dibuja la línea entre los nodos seleccionados
         painter.drawLine(QPoint(x1, y1), QPoint(x2, y2));
     }
 
-    // Dibujar los tanques en sus posiciones actuales
+    // Dibujar los tanques en sus posiciones actuales (en los nodos correspondientes)
     if (tanqueAmarillo) {
         int x = grafo->getPosicionX(tanqueAmarillo->obtenerNodoActual());
         int y = grafo->getPosicionY(tanqueAmarillo->obtenerNodoActual());
-        //painter.drawPixmap(x - imgTanqueAmarillo.width() / 2, y - imgTanqueAmarillo.height() / 2, imgTanqueAmarillo);
-        painter.drawPixmap(890, 54, imgTanqueAmarillo);
+        painter.drawPixmap(x - imgTanqueAmarillo.width() / 2, y - imgTanqueAmarillo.height() / 2, imgTanqueAmarillo);
     }
 
     if (tanqueAzul) {
         int x = grafo->getPosicionX(tanqueAzul->obtenerNodoActual());
         int y = grafo->getPosicionY(tanqueAzul->obtenerNodoActual());
-        painter.drawPixmap(100, 54, imgTanqueAzul);
+        painter.drawPixmap(x - imgTanqueAzul.width() / 2, y - imgTanqueAzul.height() / 2, imgTanqueAzul);
     }
 
     if (tanqueCeleste) {
         int x = grafo->getPosicionX(tanqueCeleste->obtenerNodoActual());
         int y = grafo->getPosicionY(tanqueCeleste->obtenerNodoActual());
-        painter.drawPixmap(100, 554, imgTanqueCeleste);
+        painter.drawPixmap(x - imgTanqueCeleste.width() / 2, y - imgTanqueCeleste.height() / 2, imgTanqueCeleste);
     }
 
     if (tanqueRojo) {
         int x = grafo->getPosicionX(tanqueRojo->obtenerNodoActual());
         int y = grafo->getPosicionY(tanqueRojo->obtenerNodoActual());
-        painter.drawPixmap(890, 554, imgTanqueRojo);
+        painter.drawPixmap(x - imgTanqueRojo.width() / 2, y - imgTanqueRojo.height() / 2, imgTanqueRojo);
     }
 }
+
 
 void GrafoWidget::mousePressEvent(QMouseEvent *event) {
     if (!grafo) return;
@@ -101,7 +100,7 @@ void GrafoWidget::mousePressEvent(QMouseEvent *event) {
     int clickX = static_cast<int>(event->position().x());
     int clickY = static_cast<int>(event->position().y());
 
-    int numNodos = grafo->getNumNodos();
+    int numNodos = grafo->obtenerNumNodos();
     int nodoCercano = -1;
     double distanciaMinima = std::numeric_limits<double>::max();
 
@@ -190,11 +189,6 @@ void GrafoWidget::siguienteTurno() {
     seleccionInicial = true;  // Reiniciar para permitir una nueva selección de nodos
     update();  // Asegurar que se redibuje la ventana al cambiar de turno
 }
-
-
-
-
-
 
 
 

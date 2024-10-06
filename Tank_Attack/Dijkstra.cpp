@@ -36,7 +36,7 @@ public:
 };
 
 void dijkstra(Grafo& grafo, int inicio) {
-    int numNodos = grafo.getNumNodos();
+    int numNodos = grafo.obtenerNumNodos();
     int* distancia = new int[numNodos];  // Distancias mínimas
     int* predecesores = new int[numNodos]; // Para reconstruir el camino
     bool* visitado = new bool[numNodos]; // Si el nodo ha sido visitado

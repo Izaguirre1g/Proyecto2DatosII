@@ -1,21 +1,26 @@
 #ifndef TANQUE_H
 #define TANQUE_H
 
-#include "Grafo.h"
+class Grafo; // Forward declaration
 
 class Tanque {
-protected:
-    Grafo* grafo;
-    int nodoActual;
-    int nodoObjetivo; // Nodo al que el tanque debe moverse
-
 public:
     Tanque(Grafo* grafo, int nodoInicial);
 
-    virtual void mover() = 0; // Método virtual puro
-
     int obtenerNodoActual() const;
-    void setNodoObjetivo(int nodoObjetivo); // Método para establecer el nodo objetivo
+    void setNodoObjetivo(int nodoObjetivo);
+
+    // Métodos para obtener el camino y su longitud
+    int* getCamino() const;
+    int getLongitudCamino() const;
+
+protected:
+    Grafo* grafo;
+    int nodoActual;
+    int nodoObjetivo;
+    int* camino;  // Arreglo para almacenar el camino
+    int longitudCamino;  // Longitud del camino
+
 };
 
 #endif // TANQUE_H

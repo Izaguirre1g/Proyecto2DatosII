@@ -6,8 +6,7 @@
 class TanqueAmarillo : public Tanque {
 public:
     TanqueAmarillo(Grafo* grafo, int nodoInicial);
-
-    void mover() override;
+    void mover() ;
 };
 
 #endif // TANQUEAMARILLO_H

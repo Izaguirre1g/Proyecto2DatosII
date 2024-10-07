@@ -4,6 +4,6 @@
 
 #include "Grafo.h"
 
-void bfs(const Grafo& grafo, int startNode, int destinationNode);
+void bfs(const Grafo& grafo, int startNode, int destinationNode, int* camino, int& longitudCamino);
 
 #endif // BFS_H

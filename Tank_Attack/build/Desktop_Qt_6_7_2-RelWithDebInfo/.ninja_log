@@ -59,3 +59,11 @@
 477	2144	1728255572792586244	CMakeFiles/Tank_Attack.dir/mainwindow.cpp.o	b3804443e23413b
 477	2152	1728255572792586244	CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/mocs_compilation.cpp.o	98cf615affac9ce2
 2152	2508	1728255574467550312	Tank_Attack	b88753128417436f
+3	16	1728261871610718668	Tank_Attack_autogen/timestamp	f75b7902dc5f8f4d
+3	16	1728261871610718668	Tank_Attack_autogen/mocs_compilation.cpp	f75b7902dc5f8f4d
+3	16	1728261871610718668	/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/timestamp	f75b7902dc5f8f4d
+3	16	1728261871610718668	/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/mocs_compilation.cpp	f75b7902dc5f8f4d
+16	580	1728261871623718286	CMakeFiles/Tank_Attack.dir/BFS.cpp.o	5266d63100a053fd
+17	631	1728261871624718257	CMakeFiles/Tank_Attack.dir/TanqueCeleste.cpp.o	7e8866508ada41c7
+16	684	1728261871623718286	CMakeFiles/Tank_Attack.dir/TanqueAzul.cpp.o	8a9f5c91dd09654f
+684	1027	1728261872291698682	Tank_Attack	b88753128417436f

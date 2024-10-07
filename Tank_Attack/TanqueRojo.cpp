@@ -5,22 +5,30 @@
 TanqueRojo::TanqueRojo(Grafo* grafo, int nodoInicial) : Tanque(grafo, nodoInicial) {}
 
 void TanqueRojo::mover() {
-    if (rand() % 5 < 4) {
+    if (rand() % 5 < 4) {  // 80% de probabilidad de moverse mediante Dijkstra
         std::cout << "Movimiento mediante Dijkstra de rojo" << std::endl;
-        // Movimiento mediante Dijkstra (80% de probabilidad)
         if (nodoObjetivo != -1) {
-            // Reservar espacio para almacenar el camino y calcularlo usando Dijkstra
             camino = new int[grafo->obtenerNumNodos()];
-            longitudCamino = 0;  // Reiniciar la longitud del camino
+            longitudCamino = 0;
             dijkstra(*grafo, nodoActual, nodoObjetivo, camino, longitudCamino);
-            nodoActual = nodoObjetivo; // El tanque llega al nodo objetivo
+            indiceCamino = 0;  // Reiniciar el índice del camino
         }
-    } else {
+    } else {  // 20% de probabilidad de moverse aleatoriamente
         std::cout << "Movimiento aleatorio de rojo" << std::endl;
-        // Movimiento aleatorio (20% de probabilidad)
-        int numNodos = grafo->obtenerNumNodos();
-        nodoActual = rand() % numNodos;
-        camino = nullptr;  // No hay camino en el movimiento aleatorio
-        longitudCamino = 0;  // No hay longitud de camino en este caso
+        nodoActual = rand() % grafo->obtenerNumNodos();
+        camino = nullptr;
+        longitudCamino = 0;
     }
 }
+
+bool TanqueRojo::haTerminadoCamino() {
+    return indiceCamino >= longitudCamino;
+}
+
+void TanqueRojo::avanzarCaminoPaso() {
+    if (indiceCamino < longitudCamino) {
+        nodoActual = camino[indiceCamino];  // Mover al siguiente nodo en el camino
+        indiceCamino++;
+    }
+}
+

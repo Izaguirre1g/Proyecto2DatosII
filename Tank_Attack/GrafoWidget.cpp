@@ -1,8 +1,6 @@
 #include "GrafoWidget.h"
 #include <QPainter>
 #include <QMouseEvent>
-#include <QTimer>
-#include <cmath>
 #include <iostream>
 
 GrafoWidget::GrafoWidget(QWidget *parent)
@@ -15,20 +13,12 @@ GrafoWidget::GrafoWidget(QWidget *parent)
     imgTanqueRojo.load(":Imagenes/Rojo.png");
 
     // Verificar si las imágenes se cargaron correctamente
-    if (imgTanqueAmarillo.isNull()) {
-        std::cerr << "Error al cargar la imagen del tanque amarillo\n";
-    }
-    if (imgTanqueAzul.isNull()) {
-        std::cerr << "Error al cargar la imagen del tanque azul\n";
-    }
-    if (imgTanqueCeleste.isNull()) {
-        std::cerr << "Error al cargar la imagen del tanque celeste\n";
-    }
-    if (imgTanqueRojo.isNull()) {
-        std::cerr << "Error al cargar la imagen del tanque rojo\n";
-    }
+    if (imgTanqueAmarillo.isNull()) std::cerr << "Error al cargar la imagen del tanque amarillo\n";
+    if (imgTanqueAzul.isNull()) std::cerr << "Error al cargar la imagen del tanque azul\n";
+    if (imgTanqueCeleste.isNull()) std::cerr << "Error al cargar la imagen del tanque celeste\n";
+    if (imgTanqueRojo.isNull()) std::cerr << "Error al cargar la imagen del tanque rojo\n";
 
-    // Configurar el temporizador para el movimiento paso a paso
+    // Inicializar el temporizador para mover el tanque del turno actual
     movimientoTimer = new QTimer(this);
     connect(movimientoTimer, &QTimer::timeout, this, &GrafoWidget::moverTanquePasoAPaso);
 }
@@ -45,71 +35,6 @@ void GrafoWidget::setTanques(TanqueAmarillo* amarillo, TanqueAzul* azul, TanqueC
     this->tanqueRojo = rojo;
 }
 
-void GrafoWidget::moverTanquePasoAPaso() {
-    // Mueve el tanque paso a paso según el turno actual
-    switch (turnoActual) {
-    case 0:  // Tanque amarillo
-        if (tanqueAmarillo->getCamino() != nullptr && !tanqueAmarillo->haTerminadoCamino()) {
-            tanqueAmarillo->avanzarCaminoPaso();  // Mueve el tanque al siguiente nodo
-        } else {
-            movimientoTimer->stop();  // Detener el temporizador si el tanque ha llegado a su destino
-        }
-        break;
-    case 1:  // Tanque azul
-        if (tanqueAzul->getCamino() != nullptr && !tanqueAzul->haTerminadoCamino()) {
-            tanqueAzul->avanzarCaminoPaso();
-        } else {
-            movimientoTimer->stop();
-        }
-        break;
-    case 2:  // Tanque celeste
-        if (tanqueCeleste->getCamino() != nullptr && !tanqueCeleste->haTerminadoCamino()) {
-            tanqueCeleste->avanzarCaminoPaso();
-        } else {
-            movimientoTimer->stop();
-        }
-        break;
-    case 3:  // Tanque rojo
-        if (tanqueRojo->getCamino() != nullptr && !tanqueRojo->haTerminadoCamino()) {
-            tanqueRojo->avanzarCaminoPaso();
-        } else {
-            movimientoTimer->stop();
-        }
-        break;
-    }
-
-    update();  // Redibuja la ventana con el tanque en su nueva posición
-}
-
-void GrafoWidget::dibujarCamino(Tanque* tanque, QPainter& painter) {
-    if (!tanque || !tanque->getCamino()) return;  // Verifica si el tanque o su camino es nulo
-
-    int* camino = tanque->getCamino();  // Obtener el camino del tanque
-    int longitud = tanque->getLongitudCamino();  // Obtener la longitud del camino
-
-    for (int i = 0; i < longitud - 1; ++i) {
-        // Obtener las coordenadas X e Y de los nodos en el camino
-        int x1 = grafo->getPosicionX(camino[i]);
-        int y1 = grafo->getPosicionY(camino[i]);
-        int x2 = grafo->getPosicionX(camino[i + 1]);
-        int y2 = grafo->getPosicionY(camino[i + 1]);
-
-        // Dibujar una línea entre el nodo actual y el siguiente
-        painter.drawLine(QPoint(x1, y1), QPoint(x2, y2));
-    }
-}
-
-void GrafoWidget::dibujarTanque(Tanque* tanque, QPixmap& imagenTanque, QPainter& painter) {
-    if (!tanque) return;  // Verifica si el tanque es nulo
-
-    // Obtener las coordenadas del tanque basado en el nodo actual
-    int x = grafo->getPosicionX(tanque->obtenerNodoActual());
-    int y = grafo->getPosicionY(tanque->obtenerNodoActual());
-
-    // Dibujar la imagen del tanque centrada en la posición del nodo
-    painter.drawPixmap(x - imagenTanque.width() / 2, y - imagenTanque.height() / 2, imagenTanque);
-}
-
 void GrafoWidget::paintEvent(QPaintEvent *event) {
     if (!grafo) return;
 
@@ -122,9 +47,8 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
         painter.drawPixmap(0, 0, width(), height(), background);
     }
 
-    // Dibujar el camino de aristas (en color diferente para cada tanque)
+    // Dibujar caminos
     QPen pen;
-
     if (tanqueAmarillo && tanqueAmarillo->getCamino() != nullptr) {
         pen.setColor(Qt::yellow);
         pen.setWidth(3);
@@ -153,37 +77,70 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
         dibujarCamino(tanqueRojo, painter);
     }
 
-    // Dibujar los tanques en sus posiciones actuales
-    if (tanqueAmarillo) {
-        dibujarTanque(tanqueAmarillo, imgTanqueAmarillo, painter);
-    }
+    // Dibujar los tanques
+    dibujarTanque(tanqueAmarillo, imgTanqueAmarillo, painter);
+    dibujarTanque(tanqueAzul, imgTanqueAzul, painter);
+    dibujarTanque(tanqueCeleste, imgTanqueCeleste, painter);
+    dibujarTanque(tanqueRojo, imgTanqueRojo, painter);
+}
 
-    if (tanqueAzul) {
-        dibujarTanque(tanqueAzul, imgTanqueAzul, painter);
-    }
+void GrafoWidget::dibujarCamino(Tanque* tanque, QPainter& painter) {
+    int* camino = tanque->getCamino();
+    int longitud = tanque->getLongitudCamino();
 
-    if (tanqueCeleste) {
-        dibujarTanque(tanqueCeleste, imgTanqueCeleste, painter);
-    }
-
-    if (tanqueRojo) {
-        dibujarTanque(tanqueRojo, imgTanqueRojo, painter);
+    for (int i = 0; i < longitud - 1; ++i) {
+        int x1 = grafo->getPosicionX(camino[i]);
+        int y1 = grafo->getPosicionY(camino[i]);
+        int x2 = grafo->getPosicionX(camino[i + 1]);
+        int y2 = grafo->getPosicionY(camino[i + 1]);
+        painter.drawLine(QPoint(x1, y1), QPoint(x2, y2));
     }
 }
 
-bool GrafoWidget::validarSeleccionInicial(int nodoCercano) {
+void GrafoWidget::dibujarTanque(Tanque* tanque, QPixmap& imagenTanque, QPainter& painter) {
+    int x = grafo->getPosicionX(tanque->obtenerNodoActual());
+    int y = grafo->getPosicionY(tanque->obtenerNodoActual());
+    painter.drawPixmap(x - imagenTanque.width() / 2, y - imagenTanque.height() / 2, imagenTanque);
+}
+
+void GrafoWidget::moverTanquePasoAPaso() {
+    // Mueve el tanque del turno actual paso a paso hasta que complete su camino
     switch (turnoActual) {
-    case 0:  // Turno del tanque amarillo
-        return nodoCercano == tanqueAmarillo->obtenerNodoActual();
-    case 1:  // Turno del tanque azul
-        return nodoCercano == tanqueAzul->obtenerNodoActual();
-    case 2:  // Turno del tanque celeste
-        return nodoCercano == tanqueCeleste->obtenerNodoActual();
-    case 3:  // Turno del tanque rojo
-        return nodoCercano == tanqueRojo->obtenerNodoActual();
-    default:
-        return false;
+    case 0:  // Tanque amarillo
+        if (tanqueAmarillo->getCamino() != nullptr && !tanqueAmarillo->haTerminadoCamino()) {
+            tanqueAmarillo->avanzarCaminoPaso();
+        } else {
+            movimientoTimer->stop();
+            siguienteTurno();
+        }
+        break;
+    case 1:  // Tanque azul
+        if (tanqueAzul->getCamino() != nullptr && !tanqueAzul->haTerminadoCamino()) {
+            tanqueAzul->avanzarCaminoPaso();
+        } else {
+            movimientoTimer->stop();
+            siguienteTurno();
+        }
+        break;
+    case 2:  // Tanque celeste
+        if (tanqueCeleste->getCamino() != nullptr && !tanqueCeleste->haTerminadoCamino()) {
+            tanqueCeleste->avanzarCaminoPaso();
+        } else {
+            movimientoTimer->stop();
+            siguienteTurno();
+        }
+        break;
+    case 3:  // Tanque rojo
+        if (tanqueRojo->getCamino() != nullptr && !tanqueRojo->haTerminadoCamino()) {
+            tanqueRojo->avanzarCaminoPaso();
+        } else {
+            movimientoTimer->stop();
+            siguienteTurno();
+        }
+        break;
     }
+
+    update();  // Redibuja la ventana con el tanque en su nueva posición
 }
 
 void GrafoWidget::mousePressEvent(QMouseEvent *event) {
@@ -196,24 +153,29 @@ void GrafoWidget::mousePressEvent(QMouseEvent *event) {
 
     if (nodoCercano != -1) {
         if (seleccionInicial) {
-            // Validar que el nodo inicial coincida con el nodo actual del tanque en turno
             if (validarSeleccionInicial(nodoCercano)) {
-                nodoInicial = nodoCercano;  // Seleccionamos el nodo inicial
-                seleccionInicial = false;   // Cambiamos a la selección del nodo final
+                nodoInicial = nodoCercano;
+                seleccionInicial = false;
             } else {
                 std::cout << "Selecciona el nodo donde está el tanque en turno." << std::endl;
             }
         } else {
-            nodoFinal = nodoCercano;  // Seleccionar el nodo final
-
-            // Asignar el objetivo al tanque y calcular el camino
-            moverTanqueActual();
-
-            movimientoTimer->start(500);  // Iniciar el temporizador para mover el tanque cada 500ms
-            siguienteTurno();  // Pasar al siguiente turno
+            nodoFinal = nodoCercano;
+            moverTanqueActual();  // Iniciar el movimiento del tanque en turno
+            movimientoTimer->start(500);  // Iniciar el temporizador para mover el tanque cada 500 ms
         }
 
         update();  // Redibujar la ventana
+    }
+}
+
+bool GrafoWidget::validarSeleccionInicial(int nodoCercano) {
+    switch (turnoActual) {
+    case 0: return nodoCercano == tanqueAmarillo->obtenerNodoActual();
+    case 1: return nodoCercano == tanqueAzul->obtenerNodoActual();
+    case 2: return nodoCercano == tanqueCeleste->obtenerNodoActual();
+    case 3: return nodoCercano == tanqueRojo->obtenerNodoActual();
+    default: return false;
     }
 }
 
@@ -221,7 +183,7 @@ void GrafoWidget::moverTanqueActual() {
     switch (turnoActual) {
     case 0:  // Tanque amarillo
         tanqueAmarillo->setNodoObjetivo(nodoFinal);
-        tanqueAmarillo->mover();  // Aquí calculamos el camino
+        tanqueAmarillo->mover();
         break;
     case 1:  // Tanque azul
         tanqueAzul->setNodoObjetivo(nodoFinal);
@@ -239,15 +201,12 @@ void GrafoWidget::moverTanqueActual() {
 }
 
 void GrafoWidget::siguienteTurno() {
-    // Ciclo entre los 4 tanques (amarillo, azul, celeste, rojo)
-    turnoActual = (turnoActual + 1) % 4;
-    nodoInicial = -1;  // Reiniciar el nodo inicial para el siguiente turno
-    nodoFinal = -1;    // Reiniciar el nodo final para el siguiente turno
-    seleccionInicial = true;  // Reiniciar para permitir una nueva selección de nodos
-    update();  // Asegurar que se redibuje la ventana al cambiar de turno
+    turnoActual = (turnoActual + 1) % 4;  // Cambiar al siguiente tanque
+    nodoInicial = -1;
+    nodoFinal = -1;
+    seleccionInicial = true;
+    update();
 }
-
-
 
 
 

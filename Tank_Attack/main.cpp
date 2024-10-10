@@ -28,6 +28,9 @@ int main(int argc, char *argv[]) {
     // Generar la matriz de nodos en el espacio
     grafo->generarMatriz(ancho, alto, espaciado);
 
+    int numObstaculos = 5;  // El número de obstáculos que deseas
+    grafo->asignarObstaculosAleatorios(numObstaculos);
+
     // Crear la ventana principal y pasarle el grafo
     MainWindow w(grafo);
     w.show();

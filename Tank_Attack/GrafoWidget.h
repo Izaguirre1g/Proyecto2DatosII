@@ -2,12 +2,13 @@
 #define GRAFOWIDGET_H
 
 #include <QWidget>
+#include <QTimer>
+#include <QPixmap>  // Necesario para usar QPixmap
 #include "Grafo.h"
 #include "TanqueAmarillo.h"
 #include "TanqueAzul.h"
 #include "TanqueCeleste.h"
 #include "TanqueRojo.h"
-#include <QPixmap>  // Agrega esto para manejar las imágenes
 
 class GrafoWidget : public QWidget {
     Q_OBJECT
@@ -15,31 +16,38 @@ class GrafoWidget : public QWidget {
 public:
     explicit GrafoWidget(QWidget *parent = nullptr);
     void setGrafo(Grafo* grafo);
-    void setTanques(TanqueAmarillo* amarillo, TanqueAzul* azul, TanqueCeleste* celeste, TanqueRojo* rojo);  // Asignar los tanques
+    void setTanques(TanqueAmarillo* amarillo, TanqueAzul* azul, TanqueCeleste* celeste, TanqueRojo* rojo);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
 
+private slots:
+    void moverTanquePasoAPaso();  // Un solo temporizador para manejar el tanque en turno.
+
 private:
     Grafo* grafo;
-    int nodoInicial;
-    int nodoFinal;
-    bool seleccionInicial;
-
-    int turnoActual;  // Para gestionar los turnos de los tanques
     TanqueAmarillo* tanqueAmarillo;
     TanqueAzul* tanqueAzul;
     TanqueCeleste* tanqueCeleste;
     TanqueRojo* tanqueRojo;
 
-    // Añade QPixmaps para los tanques
-    QPixmap imgTanqueAmarillo;
+    QTimer* movimientoTimer;  // Un solo temporizador que controla el tanque en turno.
+
+    bool seleccionInicial;
+    int turnoActual;  // Turno actual del tanque que se mueve
+    int nodoInicial, nodoFinal;  // Nodo de origen y destino
+
+    QPixmap imgTanqueAmarillo;  // Agregamos las imágenes de los tanques
     QPixmap imgTanqueAzul;
     QPixmap imgTanqueCeleste;
     QPixmap imgTanqueRojo;
 
-    void siguienteTurno();  // Avanzar al siguiente turno
+    void dibujarCamino(Tanque* tanque, QPainter& painter);
+    void dibujarTanque(Tanque* tanque, QPixmap& imagenTanque, QPainter& painter);
+    bool validarSeleccionInicial(int nodoCercano);
+    void moverTanqueActual();  // Llamado para comenzar a mover el tanque en turno
+    void siguienteTurno();  // Cambiar de turno solo cuando el tanque ha terminado de moverse.
 };
 
-#endif // GRAFOWIDGET_H
+#endif

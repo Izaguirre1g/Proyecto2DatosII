@@ -1,5 +1,5 @@
-#ifndef TANQUEAZUL_H
-#define TANQUEAZUL_H
+#ifndef TANQUE_AZUL_H
+#define TANQUE_AZUL_H
 
 #include "Tanque.h"
 
@@ -7,7 +7,11 @@ class TanqueAzul : public Tanque {
 public:
     TanqueAzul(Grafo* grafo, int nodoInicial);
 
-    void mover() override;
+    void mover();
+    bool haTerminadoCamino();
+    void avanzarCaminoPaso();
+private:
+    int indiceCamino;
 };
 
-#endif // TANQUEAZUL_H
+#endif

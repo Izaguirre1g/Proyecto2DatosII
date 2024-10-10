@@ -35,7 +35,7 @@ public:
     }
 };
 
-void dijkstra(Grafo& grafo, int inicio) {
+void dijkstra(Grafo& grafo, int inicio, int destino, int* &camino, int &longitudCamino) {
     int numNodos = grafo.obtenerNumNodos();
     int* distancia = new int[numNodos];  // Distancias mínimas
     int* predecesores = new int[numNodos]; // Para reconstruir el camino
@@ -73,40 +73,22 @@ void dijkstra(Grafo& grafo, int inicio) {
         // Actualizar las distancias de los nodos adyacentes
         for (int j = 0; j < numNodos; ++j) {
             int peso = grafo.obtenerPeso(minNodo, j);
-            if (!visitado[j] && peso > 0 && distancia[minNodo] != INT_MAX
-                && distancia[minNodo] + peso < distancia[j]) {
+            if (!visitado[j] && peso > 0 && distancia[minNodo] != INT_MAX && distancia[minNodo] + peso < distancia[j]) {
                 distancia[j] = distancia[minNodo] + peso;
                 predecesores[j] = minNodo; // Registrar el predecesor
             }
         }
     }
 
-    // Imprimir distancias desde el nodo inicial
-    std::cout << "Distancias desde el nodo " << inicio << ":\n";
-    for (int i = 0; i < numNodos; ++i) {
-        std::cout << "Nodo " << i << ": " << (distancia[i] == INT_MAX ? "Infinito" : std::to_string(distancia[i])) << std::endl;
+    // Reconstruir el camino desde el destino al inicio
+    longitudCamino = 0; // Iniciar en 0
+    for (int v = destino; v != -1; v = predecesores[v]) {
+        camino[longitudCamino++] = v;
     }
 
-    // Imprimir el camino más corto desde el nodo inicial a todos los nodos
-    for (int destino = 0; destino < numNodos; ++destino) {
-        if (distancia[destino] < INT_MAX) {
-            std::cout << "Camino más corto al nodo " << destino << ":\n";
-            int* camino = new int[numNodos]; // Usar memoria dinámica para el camino
-            int indice = 0;
-
-            // Reconstruir el camino
-            for (int v = destino; v != -1; v = predecesores[v]) {
-                camino[indice++] = v;
-            }
-
-            // Imprimir el camino en orden inverso
-            for (int i = indice - 1; i >= 0; --i) {
-                std::cout << camino[i] << " ";
-            }
-            std::cout << "\n";
-
-            delete[] camino; // Liberar la memoria del camino
-        }
+    // Invertir el camino
+    for (int i = 0; i < longitudCamino / 2; ++i) {
+        std::swap(camino[i], camino[longitudCamino - 1 - i]);
     }
 
     // Liberar memoria

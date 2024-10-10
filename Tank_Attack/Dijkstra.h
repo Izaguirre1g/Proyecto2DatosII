@@ -4,6 +4,6 @@
 
 #include "Grafo.h"
 
-void dijkstra(Grafo& grafo, int inicio);
+void dijkstra(Grafo& grafo, int inicio, int destino, int* &camino, int &longitudCamino);
 
 #endif

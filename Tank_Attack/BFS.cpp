@@ -46,7 +46,8 @@ public:
     }
 };
 
-void bfs(const Grafo& grafo, int startNode, int destinationNode) {
+// Modificar para devolver el camino y su longitud
+void bfs(const Grafo& grafo, int startNode, int destinationNode, int* camino, int& longitudCamino) {
     int numNodos = grafo.obtenerNumNodos();
     int distancias[MAX_NODOS];  // Arreglo para las distancias
     int predecesores[MAX_NODOS];  // Arreglo para los predecesores
@@ -70,7 +71,8 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode) {
         }
 
         for (int vecino = 0; vecino < numNodos; ++vecino) {
-            if (grafo.obtenerPeso(nodoActual, vecino) > 0 && distancias[vecino] == -1) {  // Verifica si hay conexión
+            //if (grafo.obtenerPeso(nodoActual, vecino) > 0 && distancias[vecino] == -1 && !grafo.nodosBloqueados[vecino]) {
+            if (grafo.obtenerPeso(nodoActual, vecino) > 0 && distancias[vecino] == -1) {
                 cola.push(vecino);
                 distancias[vecino] = distancias[nodoActual] + 1;
                 predecesores[vecino] = nodoActual;
@@ -80,17 +82,26 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode) {
 
     // Verificar si alcanzamos el destino
     if (distancias[destinationNode] == -1) {
-        std::cerr << "No se pudo alcanzar el nodo destino desde el nodo inicial.\n";
+        longitudCamino = 0;  // No se encontró camino
     } else {
         std::cout << "Camino al nodo " << destinationNode << ":\n";
-        int camino[MAX_NODOS];
         int indice = 0;
 
+        // Reconstruir el camino desde el destino al nodo inicial
         for (int v = destinationNode; v != -1; v = predecesores[v]) {
             camino[indice++] = v;
         }
 
-        for (int i = indice - 1; i >= 0; --i) {
+        // Invertir el camino para que vaya desde el inicio hasta el destino
+        for (int i = 0; i < indice / 2; ++i) {
+            std::swap(camino[i], camino[indice - 1 - i]);
+        }
+
+        // Actualizar la longitud del camino
+        longitudCamino = indice;
+
+        // Imprimir el camino
+        for (int i = 0; i < indice; ++i) {
             std::cout << camino[i] << " ";
         }
         std::cout << "\n";

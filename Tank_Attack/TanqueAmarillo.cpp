@@ -1,21 +1,40 @@
 #include "TanqueAmarillo.h"
 #include "Dijkstra.h"
-#include <cstdlib> // Para rand()
+#include <cstdlib>  // Para rand()
 
 TanqueAmarillo::TanqueAmarillo(Grafo* grafo, int nodoInicial) : Tanque(grafo, nodoInicial) {}
 
 void TanqueAmarillo::mover() {
-    if (rand() % 5 < 4) {
+    if (rand() % 5 < 4) {  // 80% de probabilidad de usar Dijkstra
         std::cout << "Movimiento mediante Dijkstra de amarillo" << std::endl;
-        // Movimiento mediante Dijkstra (80% de probabilidad)
         if (nodoObjetivo != -1) {
-            dijkstra(*grafo, nodoActual);
-            nodoActual = nodoObjetivo; // Para simplificar, asumimos que el tanque llega al objetivo
+            // Verificar si el nodo objetivo está bloqueado antes de realizar el movimiento
+            if (grafo->nodosBloqueados[nodoObjetivo]) {
+                std::cerr << "El nodo objetivo está bloqueado por un obstáculo. No se puede mover el tanque amarillo." << std::endl;
+                return;
+            }
+            camino = new int[grafo->obtenerNumNodos()];
+            longitudCamino = 0;
+            dijkstra(*grafo, nodoActual, nodoObjetivo, camino, longitudCamino);
+            indiceCamino = 0;  // Reiniciar el índice del camino
         }
     } else {
         std::cout << "Movimiento aleatorio de amarillo" << std::endl;
-        // Movimiento aleatorio (20% de probabilidad)
-        int numNodos = grafo->obtenerNumNodos();
-        nodoActual = rand() % numNodos;
+        nodoActual = rand() % grafo->obtenerNumNodos();  // Movimiento aleatorio
+        camino = nullptr;  // No hay camino en el movimiento aleatorio
+        longitudCamino = 0;
+    }
+}
+
+bool TanqueAmarillo::haTerminadoCamino() {
+    return indiceCamino >= longitudCamino;
+}
+
+void TanqueAmarillo::avanzarCaminoPaso() {
+    if (indiceCamino < longitudCamino) {
+        nodoActual = camino[indiceCamino];  // Mover al siguiente nodo en el camino
+        indiceCamino++;
+    } else {
+        std::cout << "El nodo " << indiceCamino << " está bloqueado. No se puede mover." << std::endl;
     }
 }

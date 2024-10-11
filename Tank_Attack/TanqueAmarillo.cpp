@@ -34,7 +34,12 @@ void TanqueAmarillo::avanzarCaminoPaso() {
     if (indiceCamino < longitudCamino) {
         nodoActual = camino[indiceCamino];  // Mover al siguiente nodo en el camino
         indiceCamino++;
-    } else {
-        std::cout << "El nodo " << indiceCamino << " está bloqueado. No se puede mover." << std::endl;
     }
+}
+
+int TanqueAmarillo::getNodoSiguiente() {
+    if (indiceCamino < longitudCamino) {
+        return camino[indiceCamino];  // Devolver el siguiente nodo en el camino
+    }
+    return -1;  // No hay más nodos en el camino
 }

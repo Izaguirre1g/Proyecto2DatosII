@@ -36,3 +36,10 @@ void TanqueAzul::avanzarCaminoPaso() {
         indiceCamino++;
     }
 }
+
+int TanqueAzul::getNodoSiguiente() {
+    if (indiceCamino < longitudCamino) {
+        return camino[indiceCamino];  // Devolver el siguiente nodo en el camino
+    }
+    return -1;  // No hay más nodos en el camino
+}

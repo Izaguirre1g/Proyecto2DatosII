@@ -41,13 +41,6 @@ int main(int argc, char *argv[]) {
     TanqueAmarillo tanqueAmarillo(grafo, 2);
     TanqueRojo tanqueRojo(grafo, 3);
 
-    // Establecer el nodo objetivo para todos los tanques
-    /*int nodoObjetivo = 200; // Nodo como objetivo para todos
-    tanqueAzul.setNodoObjetivo(nodoObjetivo);
-    tanqueCeleste.setNodoObjetivo(nodoObjetivo);
-    tanqueAmarillo.setNodoObjetivo(nodoObjetivo);
-    tanqueRojo.setNodoObjetivo(nodoObjetivo);*/
-
     // Función para mostrar la posición actual del tanque
     auto mostrarPosicion = [](const Tanque& tanque, const std::string& nombre) {
         cout << nombre << " está en el nodo " << tanque.obtenerNodoActual() << endl;
@@ -60,18 +53,6 @@ int main(int argc, char *argv[]) {
     mostrarPosicion(tanqueAmarillo, "Tanque Amarillo");
     mostrarPosicion(tanqueRojo, "Tanque Rojo");
 
-    // Realizar movimientos
-    /*tanqueAzul.mover();
-    tanqueCeleste.mover();
-    tanqueAmarillo.mover();
-    tanqueRojo.mover();*/
-
-    // Mostrar posiciones después de mover
-    /*cout << "\nDespués de mover:" << endl;
-    mostrarPosicion(tanqueAzul, "Tanque Azul");
-    mostrarPosicion(tanqueCeleste, "Tanque Celeste");
-    mostrarPosicion(tanqueAmarillo, "Tanque Amarillo");
-    mostrarPosicion(tanqueRojo, "Tanque Rojo");*/
 
     // Ejecutar la aplicación Qt
     return a.exec();

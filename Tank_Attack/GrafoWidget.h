@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QTimer>
-#include <QPixmap>  // Necesario para usar QPixmap
+#include <QPixmap>
 #include "Grafo.h"
 #include "TanqueAmarillo.h"
 #include "TanqueAzul.h"
@@ -16,29 +16,34 @@ class GrafoWidget : public QWidget {
 public:
     explicit GrafoWidget(QWidget *parent = nullptr);
     void setGrafo(Grafo* grafo);
-    void setTanques(TanqueAmarillo* amarillo, TanqueAzul* azul, TanqueCeleste* celeste, TanqueRojo* rojo);
+    void setTanques(TanqueAmarillo* amarillo1, TanqueAmarillo* amarillo2, TanqueAzul* azul1, TanqueAzul* azul2,
+                    TanqueCeleste* celeste1, TanqueCeleste* celeste2, TanqueRojo* rojo1, TanqueRojo* rojo2);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
 
 private slots:
-    void moverTanquePasoAPaso();  // Un solo temporizador para manejar el tanque en turno.
+    void moverTanquePasoAPaso();
 
 private:
     Grafo* grafo;
-    TanqueAmarillo* tanqueAmarillo;
-    TanqueAzul* tanqueAzul;
-    TanqueCeleste* tanqueCeleste;
-    TanqueRojo* tanqueRojo;
+    TanqueAmarillo* tanqueAmarillo1;
+    TanqueAmarillo* tanqueAmarillo2;
+    TanqueAzul* tanqueAzul1;
+    TanqueAzul* tanqueAzul2;
+    TanqueCeleste* tanqueCeleste1;
+    TanqueCeleste* tanqueCeleste2;
+    TanqueRojo* tanqueRojo1;
+    TanqueRojo* tanqueRojo2;
 
-    QTimer* movimientoTimer;  // Un solo temporizador que controla el tanque en turno.
-
+    QTimer* movimientoTimer;
     bool seleccionInicial;
-    int turnoActual;  // Turno actual del tanque que se mueve
-    int nodoInicial, nodoFinal;  // Nodo de origen y destino
+    int turnoActual;
+    int nodoInicial, nodoFinal;
+    int jugadorActual;  // 0: Jugador 1, 1: Jugador 2
 
-    QPixmap imgTanqueAmarillo;  // Agregamos las imágenes de los tanques
+    QPixmap imgTanqueAmarillo;
     QPixmap imgTanqueAzul;
     QPixmap imgTanqueCeleste;
     QPixmap imgTanqueRojo;
@@ -46,8 +51,8 @@ private:
     void dibujarCamino(Tanque* tanque, QPainter& painter);
     void dibujarTanque(Tanque* tanque, QPixmap& imagenTanque, QPainter& painter);
     bool validarSeleccionInicial(int nodoCercano);
-    void moverTanqueActual();  // Llamado para comenzar a mover el tanque en turno
-    void siguienteTurno();  // Cambiar de turno solo cuando el tanque ha terminado de moverse.
+    void moverTanqueActual();  // Iniciar el movimiento
+    void siguienteTurno();     // Cambiar entre los jugadores
 };
 
 #endif

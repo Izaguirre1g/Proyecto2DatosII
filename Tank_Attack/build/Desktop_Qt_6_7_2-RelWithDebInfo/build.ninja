@@ -153,6 +153,14 @@ build CMakeFiles/Tank_Attack.dir/TanqueRojo.cpp.o: CXX_COMPILER__Tank_Attack_uns
   OBJECT_DIR = CMakeFiles/Tank_Attack.dir
   OBJECT_FILE_DIR = CMakeFiles/Tank_Attack.dir
 
+build CMakeFiles/Tank_Attack.dir/Bala.cpp.o: CXX_COMPILER__Tank_Attack_unscanned_RelWithDebInfo /home/jose/Proyecto2DatosII/Tank_Attack/Bala.cpp || cmake_object_order_depends_target_Tank_Attack
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Tank_Attack.dir/Bala.cpp.o.d
+  FLAGS = -O2 -g -DNDEBUG -std=gnu++17 -fdiagnostics-color=always -fPIC
+  INCLUDES = -I/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/include -isystem /home/jose/Qt/6.7.2/gcc_64/include/QtCore -isystem /home/jose/Qt/6.7.2/gcc_64/include -isystem /home/jose/Qt/6.7.2/gcc_64/mkspecs/linux-g++ -isystem /home/jose/Qt/6.7.2/gcc_64/include/QtWidgets -isystem /home/jose/Qt/6.7.2/gcc_64/include/QtGui
+  OBJECT_DIR = CMakeFiles/Tank_Attack.dir
+  OBJECT_FILE_DIR = CMakeFiles/Tank_Attack.dir
+
 build CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/EWIEGA46WW/qrc_resource.cpp.o: CXX_COMPILER__Tank_Attack_unscanned_RelWithDebInfo /home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/EWIEGA46WW/qrc_resource.cpp || cmake_object_order_depends_target_Tank_Attack
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
   DEP_FILE = CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/EWIEGA46WW/qrc_resource.cpp.o.d
@@ -169,7 +177,7 @@ build CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/EWIEGA46WW/qrc_resource.cpp
 #############################################
 # Link the executable Tank_Attack
 
-build Tank_Attack: CXX_EXECUTABLE_LINKER__Tank_Attack_RelWithDebInfo CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/mocs_compilation.cpp.o CMakeFiles/Tank_Attack.dir/main.cpp.o CMakeFiles/Tank_Attack.dir/mainwindow.cpp.o CMakeFiles/Tank_Attack.dir/Grafo.cpp.o CMakeFiles/Tank_Attack.dir/Dijkstra.cpp.o CMakeFiles/Tank_Attack.dir/AStar.cpp.o CMakeFiles/Tank_Attack.dir/GrafoWidget.cpp.o CMakeFiles/Tank_Attack.dir/BFS.cpp.o CMakeFiles/Tank_Attack.dir/Tanque.cpp.o CMakeFiles/Tank_Attack.dir/TanqueAmarillo.cpp.o CMakeFiles/Tank_Attack.dir/TanqueAzul.cpp.o CMakeFiles/Tank_Attack.dir/TanqueCeleste.cpp.o CMakeFiles/Tank_Attack.dir/TanqueRojo.cpp.o CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/EWIEGA46WW/qrc_resource.cpp.o | /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Widgets.so.6.7.2 /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Gui.so.6.7.2 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Core.so.6.7.2 || Tank_Attack_autogen Tank_Attack_autogen_timestamp_deps
+build Tank_Attack: CXX_EXECUTABLE_LINKER__Tank_Attack_RelWithDebInfo CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/mocs_compilation.cpp.o CMakeFiles/Tank_Attack.dir/main.cpp.o CMakeFiles/Tank_Attack.dir/mainwindow.cpp.o CMakeFiles/Tank_Attack.dir/Grafo.cpp.o CMakeFiles/Tank_Attack.dir/Dijkstra.cpp.o CMakeFiles/Tank_Attack.dir/AStar.cpp.o CMakeFiles/Tank_Attack.dir/GrafoWidget.cpp.o CMakeFiles/Tank_Attack.dir/BFS.cpp.o CMakeFiles/Tank_Attack.dir/Tanque.cpp.o CMakeFiles/Tank_Attack.dir/TanqueAmarillo.cpp.o CMakeFiles/Tank_Attack.dir/TanqueAzul.cpp.o CMakeFiles/Tank_Attack.dir/TanqueCeleste.cpp.o CMakeFiles/Tank_Attack.dir/TanqueRojo.cpp.o CMakeFiles/Tank_Attack.dir/Bala.cpp.o CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/EWIEGA46WW/qrc_resource.cpp.o | /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Widgets.so.6.7.2 /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Gui.so.6.7.2 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Core.so.6.7.2 || Tank_Attack_autogen Tank_Attack_autogen_timestamp_deps
   FLAGS = -O2 -g -DNDEBUG
   LINK_LIBRARIES = -Wl,-rpath,/home/jose/Qt/6.7.2/gcc_64/lib:  /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Widgets.so.6.7.2  /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Gui.so.6.7.2  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libOpenGL.so  /home/jose/Qt/6.7.2/gcc_64/lib/libQt6Core.so.6.7.2  -Wl,-rpath-link,/home/jose/Qt/6.7.2/gcc_64/lib
   OBJECT_DIR = CMakeFiles/Tank_Attack.dir

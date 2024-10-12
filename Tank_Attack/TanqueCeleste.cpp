@@ -13,6 +13,11 @@ void TanqueCeleste::mover() {
     } else {
         std::cout << "Movimiento mediante BFS de celeste" << std::endl;
         if (nodoObjetivo != -1) {
+            // Verificar si el nodo objetivo está bloqueado antes de realizar el movimiento
+            if (grafo->nodosBloqueados[nodoObjetivo]) {
+                std::cerr << "El nodo objetivo está bloqueado por un obstáculo. No se puede mover el tanque celeste." << std::endl;
+                return;
+            }
             camino = new int[grafo->obtenerNumNodos()];
             longitudCamino = 0;
             bfs(*grafo, nodoActual, nodoObjetivo, camino, longitudCamino);
@@ -32,3 +37,9 @@ void TanqueCeleste::avanzarCaminoPaso() {
     }
 }
 
+int TanqueCeleste::getNodoSiguiente() {
+    if (indiceCamino < longitudCamino) {
+        return camino[indiceCamino];  // Devolver el siguiente nodo en el camino
+    }
+    return -1;  // No hay más nodos en el camino
+}

@@ -20,6 +20,7 @@ public:
     void conectarNodos(int nodo1, int nodo2, int peso);
     void conectarConDistancia(int nodo1, int nodo2);
     void generarMatriz(int ancho, int alto, int espaciado); // Generar nodos en una matriz con espaciado
+    void asignarObstaculosAleatorios(int numObstaculos);
 
     // Mostrar la matriz de adyacencia
     void mostrarMatriz();
@@ -36,6 +37,8 @@ public:
     int obtenerPosY(int nodo) const;
     int getPosicionX(int nodo) const; // Alias de obtenerPosX (opcional)
     int getPosicionY(int nodo) const; // Alias de obtenerPosY (opcional)
+    bool* nodosBloqueados;  // Arreglo que indica si un nodo está bloqueado por un obstáculo
+
 
 
     // Destructor

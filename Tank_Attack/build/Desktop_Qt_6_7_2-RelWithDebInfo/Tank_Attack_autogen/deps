@@ -3,6 +3,8 @@ Tank_Attack_autogen/timestamp: \
 	/home/jose/Proyecto2DatosII/Tank_Attack/AStar.h \
 	/home/jose/Proyecto2DatosII/Tank_Attack/BFS.cpp \
 	/home/jose/Proyecto2DatosII/Tank_Attack/BFS.h \
+	/home/jose/Proyecto2DatosII/Tank_Attack/Bala.cpp \
+	/home/jose/Proyecto2DatosII/Tank_Attack/Bala.h \
 	/home/jose/Proyecto2DatosII/Tank_Attack/CMakeLists.txt \
 	/home/jose/Proyecto2DatosII/Tank_Attack/Dijkstra.cpp \
 	/home/jose/Proyecto2DatosII/Tank_Attack/Dijkstra.h \

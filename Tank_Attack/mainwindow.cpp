@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include "GrafoWidget.h"
 #include <cmath>
-#include <QTimer>  // Incluir QTimer
-#include <iostream>  // Para imprimir en consola
+#include <QTimer>
+#include <iostream>
 
 MainWindow::MainWindow(Grafo* grafo, QWidget *parent)
     : QMainWindow(parent), grafo(grafo) {
@@ -10,52 +10,36 @@ MainWindow::MainWindow(Grafo* grafo, QWidget *parent)
     GrafoWidget* grafoWidget = new GrafoWidget(this);
     grafoWidget->setGrafo(grafo);
 
-    // Definir las posiciones visuales iniciales de los tanques
-    int posAmarilloX = 150;
-    int posAmarilloY = 150;
-    int posAzulX = 150;
-    int posAzulY = 450;
-    int posCelesteX = 350;
-    int posCelesteY = 150;
-    int posRojoX = 350;
-    int posRojoY = 450;
+    int posiciones[8][2] = {
+        {150, 150}, {200, 150},  // Amarillo 1 y 2
+        {150, 450}, {200, 450},  // Azul 1 y 2
+        {350, 150}, {400, 150},  // Celeste 1 y 2
+        {350, 450}, {400, 450}   // Rojo 1 y 2
+    };
 
-    // Encontrar los nodos más cercanos a estas posiciones
-    int nodoAmarillo = grafo->encontrarNodoCercano(posAmarilloX, posAmarilloY);
-    int nodoAzul = grafo->encontrarNodoCercano(posAzulX, posAzulY);
-    int nodoCeleste = grafo->encontrarNodoCercano(posCelesteX, posCelesteY);
-    int nodoRojo = grafo->encontrarNodoCercano(posRojoX, posRojoY);
+    TanqueAmarillo* tanqueAmarillo1 = new TanqueAmarillo(grafo, grafo->encontrarNodoCercano(posiciones[0][0], posiciones[0][1]));
+    TanqueAmarillo* tanqueAmarillo2 = new TanqueAmarillo(grafo, grafo->encontrarNodoCercano(posiciones[1][0], posiciones[1][1]));
+    TanqueAzul* tanqueAzul1 = new TanqueAzul(grafo, grafo->encontrarNodoCercano(posiciones[2][0], posiciones[2][1]));
+    TanqueAzul* tanqueAzul2 = new TanqueAzul(grafo, grafo->encontrarNodoCercano(posiciones[3][0], posiciones[3][1]));
+    TanqueCeleste* tanqueCeleste1 = new TanqueCeleste(grafo, grafo->encontrarNodoCercano(posiciones[4][0], posiciones[4][1]));
+    TanqueCeleste* tanqueCeleste2 = new TanqueCeleste(grafo, grafo->encontrarNodoCercano(posiciones[5][0], posiciones[5][1]));
+    TanqueRojo* tanqueRojo1 = new TanqueRojo(grafo, grafo->encontrarNodoCercano(posiciones[6][0], posiciones[6][1]));
+    TanqueRojo* tanqueRojo2 = new TanqueRojo(grafo, grafo->encontrarNodoCercano(posiciones[7][0], posiciones[7][1]));
 
-    // Crear los tanques y asignarles sus posiciones iniciales (nodos correspondientes)
-    TanqueAmarillo* tanqueAmarillo = new TanqueAmarillo(grafo, nodoAmarillo);
-    TanqueAzul* tanqueAzul = new TanqueAzul(grafo, nodoAzul);
-    TanqueCeleste* tanqueCeleste = new TanqueCeleste(grafo, nodoCeleste);
-    TanqueRojo* tanqueRojo = new TanqueRojo(grafo, nodoRojo);
+    grafoWidget->setTanques(tanqueAmarillo1, tanqueAmarillo2, tanqueAzul1, tanqueAzul2, tanqueCeleste1, tanqueCeleste2, tanqueRojo1, tanqueRojo2);
 
-    // Pasar los tanques al GrafoWidget
-    grafoWidget->setTanques(tanqueAmarillo, tanqueAzul, tanqueCeleste, tanqueRojo);
-
-    // Establecer el tamaño de la ventana
     setFixedSize(1050, 720);
     setCentralWidget(grafoWidget);
 
-    // Iniciar el temporizador
-    timer = new QTimer(this);  // Crear el temporizador
-    connect(timer, &QTimer::timeout, this, &MainWindow::finalizarJuego);  // Conectar el temporizador con el slot
-    timer->start(300000);  // Establecer que se ejecute en 5 minutos (300,000 ms)
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MainWindow::finalizarJuego);
+    timer->start(300000);  // 5 minutos
 }
 
-MainWindow::~MainWindow() {
-    // Liberar memoria si es necesario
-}
+MainWindow::~MainWindow() {}
 
 void MainWindow::finalizarJuego() {
-    // Detener el temporizador
     timer->stop();
-
-    // Imprimir el mensaje en consola
     std::cout << "Juego finalizado" << std::endl;
-
-    // Cerrar la ventana
     close();
 }

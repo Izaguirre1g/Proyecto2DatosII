@@ -15,6 +15,9 @@ Grafo::Grafo(int n) : numNodos(n) {
     // Inicializar las posiciones X e Y de los nodos
     posicionesX = new int[numNodos];
     posicionesY = new int[numNodos];
+
+    nodosBloqueados = new bool[numNodos];
+    std::fill(nodosBloqueados, nodosBloqueados + numNodos, false);  // Ningún nodo está bloqueado inicialmente
 }
 
 void Grafo::asignarPosicion(int nodo, int x, int y) {
@@ -136,6 +139,22 @@ int Grafo::obtenerPeso(int nodo1, int nodo2) const {
     return -1; // Error
 }
 
+
+void Grafo::asignarObstaculosAleatorios(int numObstaculos) {
+    int asignados = 0;
+    while (asignados < numObstaculos) {
+        int nodoAleatorio = rand() % numNodos;
+
+        // Evitar asignar obstáculos en nodos de inicio de los tanques, o si ya está bloqueado
+        if (!nodosBloqueados[nodoAleatorio]) {
+            nodosBloqueados[nodoAleatorio] = true;
+            asignados++;
+        }
+    }
+}
+
+
+
 Grafo::~Grafo() {
     for (int i = 0; i < numNodos; ++i) {
         delete[] matrizAdyacencia[i];
@@ -143,5 +162,6 @@ Grafo::~Grafo() {
     delete[] matrizAdyacencia;
     delete[] posicionesX;
     delete[] posicionesY;
+    delete[] nodosBloqueados;
 }
 

@@ -10,6 +10,8 @@ public:
     void mover();
     bool haTerminadoCamino();          // Método para verificar si ha terminado el camino
     void avanzarCaminoPaso();
+    int getNodoSiguiente();            // Método para obtener el siguiente nodo en el camino
+
 private:
     int indiceCamino;         // Método para avanzar un paso en el camino
 };

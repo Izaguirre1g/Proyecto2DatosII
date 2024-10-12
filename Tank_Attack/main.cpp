@@ -28,6 +28,9 @@ int main(int argc, char *argv[]) {
     // Generar la matriz de nodos en el espacio
     grafo->generarMatriz(ancho, alto, espaciado);
 
+    int numObstaculos = 5;  // El número de obstáculos que deseas
+    grafo->asignarObstaculosAleatorios(numObstaculos);
+
     // Crear la ventana principal y pasarle el grafo
     MainWindow w(grafo);
     w.show();
@@ -37,13 +40,6 @@ int main(int argc, char *argv[]) {
     TanqueCeleste tanqueCeleste(grafo, 1);
     TanqueAmarillo tanqueAmarillo(grafo, 2);
     TanqueRojo tanqueRojo(grafo, 3);
-
-    // Establecer el nodo objetivo para todos los tanques
-    /*int nodoObjetivo = 200; // Nodo como objetivo para todos
-    tanqueAzul.setNodoObjetivo(nodoObjetivo);
-    tanqueCeleste.setNodoObjetivo(nodoObjetivo);
-    tanqueAmarillo.setNodoObjetivo(nodoObjetivo);
-    tanqueRojo.setNodoObjetivo(nodoObjetivo);*/
 
     // Función para mostrar la posición actual del tanque
     auto mostrarPosicion = [](const Tanque& tanque, const std::string& nombre) {
@@ -57,18 +53,6 @@ int main(int argc, char *argv[]) {
     mostrarPosicion(tanqueAmarillo, "Tanque Amarillo");
     mostrarPosicion(tanqueRojo, "Tanque Rojo");
 
-    // Realizar movimientos
-    /*tanqueAzul.mover();
-    tanqueCeleste.mover();
-    tanqueAmarillo.mover();
-    tanqueRojo.mover();*/
-
-    // Mostrar posiciones después de mover
-    /*cout << "\nDespués de mover:" << endl;
-    mostrarPosicion(tanqueAzul, "Tanque Azul");
-    mostrarPosicion(tanqueCeleste, "Tanque Celeste");
-    mostrarPosicion(tanqueAmarillo, "Tanque Amarillo");
-    mostrarPosicion(tanqueRojo, "Tanque Rojo");*/
 
     // Ejecutar la aplicación Qt
     return a.exec();

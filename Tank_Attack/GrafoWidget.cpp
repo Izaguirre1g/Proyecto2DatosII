@@ -282,9 +282,18 @@ void GrafoWidget::mousePressEvent(QMouseEvent *event) {
     } else if (event->button() == Qt::RightButton) {  // Handling right-click for shooting
         std::cout << "Click derecho para disparar detectado en: (" << clickX << ", " << clickY << ")" << std::endl;
 
-        // Disparar una bala desde el tanque en turno
-        dispararBala(clickX, clickY);  // Método para disparar la bala hacia el punto donde se hizo click derecho
-        accionRealizada = true;
+        if (!seleccionDisparo) {  // Selección inicial para disparar
+            if (nodoCercano != -1 && validarSeleccionInicial(nodoCercano)) {
+                seleccionDisparo = true;  // Marcar como en proceso de disparo
+                std::cout << "Seleccionado tanque en turno para disparar." << std::endl;
+            } else {
+                std::cout << "No se seleccionó un tanque válido para disparar." << std::endl;
+            }
+        } else {  // Seleccionar el objetivo para disparar
+            dispararBala(clickX, clickY);  // Iniciar el disparo hacia la posición seleccionada
+            accionRealizada = true;
+            seleccionDisparo = false;  // Restablecer la selección de disparo
+        }
     }
 }
 

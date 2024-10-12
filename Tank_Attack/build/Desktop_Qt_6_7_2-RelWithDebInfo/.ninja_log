@@ -74,3 +74,11 @@
 344	2513	1728748507779816667	CMakeFiles/Tank_Attack.dir/mainwindow.cpp.o	b3804443e23413b
 344	2767	1728748507779816667	CMakeFiles/Tank_Attack.dir/GrafoWidget.cpp.o	f262fc84e037516a
 2767	3036	1728748510202896588	Tank_Attack	87511f1e832e0633
+3	401	1728749389444684040	Tank_Attack_autogen/timestamp	f75b7902dc5f8f4d
+3	401	1728749389444684040	Tank_Attack_autogen/mocs_compilation.cpp	f75b7902dc5f8f4d
+3	401	1728749389444684040	/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/timestamp	f75b7902dc5f8f4d
+3	401	1728749389444684040	/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/mocs_compilation.cpp	f75b7902dc5f8f4d
+401	1781	1728749389448684078	CMakeFiles/Tank_Attack.dir/mainwindow.cpp.o	b3804443e23413b
+401	2039	1728749389448684078	CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/mocs_compilation.cpp.o	98cf615affac9ce2
+402	2818	1728749389449684087	CMakeFiles/Tank_Attack.dir/GrafoWidget.cpp.o	f262fc84e037516a
+2818	3192	1728749391866706822	Tank_Attack	87511f1e832e0633

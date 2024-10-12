@@ -47,6 +47,8 @@ private:
     int nodoInicial, nodoFinal;
     int jugadorActual;
     bool accionRealizada;
+    bool seleccionDisparo;
+
 
     QPixmap imgTanqueAmarillo;
     QPixmap imgTanqueAzul;

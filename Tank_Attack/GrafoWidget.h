@@ -46,6 +46,7 @@ private:
     int turnoActual;
     int nodoInicial, nodoFinal;
     int jugadorActual;
+    bool accionRealizada;
 
     QPixmap imgTanqueAmarillo;
     QPixmap imgTanqueAzul;

@@ -13,14 +13,14 @@ public:
     // Métodos para obtener el camino y su longitud
     int* getCamino() const;
     int getLongitudCamino() const;
-
+    void limpiarCamino();
 protected:
     Grafo* grafo;
     int nodoActual;
     int nodoObjetivo;
     int* camino;  // Arreglo para almacenar el camino
     int longitudCamino;  // Longitud del camino
-
+    int indiceCamino;
 };
 
 #endif // TANQUE_H

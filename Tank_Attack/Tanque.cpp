@@ -20,3 +20,14 @@ int* Tanque::getCamino() const {
 int Tanque::getLongitudCamino() const {
     return longitudCamino;  // Retorna la longitud del camino
 }
+
+void Tanque::limpiarCamino() {
+    // Liberar memoria del camino y reiniciar los parámetros
+    if (camino) {
+        delete[] camino;  // Liberar el arreglo de camino si existe
+        camino = nullptr;
+    }
+    longitudCamino = 0;
+    indiceCamino = 0;
+    std::cout << "Camino limpiado para el tanque en nodo " << nodoActual << std::endl;
+}

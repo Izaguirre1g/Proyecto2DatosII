@@ -56,13 +56,9 @@ void GrafoWidget::moverBala(){
         update();
     }else{
         balaTimer->stop();
+        siguienteTurno();
     }
 }
-
-
-
-
-
 
 
 void GrafoWidget::paintEvent(QPaintEvent *event) {
@@ -190,6 +186,7 @@ void GrafoWidget::dibujarTanque(Tanque* tanque, QPixmap& imagenTanque, QPainter&
 }
 
 void GrafoWidget::moverTanquePasoAPaso() {
+    if(accionRealizada) return;// Impedir movimiento si ya se realizó una acción
     // Mueve el tanque del turno actual paso a paso hasta que complete su camino
     bool mover = false;
 
@@ -254,7 +251,7 @@ void GrafoWidget::moverTanquePasoAPaso() {
 
 
 void GrafoWidget::mousePressEvent(QMouseEvent *event) {
-    if (!grafo) return;
+    if (!grafo || accionRealizada) return;
 
     int clickX = static_cast<int>(event->position().x());
     int clickY = static_cast<int>(event->position().y());
@@ -287,6 +284,7 @@ void GrafoWidget::mousePressEvent(QMouseEvent *event) {
 
         // Disparar una bala desde el tanque en turno
         dispararBala(clickX, clickY);  // Método para disparar la bala hacia el punto donde se hizo click derecho
+        accionRealizada = true;
     }
 }
 
@@ -371,6 +369,35 @@ void GrafoWidget::moverTanqueActual() {
 
 
 void GrafoWidget::siguienteTurno() {
+    // Limpiar el camino del tanque en turno actual antes de pasar al siguiente turno
+    switch (turnoActual) {
+    case 0:  // Tanque rojo 1
+        tanqueRojo1->limpiarCamino();
+        break;
+    case 1:  // Tanque amarillo 1
+        tanqueAmarillo1->limpiarCamino();
+        break;
+    case 2:  // Tanque azul 1
+        tanqueAzul1->limpiarCamino();
+        break;
+    case 3:  // Tanque celeste 1
+        tanqueCeleste1->limpiarCamino();
+        break;
+    case 4:  // Tanque rojo 2
+        tanqueRojo2->limpiarCamino();
+        break;
+    case 5:  // Tanque amarillo 2
+        tanqueAmarillo2->limpiarCamino();
+        break;
+    case 6:  // Tanque azul 2
+        tanqueAzul2->limpiarCamino();
+        break;
+    case 7:  // Tanque celeste 2
+        tanqueCeleste2->limpiarCamino();
+        break;
+    }
+
+    // Cambiar turno
     turnoActual = (turnoActual + 1) % 8;  // Cambiar entre los 8 tanques
 
     // Jugador 1 mueve en turnos 0, 2, 4, 6 (pares)
@@ -380,9 +407,11 @@ void GrafoWidget::siguienteTurno() {
     nodoInicial = -1;
     nodoFinal = -1;
     seleccionInicial = true;
+    accionRealizada = false;  // Resetear para el próximo turno
     std::cout << "Cambio al turno del tanque: " << turnoActual << " (Jugador " << jugadorActual + 1 << ")" << std::endl;
     update();
 }
+
     /*
     // Dibujar los nodos
     int numNodos = grafo->getNumNodos();

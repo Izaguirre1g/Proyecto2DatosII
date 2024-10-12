@@ -3,18 +3,17 @@
 
 class Bala {
 public:
-    Bala(int xInicial, int yInicial, int xDestino, int yDestino);
+    Bala(int xInicial, int yInicial, int xObjetivo, int yObjetivo);
 
-    void mover();      // Mueve la bala en la dirección calculada
-    int getX() const;  // Obtener la posición actual en X
-    int getY() const;  // Obtener la posición actual en Y
-    bool estaActiva() const;  // Saber si la bala está activa (en pantalla)
-    void desactivar(); // Desactiva la bala cuando alcanza su destino o sale del área
+    void mover();
+    bool estaActiva() const;
+    int getX() const;
+    int getY() const;
 
 private:
-    int x, y;        // Posición de la bala
-    float velocidadX, velocidadY;  // Velocidades en las direcciones X e Y
-    bool activa;     // Estado de la bala (activa/inactiva)
+    int x, y;         // Posición actual de la bala
+    int xObjetivo, yObjetivo;  // Posición objetivo
+    bool activa;      // Si la bala sigue activa (volando)
 };
 
 #endif // BALA_H

@@ -1,6 +1,8 @@
 #include "GrafoWidget.h"
+#include "Bala.h"
 #include <QPainter>
 #include <QMouseEvent>
+#include <cmath>
 #include <iostream>
 
 GrafoWidget::GrafoWidget(QWidget *parent)
@@ -19,6 +21,9 @@ GrafoWidget::GrafoWidget(QWidget *parent)
 
     movimientoTimer = new QTimer(this);
     connect(movimientoTimer, &QTimer::timeout, this, &GrafoWidget::moverTanquePasoAPaso);
+
+    balaTimer = new QTimer(this);  // Temporizador para manejar el movimiento de las balas
+    connect(balaTimer, &QTimer::timeout, this, &GrafoWidget::moverBala);
 }
 
 void GrafoWidget::setGrafo(Grafo* grafo) {
@@ -37,6 +42,28 @@ void GrafoWidget::setTanques(TanqueAmarillo* amarillo1, TanqueAmarillo* amarillo
     this->tanqueRojo1 = rojo1;
     this->tanqueRojo2 = rojo2;
 }
+
+void GrafoWidget::dibujarBala(QPainter& painter){
+    if (balaActual){
+        painter.setBrush(Qt::red);
+        painter.drawEllipse(QPoint(balaActual->getX(),balaActual->getY()),5,5);
+    }
+}
+
+void GrafoWidget::moverBala(){
+    if (balaActual && balaActual->estaActiva()){
+        balaActual->mover();
+        update();
+    }else{
+        balaTimer->stop();
+    }
+}
+
+
+
+
+
+
 
 void GrafoWidget::paintEvent(QPaintEvent *event) {
     if (!grafo) return;
@@ -133,6 +160,10 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
     if (tanqueCeleste2) dibujarTanque(tanqueCeleste2, imgTanqueCeleste, painter);
     if (tanqueRojo1) dibujarTanque(tanqueRojo1, imgTanqueRojo, painter);
     if (tanqueRojo2) dibujarTanque(tanqueRojo2, imgTanqueRojo, painter);
+
+    if (balaActual && balaActual->estaActiva()) {
+        dibujarBala(painter);
+    }
 }
 
 void GrafoWidget::dibujarCamino(Tanque* tanque, QPainter& painter) {
@@ -230,25 +261,55 @@ void GrafoWidget::mousePressEvent(QMouseEvent *event) {
 
     int nodoCercano = grafo->encontrarNodoCercano(clickX, clickY);
 
-    if (nodoCercano != -1) {
-        std::cout << "Nodo cercano seleccionado: " << nodoCercano << std::endl;
+    if (event->button() == Qt::LeftButton) {  // Handling left-click for moving
+        if (nodoCercano != -1) {
+            std::cout << "Nodo cercano seleccionado (click izquierdo): " << nodoCercano << std::endl;
 
-        if (seleccionInicial) {
-            if (validarSeleccionInicial(nodoCercano)) {
-                nodoInicial = nodoCercano;
-                seleccionInicial = false;
-                std::cout << "Nodo inicial seleccionado para el tanque en turno " << turnoActual << std::endl;
+            if (seleccionInicial) {
+                if (validarSeleccionInicial(nodoCercano)) {
+                    nodoInicial = nodoCercano;
+                    seleccionInicial = false;
+                    std::cout << "Nodo inicial seleccionado para el tanque en turno " << turnoActual << std::endl;
+                } else {
+                    std::cout << "El nodo seleccionado no corresponde al tanque en turno." << std::endl;
+                }
             } else {
-                std::cout << "El nodo seleccionado no corresponde al tanque en turno." << std::endl;
+                nodoFinal = nodoCercano;
+                std::cout << "Nodo final seleccionado (click izquierdo): " << nodoFinal << std::endl;
+                moverTanqueActual();  // Iniciar el movimiento del tanque en turno
+                movimientoTimer->start(500);  // Iniciar el temporizador para mover el tanque cada 500 ms
             }
-        } else {
-            nodoFinal = nodoCercano;
-            std::cout << "Nodo final seleccionado: " << nodoFinal << std::endl;
-            moverTanqueActual();  // Iniciar el movimiento del tanque en turno
-            movimientoTimer->start(500);  // Iniciar el temporizador para mover el tanque cada 500 ms
-        }
 
-        update();
+            update();  // Redibujar la ventana
+        }
+    } else if (event->button() == Qt::RightButton) {  // Handling right-click for shooting
+        std::cout << "Click derecho para disparar detectado en: (" << clickX << ", " << clickY << ")" << std::endl;
+
+        // Disparar una bala desde el tanque en turno
+        dispararBala(clickX, clickY);  // Método para disparar la bala hacia el punto donde se hizo click derecho
+    }
+}
+
+void GrafoWidget::dispararBala(int xObjetivo, int yObjetivo) {
+    // Obtener la posición actual del tanque en turno
+    Tanque* tanqueEnTurno = nullptr;
+    switch (turnoActual) {
+    case 0: tanqueEnTurno = tanqueRojo1; break;
+    case 1: tanqueEnTurno = tanqueAmarillo1; break;
+    case 2: tanqueEnTurno = tanqueAzul1; break;
+    case 3: tanqueEnTurno = tanqueCeleste1; break;
+    case 4: tanqueEnTurno = tanqueRojo2; break;
+    case 5: tanqueEnTurno = tanqueAmarillo2; break;
+    case 6: tanqueEnTurno = tanqueAzul2; break;
+    case 7: tanqueEnTurno = tanqueCeleste2; break;
+    }
+
+    if (tanqueEnTurno) {
+        int xInicial = grafo->getPosicionX(tanqueEnTurno->obtenerNodoActual());
+        int yInicial = grafo->getPosicionY(tanqueEnTurno->obtenerNodoActual());
+
+        balaActual = new Bala(xInicial, yInicial, xObjetivo, yObjetivo);
+        balaTimer->start(50);  // Iniciar el movimiento de la bala
     }
 }
 

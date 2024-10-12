@@ -1,5 +1,6 @@
 /home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/EWIEGA46WW/moc_GrafoWidget.cpp: /home/jose/Proyecto2DatosII/Tank_Attack/GrafoWidget.h \
   /home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/moc_predefs.h \
+  /home/jose/Proyecto2DatosII/Tank_Attack/Bala.h \
   /home/jose/Proyecto2DatosII/Tank_Attack/Grafo.h \
   /home/jose/Proyecto2DatosII/Tank_Attack/Tanque.h \
   /home/jose/Proyecto2DatosII/Tank_Attack/TanqueAmarillo.h \

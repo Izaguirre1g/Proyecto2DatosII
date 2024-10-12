@@ -9,6 +9,7 @@
 #include "TanqueAzul.h"
 #include "TanqueCeleste.h"
 #include "TanqueRojo.h"
+#include "Bala.h"  // Incluir la clase Bala
 
 class GrafoWidget : public QWidget {
     Q_OBJECT
@@ -25,6 +26,7 @@ protected:
 
 private slots:
     void moverTanquePasoAPaso();
+    void moverBala();  // Mover la bala cada vez que el temporizador lo indique
 
 private:
     Grafo* grafo;
@@ -38,21 +40,28 @@ private:
     TanqueRojo* tanqueRojo2;
 
     QTimer* movimientoTimer;
+    QTimer* balaTimer;  // Temporizador para manejar el movimiento de las balas
+
     bool seleccionInicial;
     int turnoActual;
     int nodoInicial, nodoFinal;
-    int jugadorActual;  // 0: Jugador 1, 1: Jugador 2
+    int jugadorActual;
 
     QPixmap imgTanqueAmarillo;
     QPixmap imgTanqueAzul;
     QPixmap imgTanqueCeleste;
     QPixmap imgTanqueRojo;
 
+    Bala* balaActual;  // Bala activa en el juego
+
     void dibujarCamino(Tanque* tanque, QPainter& painter);
     void dibujarTanque(Tanque* tanque, QPixmap& imagenTanque, QPainter& painter);
+    void dibujarBala(QPainter& painter);  // Método para dibujar la bala
+
     bool validarSeleccionInicial(int nodoCercano);
-    void moverTanqueActual();  // Iniciar el movimiento
-    void siguienteTurno();     // Cambiar entre los jugadores
+    void moverTanqueActual();
+    void siguienteTurno();
+    void dispararBala(int xObjetivo, int yObjetivo);  // Método para disparar
 };
 
 #endif

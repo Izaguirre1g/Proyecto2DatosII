@@ -1,30 +1,25 @@
 #include "Bala.h"
-#include <cmath>  // Para calcular la dirección
+#include <cmath>
 
-Bala::Bala(int xInicial, int yInicial, int xDestino, int yDestino)
-    : x(xInicial), y(yInicial), activa(true) {
+Bala::Bala(int xInicial, int yInicial, int xObjetivo, int yObjetivo)
+    : x(xInicial), y(yInicial), xObjetivo(xObjetivo), yObjetivo(yObjetivo), activa(true) {}
 
-    // Calcular la dirección de la bala
-    float dx = xDestino - xInicial;
-    float dy = yDestino - yInicial;
-    float magnitud = std::sqrt(dx * dx + dy * dy);
+void Bala::mover() {
+    // Lógica simple para mover la bala hacia su objetivo (puedes hacerla más realista)
+    int dx = xObjetivo - x;
+    int dy = yObjetivo - y;
+    int dist = std::sqrt(dx * dx + dy * dy);
 
-    if (magnitud != 0) {
-        velocidadX = dx / magnitud * 10;  // Ajustar 10 para la velocidad deseada
-        velocidadY = dy / magnitud * 10;
+    if (dist < 5) {
+        activa = false;  // La bala alcanzó el objetivo o está muy cerca
     } else {
-        velocidadX = 0;
-        velocidadY = 0;
+        x += dx / 10;  // Mover en dirección al objetivo
+        y += dy / 10;
     }
 }
 
-void Bala::mover() {
-    if (!activa) return;
-
-    x += velocidadX;
-    y += velocidadY;
-
-    // Aquí puedes agregar la lógica para desactivar la bala si sale del área de juego
+bool Bala::estaActiva() const {
+    return activa;
 }
 
 int Bala::getX() const {
@@ -33,13 +28,5 @@ int Bala::getX() const {
 
 int Bala::getY() const {
     return y;
-}
-
-bool Bala::estaActiva() const {
-    return activa;
-}
-
-void Bala::desactivar() {
-    activa = false;
 }
 

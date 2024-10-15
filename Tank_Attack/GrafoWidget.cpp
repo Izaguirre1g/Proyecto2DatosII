@@ -1,5 +1,6 @@
 #include "GrafoWidget.h"
 #include "Bala.h"
+#include "LineOfSight.h"
 #include <QPainter>
 #include <QMouseEvent>
 #include <cmath>
@@ -43,22 +44,51 @@ void GrafoWidget::setTanques(TanqueAmarillo* amarillo1, TanqueAmarillo* amarillo
     this->tanqueRojo2 = rojo2;
 }
 
-void GrafoWidget::dibujarBala(QPainter& painter){
-    if (balaActual){
-        painter.setBrush(Qt::red);
-        painter.drawEllipse(QPoint(balaActual->getX(),balaActual->getY()),5,5);
+void GrafoWidget::dibujarBala(QPainter& painter) {
+    if (balaActual) {
+        // Posición actual de la bala
+        int x = balaActual->getX();
+        int y = balaActual->getY();
+
+        // Dibuja una estrella de 8 picos
+        QPolygon star;
+        const int numPicos = 8;
+        const float radioExterior = 20;  // Tamaño del radio exterior de la estrella
+        const float radioInterior = 10;   // Tamaño del radio interior de la estrella
+        const float anguloPaso = M_PI / numPicos;  // Angulo entre cada punto (mitad de 360° dividido entre el número de picos)
+
+        // Generar los puntos de la estrella
+        for (int i = 0; i < numPicos * 2; ++i) {
+            float angulo = i * anguloPaso;
+            float radio = (i % 2 == 0) ? radioExterior : radioInterior;  // Alterna entre el radio exterior e interior
+            int px = static_cast<int>(x + radio * cos(angulo));  // Coordenada X del punto
+            int py = static_cast<int>(y + radio * sin(angulo));  // Coordenada Y del punto
+            star << QPoint(px, py);  // Añade el punto al polígono
+        }
+
+        // Establece el color y dibujar la estrella
+        painter.setBrush(Qt::darkGray);
+        painter.drawPolygon(star);
     }
 }
 
-void GrafoWidget::moverBala(){
-    if (balaActual && balaActual->estaActiva()){
-        balaActual->mover();
-        update();
-    }else{
-        balaTimer->stop();
-        siguienteTurno();
+
+void GrafoWidget::moverBala() {
+    if (balaActual && balaActual->estaActiva()) {
+        // Mueve la bala paso a paso por el camino
+        balaActual->avanzarCaminoPaso(grafo);
+
+        // Si la bala ha terminado su camino
+        if (balaActual->haTerminadoCamino()) {
+            std::cout << "Bala ha llegado al destino." << std::endl;
+            balaTimer->stop();  // Detener el temporizador
+            siguienteTurno();   // Cambiar al siguiente turno
+        }
+
+        update();  // Actualizar la pantalla con la nueva posición de la bala
     }
 }
+
 
 
 void GrafoWidget::paintEvent(QPaintEvent *event) {
@@ -157,7 +187,37 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
     if (tanqueRojo1) dibujarTanque(tanqueRojo1, imgTanqueRojo, painter);
     if (tanqueRojo2) dibujarTanque(tanqueRojo2, imgTanqueRojo, painter);
 
+    // Dibujar camino de la bala
     if (balaActual && balaActual->estaActiva()) {
+        // Seleccionar color según el tanque en turno
+        switch (turnoActual) {
+        case 0:
+        case 4: pen.setColor(Qt::red); break;  // Tanques rojos
+        case 1:
+        case 5: pen.setColor(Qt::yellow); break;  // Tanques amarillos
+        case 2:
+        case 6: pen.setColor(Qt::blue); break;  // Tanques azules
+        case 3:
+        case 7: pen.setColor(Qt::cyan); break;  // Tanques celestes
+        }
+
+        pen.setWidth(2);
+        painter.setPen(pen);
+
+        // Dibujar las aristas del camino de la bala
+        for (int i = 0; i < balaActual->getLongitudCamino() - 1; ++i) {
+            int nodo1 = balaActual->getCamino()[i];
+            int nodo2 = balaActual->getCamino()[i + 1];
+
+            int x1 = grafo->getPosicionX(nodo1);
+            int y1 = grafo->getPosicionY(nodo1);
+            int x2 = grafo->getPosicionX(nodo2);
+            int y2 = grafo->getPosicionY(nodo2);
+
+            painter.drawLine(QPoint(x1, y1), QPoint(x2, y2));
+        }
+
+        // Dibujar la bala en su posición actual
         dibujarBala(painter);
     }
 }
@@ -251,14 +311,14 @@ void GrafoWidget::moverTanquePasoAPaso() {
 
 
 void GrafoWidget::mousePressEvent(QMouseEvent *event) {
-    if (!grafo || accionRealizada) return;
+    if (!grafo || accionRealizada) return;  // No permitir más acciones si ya se realizó una acción
 
     int clickX = static_cast<int>(event->position().x());
     int clickY = static_cast<int>(event->position().y());
 
     int nodoCercano = grafo->encontrarNodoCercano(clickX, clickY);
 
-    if (event->button() == Qt::LeftButton) {  // Handling left-click for moving
+    if (event->button() == Qt::LeftButton) {  // Click izquierdo para moverse
         if (nodoCercano != -1) {
             std::cout << "Nodo cercano seleccionado (click izquierdo): " << nodoCercano << std::endl;
 
@@ -279,7 +339,7 @@ void GrafoWidget::mousePressEvent(QMouseEvent *event) {
 
             update();  // Redibujar la ventana
         }
-    } else if (event->button() == Qt::RightButton) {  // Handling right-click for shooting
+    } else if (event->button() == Qt::RightButton) {  // Click derecho para disparar
         std::cout << "Click derecho para disparar detectado en: (" << clickX << ", " << clickY << ")" << std::endl;
 
         if (!seleccionDisparo) {  // Selección inicial para disparar
@@ -291,15 +351,67 @@ void GrafoWidget::mousePressEvent(QMouseEvent *event) {
             }
         } else {  // Seleccionar el objetivo para disparar
             dispararBala(clickX, clickY);  // Iniciar el disparo hacia la posición seleccionada
-            accionRealizada = true;
+            accionRealizada = true;  // Marca la acción como realizada
             seleccionDisparo = false;  // Restablecer la selección de disparo
         }
     }
 }
 
+
+int GrafoWidget::calcularCamino(int xInicial, int yInicial, int xObjetivo, int yObjetivo, int camino[]) {
+    int index = 0;
+
+    // Diferencia en las coordenadas
+    int dx = std::abs(xObjetivo - xInicial);
+    int dy = std::abs(yObjetivo - yInicial);
+
+    // Determinar la dirección del avance
+    int sx = (xInicial < xObjetivo) ? 1 : -1;
+    int sy = (yInicial < yObjetivo) ? 1 : -1;
+
+    // Variables para el algoritmo de Bresenham
+    int err = dx - dy;
+
+    // Inicialmente se coloca el nodo inicial en el camino
+    camino[index++] = grafo->encontrarNodoCercano(xInicial, yInicial);  // Nodo inicial
+
+    // Algoritmo de Bresenham para trazar una línea
+    while (xInicial != xObjetivo || yInicial != yObjetivo) {
+        int e2 = 2 * err;
+
+        if (e2 > -dy) {
+            err -= dy;
+            xInicial += sx;
+        }
+
+        if (e2 < dx) {
+            err += dx;
+            yInicial += sy;
+        }
+
+        // Agregar el nodo más cercano al nuevo punto
+        int nodoCercano = grafo->encontrarNodoCercano(xInicial, yInicial);
+
+        // Si el nodo ya está en el camino, evitar duplicados
+        if (index == 0 || camino[index - 1] != nodoCercano) {
+            camino[index++] = nodoCercano;
+        }
+
+        // Si el nodo objetivo se alcanza, romper el ciclo
+        if (nodoCercano == grafo->encontrarNodoCercano(xObjetivo, yObjetivo)) {
+            break;
+        }
+    }
+
+    return index;  // Retornar el número de nodos en el camino
+}
+
+
+
 void GrafoWidget::dispararBala(int xObjetivo, int yObjetivo) {
     // Obtener la posición actual del tanque en turno
     Tanque* tanqueEnTurno = nullptr;
+
     switch (turnoActual) {
     case 0: tanqueEnTurno = tanqueRojo1; break;
     case 1: tanqueEnTurno = tanqueAmarillo1; break;
@@ -315,10 +427,21 @@ void GrafoWidget::dispararBala(int xObjetivo, int yObjetivo) {
         int xInicial = grafo->getPosicionX(tanqueEnTurno->obtenerNodoActual());
         int yInicial = grafo->getPosicionY(tanqueEnTurno->obtenerNodoActual());
 
-        balaActual = new Bala(xInicial, yInicial, xObjetivo, yObjetivo);
+        std::cout << "Disparando bala desde (" << xInicial << ", " << yInicial
+                  << ") hacia (" << xObjetivo << ", " << yObjetivo << ")" << std::endl;
+
+        // Calcular el camino con el algoritmo de línea de vista (o el que estés usando)
+        int camino[100]; // Un array de tamaño fijo para almacenar el camino
+        int longitudCamino = calcularCamino(xInicial, yInicial, xObjetivo, yObjetivo, camino);  // Debes tener este método para obtener el camino
+
+        // Crear la bala con la ruta calculada
+        balaActual = new Bala(xInicial, yInicial, xObjetivo, yObjetivo, camino, longitudCamino);
+
         balaTimer->start(50);  // Iniciar el movimiento de la bala
     }
 }
+
+
 
 bool GrafoWidget::validarSeleccionInicial(int nodoCercano) {
     // Validar si el nodo pertenece al tanque en turno y si corresponde al turno actual
@@ -378,6 +501,8 @@ void GrafoWidget::moverTanqueActual() {
 
 
 void GrafoWidget::siguienteTurno() {
+    std::cout << "Cambiando turno..." << std::endl;
+
     // Limpiar el camino del tanque en turno actual antes de pasar al siguiente turno
     switch (turnoActual) {
     case 0:  // Tanque rojo 1
@@ -417,6 +542,7 @@ void GrafoWidget::siguienteTurno() {
     nodoFinal = -1;
     seleccionInicial = true;
     accionRealizada = false;  // Resetear para el próximo turno
+    seleccionDisparo = false;  // Resetear selección de disparo
     std::cout << "Cambio al turno del tanque: " << turnoActual << " (Jugador " << jugadorActual + 1 << ")" << std::endl;
     update();
 }

@@ -401,6 +401,12 @@
 			null
 		],
 		[
+			"/home/jose/Proyecto2DatosII/Tank_Attack/LineOfSight.h",
+			"MU",
+			"EWIEGA46WW/moc_LineOfSight.cpp",
+			null
+		],
+		[
 			"/home/jose/Proyecto2DatosII/Tank_Attack/Tanque.h",
 			"MU",
 			"EWIEGA46WW/moc_Tanque.cpp",
@@ -502,6 +508,7 @@
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/Dijkstra.cpp", "MU", null ],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/Grafo.cpp", "MU", null ],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/GrafoWidget.cpp", "MU", null ],
+		[ "/home/jose/Proyecto2DatosII/Tank_Attack/LineOfSight.cpp", "MU", null ],
 		[ "/home/jose/Proyecto2DatosII/Tank_Attack/Tanque.cpp", "MU", null ],
 		[
 			"/home/jose/Proyecto2DatosII/Tank_Attack/TanqueAmarillo.cpp",

@@ -42,6 +42,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ../Imagenes/Rojo.png
         ../Imagenes/Rojo.png
         Bala.h Bala.cpp
+        LineOfSight.h LineOfSight.cpp
 
 
 

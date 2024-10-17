@@ -32,6 +32,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         BFS.cpp
         GrafoWidget.h
         GrafoWidget.cpp
+        Bala.h
+        Bala.cpp
+        LineOfSight.h
+        LineOfSight.cpp
 
 
     )

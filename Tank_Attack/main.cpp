@@ -42,16 +42,16 @@ int main(int argc, char *argv[]) {
     TanqueRojo tanqueRojo(grafo, 3);
 
     // Función para mostrar la posición actual del tanque
-    auto mostrarPosicion = [](const Tanque& tanque, const std::string& nombre) {
+    /*auto mostrarPosicion = [](const Tanque& tanque, const std::string& nombre) {
         cout << nombre << " está en el nodo " << tanque.obtenerNodoActual() << endl;
-    };
+    };*/
 
     // Mostrar posiciones antes de mover
     //cout << "Antes de mover:" << std::endl;
-    mostrarPosicion(tanqueAzul, "Tanque Azul");
+    /*mostrarPosicion(tanqueAzul, "Tanque Azul");
     mostrarPosicion(tanqueCeleste, "Tanque Celeste");
     mostrarPosicion(tanqueAmarillo, "Tanque Amarillo");
-    mostrarPosicion(tanqueRojo, "Tanque Rojo");
+    mostrarPosicion(tanqueRojo, "Tanque Rojo");*/
 
 
     // Ejecutar la aplicación Qt

@@ -14,6 +14,18 @@ public:
     int* getCamino() const;
     int getLongitudCamino() const;
     void limpiarCamino();
+    void reducirVida(int cantidad);
+
+    // Método para obtener la vida restante
+    int obtenerVida() const {
+        return vida;
+    }
+
+    bool estaVivo() const {
+        return vida > 0;
+    }
+
+
 protected:
     Grafo* grafo;
     int nodoActual;
@@ -21,6 +33,7 @@ protected:
     int* camino;  // Arreglo para almacenar el camino
     int longitudCamino;  // Longitud del camino
     int indiceCamino;
+    int vida;
 };
 
 #endif // TANQUE_H

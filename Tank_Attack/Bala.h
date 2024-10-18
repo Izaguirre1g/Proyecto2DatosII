@@ -29,6 +29,8 @@ public:
 
     bool estaActiva() const;
     void setActiva(bool estado);
+
+    bool verificarColisionConTanque(int xTanque, int yTanque, float radioColision = 0.5);
 };
 
 #endif

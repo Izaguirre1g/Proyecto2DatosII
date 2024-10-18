@@ -20,6 +20,8 @@ public:
     void setTanques(TanqueAmarillo* amarillo1, TanqueAmarillo* amarillo2, TanqueAzul* azul1, TanqueAzul* azul2,
                     TanqueCeleste* celeste1, TanqueCeleste* celeste2, TanqueRojo* rojo1, TanqueRojo* rojo2);
     int calcularCamino(int xInicial, int yInicial, int xObjetivo, int yObjetivo, int camino[]);
+
+    Tanque* obtenerTanqueActual();  // Método que devuelve el tanque en turno
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;

@@ -67,4 +67,3 @@ bool LineOfSight::hayObstaculosEnLinea(int camino[][2], int longitudCamino) {
     }
     return false;  // No se encontraron obstáculos
 }
-

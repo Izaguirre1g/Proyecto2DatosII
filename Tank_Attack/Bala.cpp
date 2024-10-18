@@ -106,6 +106,15 @@ void Bala::setActiva(bool estado) {
     activa = estado;
 }
 
+bool Bala::verificarColisionConTanque(int xTanque, int yTanque, float radioColision) {
+    // Calcular la distancia entre la posición de la bala y el tanque
+    int dx = xTanque - x;
+    int dy = yTanque - y;
+    float distancia = std::sqrt(dx * dx + dy * dy);
+
+    // Verificar si la distancia es menor al radio de colisión
+    return distancia <= radioColision;
+}
 
 
 

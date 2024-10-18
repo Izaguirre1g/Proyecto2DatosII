@@ -2,7 +2,7 @@
 #include "Grafo.h"
 
 Tanque::Tanque(Grafo* grafo, int nodoInicial)
-    : grafo(grafo), nodoActual(nodoInicial), nodoObjetivo(-1), camino(nullptr), longitudCamino(0) {}
+    : grafo(grafo), nodoActual(nodoInicial), nodoObjetivo(-1), camino(nullptr), longitudCamino(0), vida(100) {}
 
 int Tanque::obtenerNodoActual() const {
     return nodoActual;
@@ -30,4 +30,13 @@ void Tanque::limpiarCamino() {
     longitudCamino = 0;
     indiceCamino = 0;
     std::cout << "Camino limpiado para el tanque en nodo " << nodoActual << std::endl;
+}
+
+void Tanque::reducirVida(int cantidad) {
+    // Lógica para reducir vida del tanque
+    vida -= cantidad;
+    if (vida <= 0) {
+        std::cout << "El tanque ha sido destruido!" << std::endl;
+        // Aquí puedes agregar la lógica de eliminación o destrucción del tanque
+    }
 }

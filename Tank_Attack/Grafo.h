@@ -21,6 +21,7 @@ public:
     void conectarConDistancia(int nodo1, int nodo2);
     void generarMatriz(int ancho, int alto, int espaciado); // Generar nodos en una matriz con espaciado
     void asignarObstaculosAleatorios(int numObstaculos);
+    bool esNodoBloqueado(int nodo) const;
 
     // Mostrar la matriz de adyacencia
     void mostrarMatriz();

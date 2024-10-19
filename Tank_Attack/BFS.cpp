@@ -52,12 +52,12 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode, int* camino, in
     int distancias[MAX_NODOS];  // Arreglo para las distancias
     int predecesores[MAX_NODOS];  // Arreglo para los predecesores
 
-    std::fill(distancias, distancias + numNodos, -1);
-    std::fill(predecesores, predecesores + numNodos, -1);
+    std::fill(distancias, distancias + numNodos, -1);  // Inicializar distancias con -1 (inaccesible)
+    std::fill(predecesores, predecesores + numNodos, -1);  // Inicializar predecesores con -1
 
     Cola cola;
     cola.push(startNode);
-    distancias[startNode] = 0;
+    distancias[startNode] = 0;  // Distancia al nodo inicial es 0
 
     while (!cola.empty()) {
         int nodoActual = cola.front();
@@ -70,8 +70,11 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode, int* camino, in
             break;
         }
 
+        // Explorar todos los vecinos del nodo actual
         for (int vecino = 0; vecino < numNodos; ++vecino) {
-            if (grafo.obtenerPeso(nodoActual, vecino) > 0 && distancias[vecino] == -1) {  // Verifica si hay conexión
+            if (grafo.obtenerPeso(nodoActual, vecino) > 0  // Verificar si hay conexión
+                && distancias[vecino] == -1  // Aún no visitado
+                && !grafo.esNodoBloqueado(vecino)) {  // Asegurarse de que no esté bloqueado
                 cola.push(vecino);
                 distancias[vecino] = distancias[nodoActual] + 1;
                 predecesores[vecino] = nodoActual;
@@ -107,4 +110,5 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode, int* camino, in
         std::cout << "\n";
     }
 }
+
 

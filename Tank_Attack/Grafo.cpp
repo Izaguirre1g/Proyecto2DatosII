@@ -36,6 +36,9 @@ void Grafo::conectarNodos(int nodo1, int nodo2, int peso) {
         std::cout << "Nodos fuera de rango.\n";
     }
 }
+bool Grafo::esNodoBloqueado(int nodo) const {
+    return nodosBloqueados[nodo];  // Retorna true si el nodo está bloqueado
+}
 
 // Generar los nodos como una matriz en un área dada y conectarlos en 8 direcciones
 void Grafo::generarMatriz(int ancho, int alto, int espaciado) {

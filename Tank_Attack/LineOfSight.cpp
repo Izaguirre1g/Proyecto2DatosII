@@ -59,7 +59,7 @@ bool LineOfSight::hayObstaculosEnLinea(int camino[][2], int longitudCamino) {
     for (int i = 0; i < longitudCamino; ++i) {
         int nodoCercano = grafo->encontrarNodoCercano(camino[i][0], camino[i][1]);
 
-        // Usar la indexación [] para acceder a nodosBloqueados
+        // Verificar si el nodo cercano está bloqueado
         if (grafo->nodosBloqueados[nodoCercano]) {
             std::cout << "Obstáculo encontrado en el nodo: " << nodoCercano << std::endl;
             return true;  // Hay un obstáculo

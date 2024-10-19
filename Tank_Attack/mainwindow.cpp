@@ -11,10 +11,10 @@ MainWindow::MainWindow(Grafo* grafo, QWidget *parent)
     grafoWidget->setGrafo(grafo);
 
     int posiciones[8][2] = {
-        {150, 150}, {200, 150},  // Amarillo 1 y 2
-        {150, 450}, {200, 450},  // Azul 1 y 2
-        {350, 150}, {400, 150},  // Celeste 1 y 2
-        {350, 450}, {400, 450}   // Rojo 1 y 2
+        {150, 150}, {150, 500},  // Amarillo 1 y 2
+        {950, 450}, {950, 100},  // Azul 1 y 2
+        {250, 170}, {240, 500},  // Celeste 1 y 2
+        {850, 450}, {850, 100}   // Rojo 1 y 2
     };
 
     TanqueAmarillo* tanqueAmarillo1 = new TanqueAmarillo(grafo, grafo->encontrarNodoCercano(posiciones[0][0], posiciones[0][1]));

@@ -151,25 +151,40 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
+    // Dimensiones del mapa
+    int ancho = 1050;  // Ancho total del mapa
+    int alto = 720;    // Alto total del mapa
+    int espaciado = 50;  // Espaciado entre nodos
+    int numNodos = (ancho / espaciado) * (alto / espaciado);  // Número total de nodos
+
+    // Definir el rango central donde los obstáculos pueden aparecer
+    int anchoLateral = ancho / 4;  // Dividimos el ancho en 4 partes, los laterales ocupan 1/4 cada uno
+    int margenIzquierdo = anchoLateral;           // Empieza donde termina la franja izquierda
+    int margenDerecho = ancho - anchoLateral;     // Termina donde empieza la franja derecha
+
     // Dibujar el fondo
     QPixmap background(":Imagenes/battlefield.jpg");
     if (!background.isNull()) {
         painter.drawPixmap(0, 0, width(), height(), background);
     }
 
-    // Dibujar obstáculos (nodos bloqueados) como cuadrados
+    // Dibujar obstáculos (nodos bloqueados) solo en la franja central
     painter.setBrush(Qt::black);  // Color negro para los obstáculos
     painter.setPen(Qt::NoPen);    // Sin borde para los obstáculos
 
     for (int i = 0; i < grafo->obtenerNumNodos(); ++i) {
-        if (grafo->nodosBloqueados[i]) {  // Verificar si el nodo está bloqueado
+        if (grafo->nodosBloqueados[i]) {
             int x = grafo->getPosicionX(i);  // Obtener posición X del nodo
             int y = grafo->getPosicionY(i);  // Obtener posición Y del nodo
-            int tamanoObstaculo = 30;  // Tamaño del obstáculo (puedes ajustarlo)
 
-            // Dibujar un cuadrado para representar el obstáculo
-            QRect cuadrado(x - tamanoObstaculo / 2, y - tamanoObstaculo / 2, tamanoObstaculo, tamanoObstaculo);
-            painter.drawRect(cuadrado);
+            // Verificar si el nodo está dentro de la franja central
+            if (x >= margenIzquierdo && x <= margenDerecho) {
+                int tamanoObstaculo = 45;  // Ajusta el tamaño del obstáculo según sea necesario
+
+                // Dibujar un cuadrado para representar el obstáculo
+                QRect cuadrado(x - tamanoObstaculo / 2, y - tamanoObstaculo / 2, tamanoObstaculo, tamanoObstaculo);
+                painter.drawRect(cuadrado);
+            }
         }
     }
 

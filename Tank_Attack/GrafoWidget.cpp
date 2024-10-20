@@ -151,24 +151,40 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
+    // Dimensiones del mapa
+    int ancho = 1050;  // Ancho total del mapa
+    int alto = 720;    // Alto total del mapa
+    int espaciado = 50;  // Espaciado entre nodos
+    int numNodos = (ancho / espaciado) * (alto / espaciado);  // Número total de nodos
+
+    // Definir el rango central donde los obstáculos pueden aparecer
+    int anchoLateral = ancho / 4;  // Dividimos el ancho en 4 partes, los laterales ocupan 1/4 cada uno
+    int margenIzquierdo = anchoLateral;           // Empieza donde termina la franja izquierda
+    int margenDerecho = ancho - anchoLateral;     // Termina donde empieza la franja derecha
+
     // Dibujar el fondo
     QPixmap background("/home/oem/Documentos/Tank_Attack/battlefield.jpg");
     if (!background.isNull()) {
         painter.drawPixmap(0, 0, width(), height(), background);
     }
 
-    // Dibujar obstáculos (nodos bloqueados)
+    // Dibujar obstáculos (nodos bloqueados) solo en la franja central
     painter.setBrush(Qt::black);  // Color negro para los obstáculos
     painter.setPen(Qt::NoPen);    // Sin borde para los obstáculos
 
     for (int i = 0; i < grafo->obtenerNumNodos(); ++i) {
-        if (grafo->nodosBloqueados[i]) {  // Verificar si el nodo está bloqueado
+        if (grafo->nodosBloqueados[i]) {
             int x = grafo->getPosicionX(i);  // Obtener posición X del nodo
             int y = grafo->getPosicionY(i);  // Obtener posición Y del nodo
-            int radioObstaculo = 15;  // Tamaño del obstáculo (puedes ajustarlo)
 
-            // Dibujar un círculo para representar el obstáculo
-            painter.drawEllipse(QPoint(x, y), radioObstaculo, radioObstaculo);
+            // Verificar si el nodo está dentro de la franja central
+            if (x >= margenIzquierdo && x <= margenDerecho) {
+                int tamanoObstaculo = 40;  // Ajusta el tamaño del obstáculo según sea necesario
+
+                // Dibujar un cuadrado para representar el obstáculo
+                QRect cuadrado(x - tamanoObstaculo / 2, y - tamanoObstaculo / 2, tamanoObstaculo, tamanoObstaculo);
+                painter.drawRect(cuadrado);
+            }
         }
     }
 
@@ -203,7 +219,7 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
         dibujarCamino(tanqueAzul2, painter);
     }
 
-     if (tanqueCeleste1 && tanqueCeleste1->estaVivo() && tanqueCeleste1->getCamino() != nullptr) {
+    if (tanqueCeleste1 && tanqueCeleste1->estaVivo() && tanqueCeleste1->getCamino() != nullptr) {
         pen.setColor(Qt::cyan);
         pen.setWidth(3);
         painter.setPen(pen);
@@ -613,53 +629,23 @@ void GrafoWidget::siguienteTurno() {
     std::cout << "Cambiando turno..." << std::endl;
 
     // Limpiar el camino del tanque en turno actual antes de pasar al siguiente turno
-    switch (turnoActual) {
-    case 0:  // Tanque rojo 1
-        if (tanqueRojo1 != nullptr && tanqueRojo1->estaVivo()) {
-            tanqueRojo1->limpiarCamino();
-        }
-        break;
-    case 1:  // Tanque amarillo 1
-        if (tanqueAmarillo1 != nullptr && tanqueAmarillo1->estaVivo()) {
-            tanqueAmarillo1->limpiarCamino();
-        }
-        break;
-    case 2:  // Tanque azul 1
-        if (tanqueAzul1 != nullptr && tanqueAzul1->estaVivo()) {
-            tanqueAzul1->limpiarCamino();
-        }
-        break;
-    case 3:  // Tanque celeste 1
-        if (tanqueCeleste1 != nullptr && tanqueCeleste1->estaVivo()) {
-            tanqueCeleste1->limpiarCamino();
-        }
-        break;
-    case 4:  // Tanque rojo 2
-        if (tanqueRojo2 != nullptr && tanqueRojo2->estaVivo()) {
-            tanqueRojo2->limpiarCamino();
-        }
-        break;
-    case 5:  // Tanque amarillo 2
-        if (tanqueAmarillo2 != nullptr && tanqueAmarillo2->estaVivo()) {
-            tanqueAmarillo2->limpiarCamino();
-        }
-        break;
-    case 6:  // Tanque azul 2
-        if (tanqueAzul2 != nullptr && tanqueAzul2->estaVivo()) {
-            tanqueAzul2->limpiarCamino();
-        }
-        break;
-    case 7:  // Tanque celeste 2
-        if (tanqueCeleste2 != nullptr && tanqueCeleste2->estaVivo()) {
-            tanqueCeleste2->limpiarCamino();
-        }
-        break;
+    Tanque* tanqueActual = obtenerTanqueActual();
+    if (tanqueActual != nullptr && tanqueActual->estaVivo()) {
+        tanqueActual->limpiarCamino();
     }
 
-    // Cambiar turno y verificar si el tanque está vivo para asegurar que un tanque destruido no tome un turno
+    // Buscar el siguiente tanque vivo
+    int intentos = 0;  // Para evitar ciclos infinitos si no hay tanques vivos
     do {
         turnoActual = (turnoActual + 1) % 8;  // Cambiar entre los 8 tanques
-    } while ((obtenerTanqueActual() == nullptr || !obtenerTanqueActual()->estaVivo()) && turnoActual != 0);
+        intentos++;
+    } while ((obtenerTanqueActual() == nullptr || !obtenerTanqueActual()->estaVivo()) && intentos < 8);
+
+    // Si después de 8 intentos no se encuentra un tanque vivo, terminar el juego o declararlo como terminado.
+    if (intentos == 8) {
+        std::cout << "No quedan tanques vivos en el juego. Juego terminado." << std::endl;
+        return;  // Puedes agregar lógica adicional para finalizar el juego aquí
+    }
 
     // Jugador 1 mueve en turnos 0, 2, 4, 6 (pares)
     // Jugador 2 mueve en turnos 1, 3, 5, 7 (impares)
@@ -669,8 +655,7 @@ void GrafoWidget::siguienteTurno() {
     nodoFinal = -1;
     seleccionInicial = true;
     accionRealizada = false;  // Resetear para el próximo turno
-    seleccionDisparo = false;  // Resetear selección de disparo
+    seleccionDisparo = false;  // Restablecer la selección de disparo
     std::cout << "Cambio al turno del tanque: " << turnoActual << " (Jugador " << jugadorActual + 1 << ")" << std::endl;
     update();
 }
-

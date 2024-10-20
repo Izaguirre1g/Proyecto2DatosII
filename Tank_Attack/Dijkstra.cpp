@@ -72,8 +72,14 @@ void dijkstra(Grafo& grafo, int inicio, int destino, int* &camino, int &longitud
 
         // Actualizar las distancias de los nodos adyacentes
         for (int j = 0; j < numNodos; ++j) {
+            // Chequear si el nodo es un obstáculo/bloqueado antes de procesar
+            if (grafo.esNodoBloqueado(j)) {
+                continue;  // Saltar nodos bloqueados
+            }
+
             int peso = grafo.obtenerPeso(minNodo, j);
-            if (!visitado[j] && peso > 0 && distancia[minNodo] != INT_MAX && distancia[minNodo] + peso < distancia[j]) {
+            if (!visitado[j] && peso > 0 && distancia[minNodo] != INT_MAX
+                && distancia[minNodo] + peso < distancia[j]) {
                 distancia[j] = distancia[minNodo] + peso;
                 predecesores[j] = minNodo; // Registrar el predecesor
             }

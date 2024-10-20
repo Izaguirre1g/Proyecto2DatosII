@@ -39,7 +39,7 @@ public:
     int getPosicionX(int nodo) const; // Alias de obtenerPosX (opcional)
     int getPosicionY(int nodo) const; // Alias de obtenerPosY (opcional)
     bool* nodosBloqueados;  // Arreglo que indica si un nodo está bloqueado por un obstáculo
-
+    void bloquearNodosIntermedios(int nodo);
 
 
     // Destructor

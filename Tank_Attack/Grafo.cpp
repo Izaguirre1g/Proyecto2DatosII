@@ -156,9 +156,44 @@ void Grafo::asignarObstaculosAleatorios(int numObstaculos) {
         if (!nodosBloqueados[nodoAleatorio] && x > margen && x < 800 - margen && y > margen && y < 600 - margen) {
             nodosBloqueados[nodoAleatorio] = true;
             asignados++;
+
+            // Bloquear nodos intermedios entre obstáculos cercanos
+            bloquearNodosIntermedios(nodoAleatorio);
         }
     }
 }
+
+// Función para bloquear los nodos intermedios entre dos obstáculos cercanos
+void Grafo::bloquearNodosIntermedios(int nodo) {
+    int columnas = 800 / 50;  // Asumimos que las columnas se basan en el ancho dividido por el espaciado (50 en este caso)
+
+    // Definir las 8 direcciones (horizontal, vertical y diagonal)
+    int direcciones[8][2] = {
+        {0, 1}, {0, -1}, {1, 0}, {-1, 0},  // Derecha, Izquierda, Abajo, Arriba
+        {1, 1}, {1, -1}, {-1, 1}, {-1, -1} // Diagonales
+    };
+
+    int x1 = getPosicionX(nodo);
+    int y1 = getPosicionY(nodo);
+
+    // Explorar las 8 direcciones alrededor del nodo
+    for (int i = 0; i < 8; ++i) {
+        int dx = direcciones[i][0];
+        int dy = direcciones[i][1];
+
+        // Verificar si hay un obstáculo cercano en la dirección actual
+        int nodoCercano = encontrarNodoCercano(x1 + dx * 50, y1 + dy * 50);  // Ajustamos el espaciado
+        if (nodoCercano != -1 && nodosBloqueados[nodoCercano]) {
+            // Bloquear el nodo intermedio entre el nodo actual y el nodo cercano bloqueado
+            int nodoIntermedio = encontrarNodoCercano(x1 + (dx * 25), y1 + (dy * 25));  // Mitad de la distancia
+            if (nodoIntermedio != -1 && !nodosBloqueados[nodoIntermedio]) {
+                nodosBloqueados[nodoIntermedio] = true;
+                std::cout << "Nodo intermedio bloqueado entre " << nodo << " y " << nodoCercano << std::endl;
+            }
+        }
+    }
+}
+
 
 
 

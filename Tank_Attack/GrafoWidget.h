@@ -22,6 +22,14 @@ public:
     int calcularCamino(int xInicial, int yInicial, int xObjetivo, int yObjetivo, int camino[]);
     void activarDobleTurno();
     Tanque* obtenerTanqueActual();  // Método que devuelve el tanque en turno
+
+
+    //Ecuacion auxiliar
+    bool existeEnArreglo(int arr[], int size, int valor);
+    // Declaración de la función tipoPowersUp
+    int* tipoPowersUp();  // Asegúrate de que está declarada aquí si pertenece a esta clase
+
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
@@ -54,6 +62,11 @@ private:
     int jugadorActual;
     bool accionRealizada;
     bool seleccionDisparo;
+
+    int* powerUpsJugador1;  // Lista de power-ups para el Jugador 1
+    int* powerUpsJugador2;  // Lista de power-ups para el Jugador 2
+
+    bool listaLlenaDeCeros(int* lista);  // Función auxiliar para verificar si la lista tiene solo ceros
 
 
     QPixmap imgTanqueAmarillo;

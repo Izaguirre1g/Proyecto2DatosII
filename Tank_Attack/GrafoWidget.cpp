@@ -6,11 +6,18 @@
 #include <cmath>
 #include <iostream>
 #include <QKeyEvent>
+using namespace std;
 
 GrafoWidget::GrafoWidget(QWidget *parent)
     : QWidget(parent), textoCambiante1("Bienvenidos al Juego"), textoCambiante2("Bienvenidos al Juego"),
     grafo(nullptr), seleccionInicial(true), turnoActual(0), nodoInicial(-1), nodoFinal(-1),
     jugadorActual(0), accionRealizada(false) {  // Inicializa accionRealizada en false
+
+    // Inicialización
+    powerUpsJugador1 = tipoPowersUp();  // Asignar lista de power-ups al Jugador 1
+    powerUpsJugador2 = tipoPowersUp();  // Asignar lista de power-ups al Jugador 2
+
+
 
     // Cargar las imágenes de los tanques y otras configuraciones
     imgTanqueAmarillo.load(":Imagenes/Amarillo.png");
@@ -351,14 +358,107 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
 
 }
 
+bool GrafoWidget::listaLlenaDeCeros(int* lista) {
+    for (int i = 0; i < 4; ++i) {
+        if (lista[i] != 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+//Ecuacion auxiliar
+bool GrafoWidget::existeEnArreglo(int arr[], int size, int valor) {
+    for (int i = 0; i < size; ++i) {
+        if (arr[i] == valor) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int* GrafoWidget::tipoPowersUp(){
+    int* lista= new int[4];
+    for (int i = 0; i < 4; ++i) {
+        lista[i] = 0;  // Inicializar en 0
+    }
+
+    srand(static_cast<unsigned>(time(0)));
+
+    for(int i =0; i<4; i++){
+        int num;
+        do{
+            num=rand()%4+1;
+        }while(existeEnArreglo(lista, 4, num));
+        lista[i] = num;
+    }
+    return lista;
+}
+
 void GrafoWidget::keyPressEvent(QKeyEvent *event) {
     if (accionRealizada) return;  // No permitir realizar más acciones si ya se realizó una
 
     if (event->key() == Qt::Key_Shift) {
         std::cout << "Shift presionado por el jugador " << (jugadorActual + 1) << std::endl;
-        // Aquí iría la lógica de aplicar el power-up
 
-        accionRealizada = true;  // Acción realizada
+        int* powerUpsActual;  // Lista de power-ups que usará el jugador
+
+        // Seleccionamos la lista de power-ups según el jugador actual
+        if (jugadorActual == 0) {  // Jugador 1 (turnos pares)
+            if (listaLlenaDeCeros(powerUpsJugador1)) {
+                delete[] powerUpsJugador1;  // Liberar la lista anterior
+                powerUpsJugador1 = tipoPowersUp();  // Crear una nueva lista de power-ups
+                std::cout << "Generando nueva lista de power-ups para Jugador 1" << std::endl;
+            }
+            powerUpsActual = powerUpsJugador1;
+        } else {  // Jugador 2 (turnos impares)
+            if (listaLlenaDeCeros(powerUpsJugador2)) {
+                delete[] powerUpsJugador2;
+                powerUpsJugador2 = tipoPowersUp();  // Crear una nueva lista de power-ups
+                std::cout << "Generando nueva lista de power-ups para Jugador 2" << std::endl;
+            }
+            powerUpsActual = powerUpsJugador2;
+        }
+
+        // Mostrar los valores de la lista
+        std::cout << "Power-ups actuales: ";
+        for (int i = 0; i < 4; ++i) {
+            std::cout << powerUpsActual[i] << " ";
+        }
+        std::cout << std::endl;
+
+        // Recorrer la lista y usar el primer power-up disponible (distinto de cero)
+        for (int i = 0; i < 4; ++i) {
+            if (powerUpsActual[i] != 0) {
+                switch (powerUpsActual[i]) {
+                case 1:
+                    std::cout << "Activando Power-Up 1: Aumento de velocidad" << std::endl;
+                    // Implementa el efecto del Power-Up 1 aquí
+                    cout << "Power-ups 1"<<endl;
+                    break;
+                case 2:
+                    std::cout << "Activando Power-Up 2: Doble turno" << std::endl;
+                    //activarDobleTurno();  // Ejemplo de doble turno
+
+                    break;
+                case 3:
+                    std::cout << "Activando Power-Up 3: Restaurar salud" << std::endl;
+                    // Implementa el efecto del Power-Up 3 aquí
+
+                    break;
+                case 4:
+                    std::cout << "Activando Power-Up 4: Escudo temporal" << std::endl;
+                    // Implementa el efecto del Power-Up 4 aquí
+
+                    break;
+                }
+                powerUpsActual[i] = 0;  // Marcar el power-up como usado
+                break;  // Salir del loop después de usar un power-up
+            }
+        }
+
+        accionRealizada = true;  // Marcar que se realizó una acción
         siguienteTurno();        // Cambiar de turno
     }
 

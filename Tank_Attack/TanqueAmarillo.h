@@ -14,6 +14,7 @@ public:
 
 private:
     int indiceCamino;  // Variable para hacer seguimiento del progreso en el camino
+
 };
 
 #endif

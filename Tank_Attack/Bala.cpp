@@ -45,7 +45,7 @@ void Bala::avanzarCaminoPaso(Grafo* grafo) {
         float dist = std::sqrt(dx * dx + dy * dy);
 
         // Avance con un paso fijo, proporcional a la distancia
-        const float speed = 05.0;  // Ajustar este valor para controlar la velocidad de la bala
+        const float speed = 9.0;  // Ajustar este valor para controlar la velocidad de la bala
         if (dist > speed) {  // Si está lejos, mover hacia el nodo
             // Mover la bala en la dirección del siguiente nodo
             x += (dx / dist) * speed;
@@ -115,7 +115,6 @@ bool Bala::verificarColisionConTanque(int xTanque, int yTanque, float radioColis
     // Verificar si la distancia es menor al radio de colisión
     return distancia <= radioColision;
 }
-
 
 
 

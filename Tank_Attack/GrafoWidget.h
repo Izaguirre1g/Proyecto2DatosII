@@ -20,7 +20,7 @@ public:
     void setTanques(TanqueAmarillo* amarillo1, TanqueAmarillo* amarillo2, TanqueAzul* azul1, TanqueAzul* azul2,
                     TanqueCeleste* celeste1, TanqueCeleste* celeste2, TanqueRojo* rojo1, TanqueRojo* rojo2);
     int calcularCamino(int xInicial, int yInicial, int xObjetivo, int yObjetivo, int camino[]);
-
+    void activarDobleTurno();
     Tanque* obtenerTanqueActual();  // Método que devuelve el tanque en turno
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -40,10 +40,14 @@ private:
     TanqueCeleste* tanqueCeleste2;
     TanqueRojo* tanqueRojo1;
     TanqueRojo* tanqueRojo2;
-
+    QString textoCambiante1;
+    QString textoCambiante2;
     QTimer* movimientoTimer;
     QTimer* balaTimer;  // Temporizador para manejar el movimiento de las balas
 
+
+    bool dobleTurno = false;  // Indica si el doble turno está activo
+    int turnoJugadorDoble = -1;  // 0 para jugador de turnos pares, 1 para jugador de turnos impares
     bool seleccionInicial;
     int turnoActual;
     int nodoInicial, nodoFinal;

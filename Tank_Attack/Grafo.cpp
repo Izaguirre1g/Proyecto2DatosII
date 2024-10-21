@@ -145,7 +145,7 @@ int Grafo::obtenerPeso(int nodo1, int nodo2) const {
 
 // Generar obstáculos aleatorios en el mapa con restricciones para evitar los bordes
 void Grafo::asignarObstaculosAleatorios(int numObstaculos) {
-    int margen = 6;  // Distancia mínima del borde
+    int margen = 5;  // Distancia mínima del borde
     int asignados = 0;
     while (asignados < numObstaculos) {
         int nodoAleatorio = rand() % numNodos;
@@ -206,4 +206,3 @@ Grafo::~Grafo() {
     delete[] posicionesY;
     delete[] nodosBloqueados;
 }
-

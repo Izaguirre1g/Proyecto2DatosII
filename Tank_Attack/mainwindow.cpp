@@ -11,12 +11,11 @@ MainWindow::MainWindow(Grafo* grafo, QWidget *parent)
     grafoWidget->setGrafo(grafo);
 
     int posiciones[8][2] = {
-        {70, 50}, {70, 600},  // Amarillo 1 y 2
-        {1050, 550}, {1050, 100},  // Azul 1 y 2
-        {70, 250}, {70, 440},  // Celeste 1 y 2
-        {1050, 250}, {1050, 420}   // Rojo 1 y 2
+        {100, 100}, {600, 100},  // Amarillo 1 y 2
+        {600, 650}, {100, 650},  // Azul 1 y 2
+        {350, 100}, {900, 100},  // Celeste 1 y 2
+        {900, 650}, {350, 650}   // Rojo 1 y 2
     };
-
     TanqueAmarillo* tanqueAmarillo1 = new TanqueAmarillo(grafo, grafo->encontrarNodoCercano(posiciones[0][0], posiciones[0][1]));
     TanqueAmarillo* tanqueAmarillo2 = new TanqueAmarillo(grafo, grafo->encontrarNodoCercano(posiciones[1][0], posiciones[1][1]));
     TanqueAzul* tanqueAzul1 = new TanqueAzul(grafo, grafo->encontrarNodoCercano(posiciones[2][0], posiciones[2][1]));
@@ -28,7 +27,7 @@ MainWindow::MainWindow(Grafo* grafo, QWidget *parent)
 
     grafoWidget->setTanques(tanqueAmarillo1, tanqueAmarillo2, tanqueAzul1, tanqueAzul2, tanqueCeleste1, tanqueCeleste2, tanqueRojo1, tanqueRojo2);
 
-    setFixedSize(1050, 720);
+    setFixedSize(1280, 720);
     setCentralWidget(grafoWidget);
 
     timer = new QTimer(this);

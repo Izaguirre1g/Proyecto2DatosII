@@ -17,6 +17,10 @@ GrafoWidget::GrafoWidget(QWidget *parent)
     powerUpsJugador1 = tipoPowersUp();  // Asignar lista de power-ups al Jugador 1
     powerUpsJugador2 = tipoPowersUp();  // Asignar lista de power-ups al Jugador 2
 
+    while(listasSonIguales(powerUpsJugador1,powerUpsJugador2,4)){
+        delete[] powerUpsJugador2; //Libera(elimina) la lsita si es igual
+        powerUpsJugador2 = tipoPowersUp();//Genera una nueva lista para el jugador 2
+    }
 
 
     // Cargar las imágenes de los tanques y otras configuraciones
@@ -355,9 +359,10 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
     painter.drawText(rectanguloTexto2, Qt::AlignCenter, textoCambiante2);  // Dibujar el texto en el segundo rectángulo
 
 
-
 }
 
+
+//Se encarga de verificar si ya es momento de generar un nueva lista
 bool GrafoWidget::listaLlenaDeCeros(int* lista) {
     for (int i = 0; i < 4; ++i) {
         if (lista[i] != 0) {
@@ -367,8 +372,17 @@ bool GrafoWidget::listaLlenaDeCeros(int* lista) {
     return true;
 }
 
+//Funcion que verifica si son iguales las listas para evitar los mismos powerups
+bool GrafoWidget::listasSonIguales(int* lista1, int* lista2, int size){
+    for(int i = 0; i<size; i++){
+        if(lista1[i] != lista2[i]){
+            return false; //Las listas son diferentes
+        }
+    }
+    return true; //Las listas son iguales
+}
 
-//Ecuacion auxiliar
+//Funcion auxiliar
 bool GrafoWidget::existeEnArreglo(int arr[], int size, int valor) {
     for (int i = 0; i < size; ++i) {
         if (arr[i] == valor) {
@@ -378,6 +392,7 @@ bool GrafoWidget::existeEnArreglo(int arr[], int size, int valor) {
     return false;
 }
 
+//Genera una lista del 1 al 4, cada numero esta relacionado a un power-up, solo que los genera de forma aleatoria
 int* GrafoWidget::tipoPowersUp(){
     int* lista= new int[4];
     for (int i = 0; i < 4; ++i) {
@@ -395,7 +410,7 @@ int* GrafoWidget::tipoPowersUp(){
     }
     return lista;
 }
-
+//Detecta el uso de la tecla Shift
 void GrafoWidget::keyPressEvent(QKeyEvent *event) {
     if (accionRealizada) return;  // No permitir realizar más acciones si ya se realizó una
 
@@ -433,23 +448,23 @@ void GrafoWidget::keyPressEvent(QKeyEvent *event) {
             if (powerUpsActual[i] != 0) {
                 switch (powerUpsActual[i]) {
                 case 1:
-                    std::cout << "Activando Power-Up 1: Aumento de velocidad" << std::endl;
-                    // Implementa el efecto del Power-Up 1 aquí
-                    cout << "Power-ups 1"<<endl;
+                    cout << "Activando Power-Up 1: Doble turno" << endl;
+                    //activarDobleTurno();
+
                     break;
                 case 2:
-                    std::cout << "Activando Power-Up 2: Doble turno" << std::endl;
-                    //activarDobleTurno();  // Ejemplo de doble turno
+                    cout << "Activando Power-Up 2: Precisión de movimiento:" << endl;
+
 
                     break;
                 case 3:
-                    std::cout << "Activando Power-Up 3: Restaurar salud" << std::endl;
-                    // Implementa el efecto del Power-Up 3 aquí
+                    cout << "Activando Power-Up 3: Precisión de ataque:" << endl;
+
 
                     break;
                 case 4:
-                    std::cout << "Activando Power-Up 4: Escudo temporal" << std::endl;
-                    // Implementa el efecto del Power-Up 4 aquí
+                    cout << "Activando Power-Up 4: Poder de ataque" << endl;
+
 
                     break;
                 }
@@ -465,7 +480,7 @@ void GrafoWidget::keyPressEvent(QKeyEvent *event) {
     QWidget::keyPressEvent(event);  // Llamar al evento base
 }
 
-
+//Se encarga de mostrar el camino de aristas
 void GrafoWidget::dibujarCamino(Tanque* tanque, QPainter& painter) {
 
     if (!tanque || !tanque->estaVivo()) {

@@ -23,8 +23,8 @@ public:
     void activarDobleTurno();
     Tanque* obtenerTanqueActual();  // Método que devuelve el tanque en turno
 
-
-    //Ecuacion auxiliar
+    bool listasSonIguales(int* lista1, int* lista2, int size);
+    //Funcion auxiliar
     bool existeEnArreglo(int arr[], int size, int valor);
     // Declaración de la función tipoPowersUp
     int* tipoPowersUp();  // Asegúrate de que está declarada aquí si pertenece a esta clase

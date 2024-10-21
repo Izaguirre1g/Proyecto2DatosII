@@ -71,6 +71,11 @@ private:
     void moverTanqueActual();
     void siguienteTurno();
     void dispararBala(int xObjetivo, int yObjetivo);  // Método para disparar
+
+    void keyPressEvent(QKeyEvent *event);
+
+
+
 };
 
 #endif

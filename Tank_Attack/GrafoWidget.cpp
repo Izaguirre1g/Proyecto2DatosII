@@ -5,27 +5,35 @@
 #include <QMouseEvent>
 #include <cmath>
 #include <iostream>
+#include <QKeyEvent>
 
 GrafoWidget::GrafoWidget(QWidget *parent)
-    : QWidget(parent), textoCambiante1("Bienvenidos al Juego"), textoCambiante2("Bienvenidos al Juego"),grafo(nullptr), seleccionInicial(true), turnoActual(0), nodoInicial(-1), nodoFinal(-1), jugadorActual(0) {
+    : QWidget(parent), textoCambiante1("Bienvenidos al Juego"), textoCambiante2("Bienvenidos al Juego"),
+    grafo(nullptr), seleccionInicial(true), turnoActual(0), nodoInicial(-1), nodoFinal(-1),
+    jugadorActual(0), accionRealizada(false) {  // Inicializa accionRealizada en false
 
-    // Cargar las imágenes de los tanques
+    // Cargar las imágenes de los tanques y otras configuraciones
     imgTanqueAmarillo.load(":Imagenes/Amarillo.png");
     imgTanqueAzul.load(":Imagenes/Azul.png");
     imgTanqueCeleste.load(":Imagenes/Celeste.png");
     imgTanqueRojo.load(":Imagenes/Rojo.png");
 
+    // Chequeo de imágenes
     if (imgTanqueAmarillo.isNull()) std::cerr << "Error al cargar la imagen del tanque amarillo\n";
     if (imgTanqueAzul.isNull()) std::cerr << "Error al cargar la imagen del tanque azul\n";
     if (imgTanqueCeleste.isNull()) std::cerr << "Error al cargar la imagen del tanque celeste\n";
     if (imgTanqueRojo.isNull()) std::cerr << "Error al cargar la imagen del tanque rojo\n";
 
+    setFocusPolicy(Qt::StrongFocus);
+    this->setFocus();
+
     movimientoTimer = new QTimer(this);
     connect(movimientoTimer, &QTimer::timeout, this, &GrafoWidget::moverTanquePasoAPaso);
 
-    balaTimer = new QTimer(this);  // Temporizador para manejar el movimiento de las balas
+    balaTimer = new QTimer(this);
     connect(balaTimer, &QTimer::timeout, this, &GrafoWidget::moverBala);
 }
+
 
 void GrafoWidget::setGrafo(Grafo* grafo) {
     this->grafo = grafo;
@@ -342,6 +350,20 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
 
 
 }
+void GrafoWidget::keyPressEvent(QKeyEvent *event) {
+    if (accionRealizada) return;  // No permitir realizar más acciones si ya se realizó una
+
+    if (event->key() == Qt::Key_Shift) {
+        std::cout << "Shift presionado por el jugador " << (jugadorActual + 1) << std::endl;
+        // Aquí iría la lógica de aplicar el power-up
+
+        accionRealizada = true;  // Acción realizada
+        siguienteTurno();        // Cambiar de turno
+    }
+
+    QWidget::keyPressEvent(event);  // Llamar al evento base
+}
+
 
 void GrafoWidget::dibujarCamino(Tanque* tanque, QPainter& painter) {
 
@@ -564,6 +586,8 @@ int GrafoWidget::calcularCamino(int xInicial, int yInicial, int xObjetivo, int y
 
 
 void GrafoWidget::dispararBala(int xObjetivo, int yObjetivo) {
+    if (accionRealizada) return;  // No permitir disparar si ya se hizo una acción
+
     // Obtener la posición actual del tanque en turno
     Tanque* tanqueEnTurno = nullptr;
 
@@ -596,6 +620,8 @@ void GrafoWidget::dispararBala(int xObjetivo, int yObjetivo) {
         balaActual = new Bala(xInicial, yInicial, xObjetivo, yObjetivo, camino, longitudCamino);
 
         balaTimer->start(50);  // Iniciar el movimiento de la bala
+
+        accionRealizada = true;  // Acción realizada
     }
 }
 
@@ -619,6 +645,8 @@ bool GrafoWidget::validarSeleccionInicial(int nodoCercano) {
 
 
 void GrafoWidget::moverTanqueActual() {
+    if (accionRealizada) return;  // No permitir mover si ya se hizo una acción
+
     switch (turnoActual) {
     case 0:  // Tanque rojo 1
         if (tanqueRojo1 != nullptr && tanqueRojo1->estaVivo()) {
@@ -670,6 +698,7 @@ void GrafoWidget::moverTanqueActual() {
         break;
     }
 
+    accionRealizada = true;  // Acción realizada
     // Cambiar el turno después de mover
     movimientoTimer->start(500);  // Comenzar el temporizador para mover el tanque paso a paso
 }

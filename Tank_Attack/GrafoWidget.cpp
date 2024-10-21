@@ -350,6 +350,7 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
 
 
 }
+
 void GrafoWidget::keyPressEvent(QKeyEvent *event) {
     if (accionRealizada) return;  // No permitir realizar más acciones si ya se realizó una
 
@@ -698,7 +699,7 @@ void GrafoWidget::moverTanqueActual() {
         break;
     }
 
-    accionRealizada = true;  // Acción realizada
+    accionRealizada = false;  // Acción realizada, se cambia esto porque no permite que se muevan los tanques
     // Cambiar el turno después de mover
     movimientoTimer->start(500);  // Comenzar el temporizador para mover el tanque paso a paso
 }

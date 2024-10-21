@@ -17,6 +17,8 @@ void TanqueRojo::mover() {
             longitudCamino = 0;
             dijkstra(*grafo, nodoActual, nodoObjetivo, camino, longitudCamino);
             indiceCamino = 0;  // Reiniciar el índice del camino
+        }else{
+        std::cout<< "Error"<< std::endl;
         }
     } else {  // 20% de probabilidad de moverse aleatoriamente
         std::cout << "Movimiento aleatorio de rojo" << std::endl;

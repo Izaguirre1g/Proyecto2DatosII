@@ -29,7 +29,7 @@ public:
     // Declaración de la función tipoPowersUp
     int* tipoPowersUp();  // Asegúrate de que está declarada aquí si pertenece a esta clase
 
-
+    int* obtenerCaminoAEstrella(int nodoInicial, int nodoFinal, int& longitudCamino);
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
@@ -67,6 +67,7 @@ private:
     int* powerUpsJugador2;  // Lista de power-ups para el Jugador 2
 
     bool listaLlenaDeCeros(int* lista);  // Función auxiliar para verificar si la lista tiene solo ceros
+    bool precisionDeAtaqueActivado;  // Variable para controlar cuándo está activo el power-up de precisión de ataque
 
 
     QPixmap imgTanqueAmarillo;
@@ -87,7 +88,7 @@ private:
 
     void keyPressEvent(QKeyEvent *event);
 
-
+    void activarPrecisionAtaque(int xObjetivo, int yObjetivo);
 
 };
 

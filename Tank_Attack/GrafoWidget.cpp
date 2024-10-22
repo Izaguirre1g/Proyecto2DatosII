@@ -1,5 +1,6 @@
 #include "GrafoWidget.h"
 #include "Bala.h"
+#include "AStar.h"
 #include "LineOfSight.h"
 #include <QPainter>
 #include <QMouseEvent>
@@ -21,6 +22,7 @@ GrafoWidget::GrafoWidget(QWidget *parent)
         delete[] powerUpsJugador2; //Libera(elimina) la lsita si es igual
         powerUpsJugador2 = tipoPowersUp();//Genera una nueva lista para el jugador 2
     }
+    precisionDeAtaqueActivado = false;
 
 
     // Cargar las imágenes de los tanques y otras configuraciones
@@ -459,8 +461,8 @@ void GrafoWidget::keyPressEvent(QKeyEvent *event) {
                     break;
                 case 3:
                     cout << "Activando Power-Up 3: Precisión de ataque:" << endl;
-
-
+                    precisionDeAtaqueActivado=true;
+                    cout << "Precisión de ataque: activado" << endl;
                     break;
                 case 4:
                     cout << "Activando Power-Up 4: Poder de ataque" << endl;
@@ -699,7 +701,17 @@ int GrafoWidget::calcularCamino(int xInicial, int yInicial, int xObjetivo, int y
     return index;  // Retornar el número de nodos en el camino
 }
 
+//bool precisionDeAtaqueActivado = false;  // Bandera para saber si el power-up de precisión de ataque está activo
 
+void GrafoWidget::activarPrecisionAtaque(int xObjetivo, int yObjetivo) {
+    std::cout << "Activando Power-Up: Precisión de Ataque" << std::endl;
+    precisionDeAtaqueActivado = true;  // Activamos la precisión de ataque
+}
+
+int* GrafoWidget::obtenerCaminoAEstrella(int nodoInicial, int nodoFinal, int& longitudCamino) {
+    // Llama a la función aEstrella para obtener el camino
+    return aEstrella(*grafo, nodoInicial, nodoFinal, longitudCamino);
+}
 
 void GrafoWidget::dispararBala(int xObjetivo, int yObjetivo) {
     if (accionRealizada) return;  // No permitir disparar si ya se hizo una acción
@@ -721,25 +733,54 @@ void GrafoWidget::dispararBala(int xObjetivo, int yObjetivo) {
     if (tanqueEnTurno == nullptr || !tanqueEnTurno->estaVivo()) {
         std::cout << "Error: El tanque en turno está destruido o no es válido. No puede disparar." << std::endl;
         return;  // No disparar si el tanque está destruido
-    } else {
-        int xInicial = grafo->getPosicionX(tanqueEnTurno->obtenerNodoActual());
-        int yInicial = grafo->getPosicionY(tanqueEnTurno->obtenerNodoActual());
-
-        std::cout << "Disparando bala desde (" << xInicial << ", " << yInicial
-                  << ") hacia (" << xObjetivo << ", " << yObjetivo << ")" << std::endl;
-
-        // Calcular el camino con el algoritmo de línea de vista (o el que estés usando)
-        int camino[100]; // Un array de tamaño fijo para almacenar el camino
-        int longitudCamino = calcularCamino(xInicial, yInicial, xObjetivo, yObjetivo, camino);  // Debes tener este método para obtener el camino
-
-        // Crear la bala con la ruta calculada
-        balaActual = new Bala(xInicial, yInicial, xObjetivo, yObjetivo, camino, longitudCamino);
-
-        balaTimer->start(50);  // Iniciar el movimiento de la bala
-
-        accionRealizada = true;  // Acción realizada
     }
+
+    // Posiciones iniciales del tanque
+    int xInicial = grafo->getPosicionX(tanqueEnTurno->obtenerNodoActual());
+    int yInicial = grafo->getPosicionY(tanqueEnTurno->obtenerNodoActual());
+
+    std::cout << "Disparando bala desde (" << xInicial << ", " << yInicial
+              << ") hacia (" << xObjetivo << ", " << yObjetivo << ")" << std::endl;
+
+    // Array para almacenar el camino
+    int camino[100];
+    int longitudCamino = 0;
+
+    // Aquí agregamos la verificación de si se está usando el power-up de precisión de ataque
+    if (precisionDeAtaqueActivado) {
+        std::cout << "Usando A* para calcular el camino de la bala." << std::endl;
+        // Usar A* para calcular el camino desde el nodo inicial al nodo objetivo
+        int nodoInicial = grafo->encontrarNodoCercano(xInicial, yInicial);
+        int nodoFinal = grafo->encontrarNodoCercano(xObjetivo, yObjetivo);
+        int* caminoAEstrella = aEstrella(*grafo, nodoInicial, nodoFinal, longitudCamino);
+
+        // Copiar el camino de A* al array 'camino'
+        for (int i = 0; i < longitudCamino && i < 100; ++i) {
+            camino[i] = caminoAEstrella[i];
+        }
+
+        delete[] caminoAEstrella;  // Liberar memoria asignada por A*
+
+        // Desactivar el power-up de precisión de ataque después de usarlo
+        precisionDeAtaqueActivado = false;
+    } else {
+        // Usar línea de visión si el power-up no está activado
+        std::cout << "Usando línea de visión para el disparo." << std::endl;
+        longitudCamino = calcularCamino(xInicial, yInicial, xObjetivo, yObjetivo, camino);  // Usar el cálculo existente
+    }
+
+    // Crear la bala con la ruta calculada
+    balaActual = new Bala(xInicial, yInicial, xObjetivo, yObjetivo, camino, longitudCamino);
+
+    // Iniciar el temporizador para mover la bala
+    balaTimer->start(50);
+
+    // Marcar la acción como realizada
+    accionRealizada = true;
+
 }
+
+
 
 
 

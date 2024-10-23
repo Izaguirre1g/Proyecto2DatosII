@@ -15,6 +15,7 @@ public:
     int getLongitudCamino() const;
     void limpiarCamino();
     void reducirVida(int cantidad);
+    bool validaExistenciaTanque(int resultado_existenciaTanque);
 
     // Método para obtener la vida restante
     int obtenerVida() const {

@@ -55,15 +55,40 @@ int LineOfSight::trazarLinea(int x1, int y1, int x2, int y2, int(*linea)[2], int
 }
 
 // Verificar si hay obstáculos en los puntos de la línea generada
-bool LineOfSight::hayObstaculosEnLinea(int camino[][2], int longitudCamino) {
-    for (int i = 0; i < longitudCamino; ++i) {
-        int nodoCercano = grafo->encontrarNodoCercano(camino[i][0], camino[i][1]);
+bool LineOfSight::hayObstaculosEnLinea(int linea[][2], int puntos) {
+    for (int i = 0; i < puntos; ++i) {
+        int nodoCercano = grafo->encontrarNodoCercano(linea[i][0], linea[i][1]);
 
         // Verificar si el nodo cercano está bloqueado
-        if (grafo->nodosBloqueados[nodoCercano]) {
+        if (grafo->esNodoBloqueado(nodoCercano)) {
             std::cout << "Obstáculo encontrado en el nodo: " << nodoCercano << std::endl;
             return true;  // Hay un obstáculo
         }
     }
     return false;  // No se encontraron obstáculos
+}
+
+// Nuevo método: Obtener el siguiente nodo en la línea de vista hacia el objetivo
+int LineOfSight::obtenerSiguienteNodoEnLinea(int nodoInicial, int nodoFinal) {
+    int x1 = grafo->getPosicionX(nodoInicial);
+    int y1 = grafo->getPosicionY(nodoInicial);
+    int x2 = grafo->getPosicionX(nodoFinal);
+    int y2 = grafo->getPosicionY(nodoFinal);
+
+    int linea[1000][2];
+    int puntos = trazarLinea(x1, y1, x2, y2, linea, 1000);
+
+    for (int i = 0; i < puntos; ++i) {
+        int nodoCercano = grafo->encontrarNodoCercano(linea[i][0], linea[i][1]);
+
+        // Si el nodo está bloqueado, devolver el nodo anterior al obstáculo
+        if (grafo->esNodoBloqueado(nodoCercano)) {
+            if (i > 0) {
+                return grafo->encontrarNodoCercano(linea[i - 1][0], linea[i - 1][1]);
+            }
+            return nodoInicial;  // Si el obstáculo está en el primer punto, quedarse en el nodo actual
+        }
+    }
+    // Si no hay obstáculos, devolver el nodo objetivo
+    return nodoFinal;
 }

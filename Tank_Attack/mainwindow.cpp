@@ -27,7 +27,7 @@ MainWindow::MainWindow(Grafo* grafo, QWidget *parent)
 
     grafoWidget->setTanques(tanqueAmarillo1, tanqueAmarillo2, tanqueAzul1, tanqueAzul2, tanqueCeleste1, tanqueCeleste2, tanqueRojo1, tanqueRojo2);
 
-    setFixedSize(1050, 720);
+    setFixedSize(1280, 720);
     setCentralWidget(grafoWidget);
 
     timer = new QTimer(this);

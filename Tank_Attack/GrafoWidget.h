@@ -67,6 +67,7 @@ private:
     void moverTanqueActual();
     void siguienteTurno();
     void dispararBala(int xObjetivo, int yObjetivo);  // Método para disparar
+    void aplicarDano(Tanque* tanque, int indice);
 };
 
 #endif

@@ -110,4 +110,3 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode, int* camino, in
         std::cout << "\n";
     }
 }
-

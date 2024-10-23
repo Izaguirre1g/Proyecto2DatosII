@@ -37,6 +37,13 @@ void Tanque::reducirVida(int cantidad) {
     vida -= cantidad;
     if (vida <= 0) {
         std::cout << "El tanque ha sido destruido!" << std::endl;
+        validaExistenciaTanque(-2);
         // Aquí puedes agregar la lógica de eliminación o destrucción del tanque
+    }
+}
+
+bool Tanque::validaExistenciaTanque(int resultado_existenciaTanque){
+    if(resultado_existenciaTanque <= 0){
+        return true;//Confirma la destrucción del tanque, logrando asi correctamente los turnos
     }
 }

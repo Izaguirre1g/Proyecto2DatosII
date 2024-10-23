@@ -143,7 +143,6 @@ int Grafo::obtenerPeso(int nodo1, int nodo2) const {
 }
 
 
-// Generar obstáculos aleatorios en el mapa con restricciones para evitar los bordes
 void Grafo::asignarObstaculosAleatorios(int numObstaculos) {
     int margen = 5;  // Distancia mínima del borde
     int asignados = 0;
@@ -153,15 +152,18 @@ void Grafo::asignarObstaculosAleatorios(int numObstaculos) {
         // Evitar asignar obstáculos en nodos de inicio de los tanques, nodos ya bloqueados o nodos cerca de los bordes
         int x = getPosicionX(nodoAleatorio);
         int y = getPosicionY(nodoAleatorio);
+
+        // Debugging para verificar las posiciones de los obstáculos
+        //std::cout << "Posición de nodo aleatorio: (" << x << ", " << y << ")" << std::endl;
+
         if (!nodosBloqueados[nodoAleatorio] && x > margen && x < 800 - margen && y > margen && y < 600 - margen) {
             nodosBloqueados[nodoAleatorio] = true;
+            //std::cout << "Obstáculo asignado en el nodo: " << nodoAleatorio << " (" << x << ", " << y << ")" << std::endl;
             asignados++;
-
-            // Bloquear nodos intermedios entre obstáculos cercanos
-            bloquearNodosIntermedios(nodoAleatorio);
         }
     }
 }
+
 
 // Función para bloquear los nodos intermedios entre dos obstáculos cercanos
 void Grafo::bloquearNodosIntermedios(int nodo) {
@@ -193,8 +195,6 @@ void Grafo::bloquearNodosIntermedios(int nodo) {
         }
     }
 }
-
-
 
 
 Grafo::~Grafo() {

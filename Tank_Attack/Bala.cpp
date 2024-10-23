@@ -30,28 +30,98 @@ void Bala::mover() {
     }
 }
 
-// Avanza la bala al siguiente nodo en el camino
+// Mueve la bala de su posición actual hacia el nodo siguiente
 void Bala::avanzarCaminoPaso(Grafo* grafo) {
+    const int maxRebotes = 50;  // Número máximo de rebotes permitidos
+    float velocidadNormal = 8.5;  // Velocidad inicial
+    float velocidadReduccion = 0.1;  // Velocidad después de un rebote
+    float velocidadActual = velocidadNormal;  // Inicializamos con la velocidad normal
+
+    // Definir los límites del grafo
+    const int xMin = 0, yMin = 0;
+    const int xMax = 1050, yMax = 720;  // Límites del área del grafo
+
+    // Verificar si la bala está fuera de los límites del grafo
+    if (x < xMin || x > xMax || y < yMin || y > yMax) {
+        std::cout << "Bala fuera de los límites del grafo. Rebote en la pared." << std::endl;
+        activa = false;
+        return;
+    }
+
+    // Si ha rebotado demasiadas veces, detener la bala
+    if (contadorRebotes >= maxRebotes) {
+        std::cout << "Bala ha rebotado demasiadas veces. Deteniendo bala." << std::endl;
+        activa = false;
+        return;
+    }
+
+    // Verificar colisiones con los límites del grafo (paredes)
+    if (x <= xMin || x >= xMax) {
+        // Rebote en el eje X (paredes laterales)
+        std::cout << "Bala ha rebotado en la pared vertical (x)." << std::endl;
+        x = (x <= xMin) ? xMin + 1 : xMax - 1;  // Ajustar la posición para evitar que se salga
+        contadorRebotes++;  // Incrementar el contador de rebotes
+        velocidadActual = velocidadReduccion;  // Reducir la velocidad tras el rebote
+    }
+
+    if (y <= yMin || y >= yMax) {
+        // Rebote en el eje Y (paredes superior e inferior)
+        std::cout << "Bala ha rebotado en la pared horizontal (y)." << std::endl;
+        y = (y <= yMin) ? yMin + 1 : yMax - 1;  // Ajustar la posición para evitar que se salga
+        contadorRebotes++;  // Incrementar el contador de rebotes
+        velocidadActual = velocidadReduccion;  // Reducir la velocidad tras el rebote
+    }
+
+    // Movimiento normal si no hay colisión con paredes ni obstáculos
     if (indiceCamino < longitudCamino - 1) {
         int nodoSiguiente = camino[indiceCamino + 1];
 
-        // Obtener las coordenadas del nodo siguiente
+        // Verificar si el nodo siguiente es un obstáculo
+        if (grafo->esNodoBloqueado(nodoSiguiente)) {
+            std::cout << "¡Colisión con obstáculo detectada en el nodo: " << nodoSiguiente << "!" << std::endl;
+
+            // Reducir la velocidad tras la colisión con un obstáculo
+            velocidadActual = velocidadReduccion;
+
+            // Alejar la bala del obstáculo
+            int xActual = grafo->getPosicionX(camino[indiceCamino]);
+            int yActual = grafo->getPosicionY(camino[indiceCamino]);
+            int xSiguiente = grafo->getPosicionX(nodoSiguiente);
+            int ySiguiente = grafo->getPosicionY(nodoSiguiente);
+
+            // Vector incidente (dirección de la bala)
+            int dx = xSiguiente - xActual;
+            int dy = ySiguiente - yActual;
+
+            // Alejar un poco la bala para evitar colisiones repetidas
+            const int distanciaRebote = 30;
+
+            if (dx != 0) {
+                x += (dx > 0) ? -distanciaRebote : distanciaRebote;
+            }
+            if (dy != 0) {
+                y += (dy > 0) ? -distanciaRebote : distanciaRebote;
+            }
+
+            contadorRebotes++;  // Incrementar el contador de rebotes para esta bala
+            return;  // Evitar que la bala continúe moviéndose en este ciclo
+        } else {
+            // Restablecer la velocidad cuando no hay colisión
+            velocidadActual = velocidadNormal;
+        }
+
+        // Movimiento normal si no hay colisión con obstáculos
         int xSiguiente = grafo->getPosicionX(nodoSiguiente);
         int ySiguiente = grafo->getPosicionY(nodoSiguiente);
 
-        // Calcular el movimiento en dirección al siguiente nodo
         int dx = xSiguiente - x;
         int dy = ySiguiente - y;
         float dist = std::sqrt(dx * dx + dy * dy);
 
-        // Avance con un paso fijo, proporcional a la distancia
-        const float speed = 9.0;  // Ajustar este valor para controlar la velocidad de la bala
-        if (dist > speed) {  // Si está lejos, mover hacia el nodo
-            // Mover la bala en la dirección del siguiente nodo
-            x += (dx / dist) * speed;
-            y += (dy / dist) * speed;
+        if (dist > velocidadActual) {
+            x += (dx / dist) * velocidadActual;
+            y += (dy / dist) * velocidadActual;
         } else {
-            // Si la bala está lo suficientemente cerca, saltar al siguiente nodo
             x = xSiguiente;
             y = ySiguiente;
             indiceCamino++;  // Avanzar en el camino

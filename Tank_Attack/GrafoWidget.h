@@ -20,7 +20,7 @@ public:
     void setTanques(TanqueAmarillo* amarillo1, TanqueAmarillo* amarillo2, TanqueAzul* azul1, TanqueAzul* azul2,
                     TanqueCeleste* celeste1, TanqueCeleste* celeste2, TanqueRojo* rojo1, TanqueRojo* rojo2);
     int calcularCamino(int xInicial, int yInicial, int xObjetivo, int yObjetivo, int camino[]);
-    void activarDobleTurno();
+    void DobleTurno(int jugadorTurnoClick);
     Tanque* obtenerTanqueActual();  // Método que devuelve el tanque en turno
 
     bool listasSonIguales(int* lista1, int* lista2, int size);
@@ -28,6 +28,10 @@ public:
     bool existeEnArreglo(int arr[], int size, int valor);
     // Declaración de la función tipoPowersUp
     int* tipoPowersUp();  // Asegúrate de que está declarada aquí si pertenece a esta clase
+
+
+    void startTurn();
+    void consumeAction();
 
     int* obtenerCaminoAEstrella(int nodoInicial, int nodoFinal, int& longitudCamino);
 protected:
@@ -62,12 +66,19 @@ private:
     int jugadorActual;
     bool accionRealizada;
     bool seleccionDisparo;
-
+    int contadorTurnos = 1;
     int* powerUpsJugador1;  // Lista de power-ups para el Jugador 1
     int* powerUpsJugador2;  // Lista de power-ups para el Jugador 2
 
     bool listaLlenaDeCeros(int* lista);  // Función auxiliar para verificar si la lista tiene solo ceros
     bool precisionDeAtaqueActivado;  // Variable para controlar cuándo está activo el power-up de precisión de ataque
+
+    bool dobleturnoActivado;
+    bool dobleturnoDisponible;
+
+
+    bool poderDeAtaqueActivado;  // Variable para indicar si el poder de ataque está activo
+
 
 
     QPixmap imgTanqueAmarillo;
@@ -83,7 +94,7 @@ private:
 
     bool validarSeleccionInicial(int nodoCercano);
     void moverTanqueActual();
-    void siguienteTurno();
+    void siguienteTurno(bool dobleTurnoObtenido, int contadorTurnos);
     void dispararBala(int xObjetivo, int yObjetivo);  // Método para disparar
 
     void keyPressEvent(QKeyEvent *event);

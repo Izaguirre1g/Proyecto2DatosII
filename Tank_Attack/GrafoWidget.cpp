@@ -1,6 +1,7 @@
 #include "GrafoWidget.h"
 #include "Bala.h"
 #include "AStar.h"
+#include "Tanque.h"
 #include "LineOfSight.h"
 #include <QPainter>
 #include <QMouseEvent>
@@ -12,7 +13,7 @@ using namespace std;
 GrafoWidget::GrafoWidget(QWidget *parent)
     : QWidget(parent), textoCambiante1("Bienvenidos al Juego"), textoCambiante2("Bienvenidos al Juego"),
     grafo(nullptr), seleccionInicial(true), turnoActual(0), nodoInicial(-1), nodoFinal(-1),
-    jugadorActual(0), accionRealizada(false) {  // Inicializa accionRealizada en false
+    jugadorActual(0), accionRealizada(false), contadorTurnos(1), poderDeAtaqueActivado(false) {  // Inicializa accionRealizada en false
 
     // Inicialización
     powerUpsJugador1 = tipoPowersUp();  // Asignar lista de power-ups al Jugador 1
@@ -117,16 +118,27 @@ void GrafoWidget::moverBala() {
 
                 if (tanques[i] != nullptr && tanques[i]->estaVivo()) {
 
-                    // Reducir la vida del tanque según el color
-                    if (i == 4 || i == 5 || i == 6 || i == 7) {
-                        // Tanques azules y celestes (vida disminuye 25%)
-                        tanques[i]->reducirVida(25);
-                        std::cout << "25% de vida perdida para el tanque " << i << std::endl;
+                    // Variable para manejar la vida que se va a reducir
+                    int vidaReducida = 0;
+
+                    // Si el power-up de ataque está activado, aplica daño especial
+                    if (poderDeAtaqueActivado) {
+                        vidaReducida = 120;  // Poder de ataque reduce 120 de vida
+                        poderDeAtaqueActivado = false;  // Desactivar después de usarlo
+                        std::cout << "Poder de ataque activado. 120% de vida reducida." << std::endl;
                     } else {
-                        // Tanques rojos y amarillos (vida disminuye 50%)
-                        tanques[i]->reducirVida(50);
-                        std::cout << "50% de vida perdida para el tanque " << i << std::endl;
+                        // Reducir la vida del tanque según el color
+                        if (i == 4 || i == 5 || i == 6 || i == 7) {
+                            // Tanques azules y celestes (vida disminuye 25%)
+                            vidaReducida = 25;
+                        } else {
+                            // Tanques rojos y amarillos (vida disminuye 50%)
+                            vidaReducida = 50;
+                        }
                     }
+
+                    tanques[i]->reducirVida(vidaReducida);  // Aplicar la reducción de vida
+                    std::cout << vidaReducida << "% de vida perdida para el tanque " << i << std::endl;
 
                     // Mostrar la vida restante del tanque
                     std::cout << "Vida restante del tanque " << i << ": " << tanques[i]->obtenerVida() << "%" << std::endl;
@@ -149,14 +161,14 @@ void GrafoWidget::moverBala() {
         if (colisionDetectada) {
             balaActual->setActiva(false);  // Marcar la bala como inactiva
             balaTimer->stop();  // Detener el temporizador de movimiento de la bala
-            siguienteTurno();  // Cambiar al siguiente turno
+            siguienteTurno(false, -10);  // Cambiar al siguiente turno
         }
 
         // Si la bala ha terminado su camino sin colisión
         if (balaActual->haTerminadoCamino() && !colisionDetectada) {
             std::cout << "Bala ha llegado al destino sin colisión." << std::endl;
             balaTimer->stop();  // Detener el temporizador
-            siguienteTurno();   // Cambiar al siguiente turno
+            siguienteTurno(false, -10);   // Cambiar al siguiente turno
         }
 
         // Aseguramos la actualización de la pantalla en cada paso
@@ -412,6 +424,18 @@ int* GrafoWidget::tipoPowersUp(){
     }
     return lista;
 }
+
+
+
+void GrafoWidget::startTurn() {
+    if (dobleturnoActivado) {
+        dobleturnoDisponible = true;
+        dobleturnoActivado = false;  // El power-up ya fue activado, así que lo desactivamos
+    }
+}
+
+
+
 //Detecta el uso de la tecla Shift
 void GrafoWidget::keyPressEvent(QKeyEvent *event) {
     if (accionRealizada) return;  // No permitir realizar más acciones si ya se realizó una
@@ -451,7 +475,10 @@ void GrafoWidget::keyPressEvent(QKeyEvent *event) {
                 switch (powerUpsActual[i]) {
                 case 1:
                     cout << "Activando Power-Up 1: Doble turno" << endl;
-                    //activarDobleTurno();
+                    cout <<contadorTurnos<<endl;
+                    //DobleTurno(contadorTurnos);
+                    dobleturnoActivado = true;
+                    siguienteTurno(dobleturnoActivado, contadorTurnos);
 
                     break;
                 case 2:
@@ -465,8 +492,11 @@ void GrafoWidget::keyPressEvent(QKeyEvent *event) {
                     cout << "Precisión de ataque: activado" << endl;
                     break;
                 case 4:
+                    Tanque* tanque = obtenerTanqueActual();
                     cout << "Activando Power-Up 4: Poder de ataque" << endl;
-
+                    //int restaVida =120;
+                    //tanque->reducirVida(restaVida);
+                    poderDeAtaqueActivado = true;  // Solo activar la bandera
 
                     break;
                 }
@@ -476,7 +506,7 @@ void GrafoWidget::keyPressEvent(QKeyEvent *event) {
         }
 
         accionRealizada = true;  // Marcar que se realizó una acción
-        siguienteTurno();        // Cambiar de turno
+        siguienteTurno(false, -10);        // Cambiar de turno
     }
 
     QWidget::keyPressEvent(event);  // Llamar al evento base
@@ -569,7 +599,7 @@ void GrafoWidget::moverTanquePasoAPaso() {
 
     if (!mover) {
         movimientoTimer->stop();  // Detener el temporizador cuando termina el movimiento
-        siguienteTurno();  // Cambiar al siguiente turno
+        siguienteTurno(false,-10);  // Cambiar al siguiente turno
     }
 
     update();  // Redibuja la ventana con el tanque en su nueva posición
@@ -601,15 +631,26 @@ void GrafoWidget::mousePressEvent(QMouseEvent *event) {
     int nodoCercano = grafo->encontrarNodoCercano(clickX, clickY);
 
     if (event->button() == Qt::LeftButton) {  // Click izquierdo para moverse
+        //Colocar el contador para las veces que pulsa el clic
+        contadorTurnos+=1;
+
+        cout <<contadorTurnos<<endl;
         if (nodoCercano != -1) {
             std::cout << "Nodo cercano seleccionado (click izquierdo): " << nodoCercano << std::endl;
 
             if (seleccionInicial) {
                 if (validarSeleccionInicial(nodoCercano) && obtenerTanqueActual()->estaVivo()) {
+
                     nodoInicial = nodoCercano;
                     seleccionInicial = false;
                     std::cout << "Nodo inicial seleccionado para el tanque en turno " << turnoActual << std::endl;
-                } else {
+                }else if(validarSeleccionInicial(nodoCercano) && obtenerTanqueActual()->estaVivo() && dobleturnoActivado){
+
+                    nodoInicial = nodoCercano;
+                    seleccionInicial = false;
+                    std::cout << "Nodo inicial seleccionado para el tanque en turno " << turnoActual << std::endl;
+                }
+                else {
                     std::cout << "El nodo seleccionado no corresponde al tanque en turno o el tanque está destruido." << std::endl;
                 }
             } else {
@@ -628,9 +669,13 @@ void GrafoWidget::mousePressEvent(QMouseEvent *event) {
         }
     } else if (event->button() == Qt::RightButton) {  // Click derecho para disparar
         std::cout << "Click derecho para disparar detectado en: (" << clickX << ", " << clickY << ")" << std::endl;
+        //Colocar el contador para las veces que pulsa el clic
+        contadorTurnos+=1;
+        cout <<contadorTurnos<<endl;
 
         if (!seleccionDisparo) {  // Selección inicial para disparar
             if (nodoCercano != -1 && validarSeleccionInicial(nodoCercano) && obtenerTanqueActual()->estaVivo()) {
+
                 seleccionDisparo = true;  // Marcar como en proceso de disparo
                 std::cout << "Seleccionado tanque en turno para disparar." << std::endl;
             } else {
@@ -785,6 +830,7 @@ void GrafoWidget::dispararBala(int xObjetivo, int yObjetivo) {
 
 
 bool GrafoWidget::validarSeleccionInicial(int nodoCercano) {
+    cout << "Nodo cercano: " << nodoCercano <<endl;
     // Validar si el nodo pertenece al tanque en turno, si corresponde al turno actual y si está vivo
     switch (turnoActual) {
     case 0: return tanqueRojo1 != nullptr && tanqueRojo1->estaVivo() && nodoCercano == tanqueRojo1->obtenerNodoActual();  // Jugador 1, tanque rojo 1
@@ -860,14 +906,23 @@ void GrafoWidget::moverTanqueActual() {
     movimientoTimer->start(500);  // Comenzar el temporizador para mover el tanque paso a paso
 }
 
-void GrafoWidget::activarDobleTurno() {
+/*void GrafoWidget::DobleTurno(int jugadorTurno, bool estado) {
+
     dobleTurno = true;  // Activar el doble turno
     turnoJugadorDoble = jugadorActual;  // Guardar si es jugador de turnos pares (0) o impares (1)
-}
+}*/
+
+/*void GrafoWidget::consumeAction() {
+    if (dobleturnoDisponible) {
+        dobleturnoDisponible = false;  // El doble turno se consume después de realizar la segunda acción
+    }
+}*/
 
 
-void GrafoWidget::siguienteTurno() {
-    std::cout << "Cambiando turno..." << std::endl;
+void GrafoWidget::siguienteTurno(bool dobleturnoActivado, int contadorTurnos) {
+    cout << "dobleTurnoObtenido: " << dobleturnoActivado<<endl;
+    cout << "contadorTurno: " << contadorTurnos<<endl;
+    //contadorTurnos += contadorTurnoTanque;
 
     // Limpiar el camino del tanque en turno actual antes de pasar al siguiente turno
     Tanque* tanqueActual = obtenerTanqueActual();
@@ -875,23 +930,60 @@ void GrafoWidget::siguienteTurno() {
         tanqueActual->limpiarCamino();
     }
     // Verificar si el doble turno está activo
-    if (dobleTurno) {
-        // Si el turno actual es del mismo tipo (pares o impares) que el doble turno, no cambiar el turno
-        if (turnoActual % 2 == turnoJugadorDoble) {
-            std::cout << "Aplicando doble turno para el jugador " << jugadorActual + 1 << std::endl;
-            dobleTurno = false;  // Desactivar el doble turno después de usarlo
-            return;  // El mismo jugador juega de nuevo
-        }
-    }
+    /*if (dobleturnoDisponible) {
+        std::cout << "Doble turno disponible para el jugador " << jugadorActual + 1 << std::endl;
+        dobleturnoDisponible = false;  // Consumir el doble turno
+        return;  // El mismo jugador juega otra vez
+    }*/
     // Buscar el siguiente tanque vivo
     int intentos = 0;  // Para evitar ciclos infinitos si no hay tanques vivos
     do {
-        turnoActual = (turnoActual + 1) % 8;  // Cambiar entre los 8 tanques
-        intentos++;
+        //Se encarga de mover los turnos por los tanques
+        if(dobleturnoActivado && contadorTurnos%2!=0 && contadorTurnos>0){
+            cout << "Doble turno disponible para el jugador " << jugadorActual + 1 << endl;
+
+            //turnoActual;
+            //siguienteTurno(true, 5);
+            cout << "Turno actual" << turnoActual  << endl;
+            //turnoActual = (turnoActual + 1) % 8;
+            //dobleTurnoObtenido=false;
+            //accionRealizada=false;
+            //contadorTurnos = 0;
+            return;
+            //turnoActual = (turnoActual - 1) % 8; //Permite otro turno al mismo jugador
+        }else{
+            std::cout << "Cambiando turno... error" << std::endl;
+            turnoActual = (turnoActual + 1) % 8;  // Cambiar entre los 8 tanques
+            intentos++;
+            // Si después de 8 intentos no se encuentra un tanque vivo, terminar el juego o declararlo como terminado.
+            if (intentos == 8) {
+                std::cout << "No quedan tanques vivos en el juego. Juego terminado." << std::endl;
+                return;  // Puedes agregar lógica adicional para finalizar el juego aquí
+            }
+            /**
+    Jugador 1: Turnos 0, 2, 4, 6 (tanques rojo 1, azul 1, rojo 2, azul 2)
+    Jugador 2: Turnos 1, 3, 5, 7 (tanques amarillo 1, celeste 1, amarillo 2, celeste 2)
+    **/
+            // Jugador 1 mueve en turnos 0, 2, 4, 6 (pares)
+            // Jugador 2 mueve en turnos 1, 3, 5, 7 (impares)
+            jugadorActual = (turnoActual % 2 == 0) ? 0 : 1;  // Jugador 1 para pares, Jugador 2 para impares
+
+            nodoInicial = -1;
+            nodoFinal = -1;
+            seleccionInicial = true;
+            accionRealizada = false;  // Resetear para el próximo turno
+            seleccionDisparo = false;  // Restablecer la selección de disparo
+            std::cout << "Cambio al turno del tanque: " << turnoActual << " (Jugador " << jugadorActual + 1 << ")" << std::endl;
+            update();
+        }
+
+
+
+        //intentos++;
     } while ((obtenerTanqueActual() == nullptr || !obtenerTanqueActual()->estaVivo()) && intentos < 8);
 
     // Si después de 8 intentos no se encuentra un tanque vivo, terminar el juego o declararlo como terminado.
-    if (intentos == 8) {
+    /*if (intentos == 8) {
         std::cout << "No quedan tanques vivos en el juego. Juego terminado." << std::endl;
         return;  // Puedes agregar lógica adicional para finalizar el juego aquí
     }
@@ -901,7 +993,7 @@ void GrafoWidget::siguienteTurno() {
     **/
     // Jugador 1 mueve en turnos 0, 2, 4, 6 (pares)
     // Jugador 2 mueve en turnos 1, 3, 5, 7 (impares)
-    jugadorActual = (turnoActual % 2 == 0) ? 0 : 1;  // Jugador 1 para pares, Jugador 2 para impares
+    /*jugadorActual = (turnoActual % 2 == 0) ? 0 : 1;  // Jugador 1 para pares, Jugador 2 para impares
 
     nodoInicial = -1;
     nodoFinal = -1;
@@ -909,7 +1001,9 @@ void GrafoWidget::siguienteTurno() {
     accionRealizada = false;  // Resetear para el próximo turno
     seleccionDisparo = false;  // Restablecer la selección de disparo
     std::cout << "Cambio al turno del tanque: " << turnoActual << " (Jugador " << jugadorActual + 1 << ")" << std::endl;
-    update();
+    update();*/
+
+
 }
 
     /*

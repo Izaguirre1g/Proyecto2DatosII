@@ -534,12 +534,31 @@ void GrafoWidget::dibujarCamino(Tanque* tanque, QPainter& painter) {
 void GrafoWidget::dibujarTanque(Tanque* tanque, QPixmap& imagenTanque, QPainter& painter) {
     if (tanque == nullptr || !tanque->estaVivo()) {
         std::cerr << "Error: El tanque está eliminado, no se puede dibujar." << std::endl;
-        return;  // Evitar dibujar si el tanque es nulo
+        return;  // Evitar dibujar si el tanque es nulo o está destruido
     }
+
     int x = grafo->getPosicionX(tanque->obtenerNodoActual());
     int y = grafo->getPosicionY(tanque->obtenerNodoActual());
+
+    // Dibuja la imagen del tanque
     painter.drawPixmap(x - imagenTanque.width() / 2, y - imagenTanque.height() / 2, imagenTanque);
+
+    // Obtener la vida del tanque y dibujarla encima del tanque
+    int vida = tanque->obtenerVida();  // Obtener el porcentaje de vida del tanque
+
+    // Configurar el estilo del texto
+    QFont font = painter.font();
+    font.setPointSize(16);  // Tamaño de letra pequeño
+    painter.setFont(font);
+    painter.setPen(Qt::yellow);  // Color blanco para la vida
+
+    // Dibujar el porcentaje de vida sobre el tanque
+    QString vidaTexto = QString::number(vida) + "%";
+    int anchoTexto = painter.fontMetrics().horizontalAdvance(vidaTexto);  // Ancho del texto
+    // Dibujar el porcentaje de vida centrado sobre el tanque
+    painter.drawText(x - anchoTexto / 2, y - imagenTanque.height() / 2 - 10, vidaTexto);
 }
+
 
 void GrafoWidget::moverTanquePasoAPaso() {
     if(accionRealizada) return;// Impedir movimiento si ya se realizó una acción

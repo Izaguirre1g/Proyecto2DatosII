@@ -32,37 +32,61 @@ void Bala::mover() {
 
 // Avanza la bala al siguiente nodo en el camino
 void Bala::avanzarCaminoPaso(Grafo* grafo) {
+    const int maxRebotes = 50;
+    float velocidadNormal = 8.5;
+    float velocidadReduccion = 0.1;
+    float velocidadActual = velocidadNormal;
+
+    const int xMin = 0, yMin = 0;
+    const int xMax = 1050, yMax = 720;
+
+    if (x < xMin || x > xMax || y < yMin || y > yMax) {
+        std::cout << "Bala fuera de los límites del grafo. Deteniendo la bala." << std::endl;
+        activa = false;
+        return;
+    }
+
     if (indiceCamino < longitudCamino - 1) {
         int nodoSiguiente = camino[indiceCamino + 1];
 
-        // Obtener las coordenadas del nodo siguiente
+        // Rebote en obstáculos
+        if (grafo->esNodoBloqueado(nodoSiguiente)) {
+            std::cout << "¡Colisión con obstáculo detectada!" << std::endl;
+            velocidadActual = velocidadReduccion;
+
+            int dx = grafo->getPosicionX(nodoSiguiente) - x;
+            int dy = grafo->getPosicionY(nodoSiguiente) - y;
+            const int distanciaRebote = 30;
+
+            if (dx != 0) x += (dx > 0 ? -distanciaRebote : distanciaRebote);
+            if (dy != 0) y += (dy > 0 ? -distanciaRebote : distanciaRebote);
+
+            contadorRebotes++;
+            return;
+        } else {
+            velocidadActual = velocidadNormal;
+        }
+
         int xSiguiente = grafo->getPosicionX(nodoSiguiente);
         int ySiguiente = grafo->getPosicionY(nodoSiguiente);
 
-        // Calcular el movimiento en dirección al siguiente nodo
         int dx = xSiguiente - x;
         int dy = ySiguiente - y;
         float dist = std::sqrt(dx * dx + dy * dy);
 
-        // Avance con un paso fijo, proporcional a la distancia
-        const float speed = 9.0;  // Ajustar este valor para controlar la velocidad de la bala
-        if (dist > speed) {  // Si está lejos, mover hacia el nodo
-            // Mover la bala en la dirección del siguiente nodo
-            x += (dx / dist) * speed;
-            y += (dy / dist) * speed;
+        if (dist > velocidadActual) {
+            x += (dx / dist) * velocidadActual;
+            y += (dy / dist) * velocidadActual;
         } else {
-            // Si la bala está lo suficientemente cerca, saltar al siguiente nodo
             x = xSiguiente;
             y = ySiguiente;
-            indiceCamino++;  // Avanzar en el camino
+            indiceCamino++;
         }
 
-        // Si la bala ha alcanzado el último nodo, marcarla como inactiva
-        if (indiceCamino >= longitudCamino - 1) {
-            activa = false;
-        }
+        if (indiceCamino >= longitudCamino - 1) activa = false;
     }
 }
+
 
 
 

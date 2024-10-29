@@ -97,53 +97,43 @@ void GrafoWidget::dibujarBala(QPainter& painter) {
 
 void GrafoWidget::moverBala() {
     if (balaActual && balaActual->estaActiva()) {
-        // Mueve la bala paso a paso por el camino
-        balaActual->avanzarCaminoPaso(grafo);
+        balaActual->avanzarCaminoPaso(grafo);  // Mueve la bala
 
-        // Actualizamos la interfaz antes de verificar colisiones
-        update();  // Esto asegura que la bala se dibuje en su nueva posición
+        update();  // Actualizar la interfaz en cada paso
 
-        // Comprobar colisiones con los tanques en cada paso del movimiento de la bala
+        // Obtener el tanque que dispara la bala (para evitar autocolisión)
+        Tanque* tanqueAtacante = obtenerTanqueActual();
+
+        // Arreglo de tanques
         Tanque* tanques[8] = {tanqueRojo1, tanqueAmarillo1, tanqueAzul1, tanqueCeleste1,
                               tanqueRojo2, tanqueAmarillo2, tanqueAzul2, tanqueCeleste2};
 
-        bool colisionDetectada = false;  // Nueva variable para detectar colisiones
+        bool colisionDetectada = false;
 
         for (int i = 0; i < 8; ++i) {
-            if (tanques[i] != nullptr && tanques[i]->estaVivo()) {
+            if (tanques[i] != nullptr && tanques[i]->estaVivo() && tanques[i] != tanqueAtacante) {
                 int xTanque = grafo->getPosicionX(tanques[i]->obtenerNodoActual());
                 int yTanque = grafo->getPosicionY(tanques[i]->obtenerNodoActual());
 
                 if (balaActual->verificarColisionConTanque(xTanque, yTanque)) {
-                    // Variable para manejar la vida que se va a reducir
                     int vidaReducida = 0;
 
-                    // Si el power-up de ataque está activado, aplica daño especial
+                    // Verifica si el power-up de ataque está activado
                     if (poderDeAtaqueActivado) {
-                        vidaReducida = 120;  // Poder de ataque reduce 120 de vida
-                        poderDeAtaqueActivado = false;  // Desactivar después de usarlo
+                        vidaReducida = 120;
+                        poderDeAtaqueActivado = false;
                         std::cout << "Poder de ataque activado. 120% de vida reducida." << std::endl;
                     } else {
-                        // Reducir la vida del tanque según el color
-                        if (i == 2 || i == 3 || i == 6 || i == 7) {
-                            // Tanques azules y celestes (vida disminuye 25%)
-                            vidaReducida = 25;
-                        } else {
-                            // Tanques rojos y amarillos (vida disminuye 50%)
-                            vidaReducida = 50;
-                        }
+                        vidaReducida = (i == 2 || i == 3 || i == 6 || i == 7) ? 25 : 50;
                     }
 
-                    tanques[i]->reducirVida(vidaReducida);  // Aplicar la reducción de vida
+                    tanques[i]->reducirVida(vidaReducida);  // Aplicar daño
                     std::cout << vidaReducida << "% de vida perdida para el tanque " << i << std::endl;
-
-                    // Mostrar la vida restante del tanque
                     std::cout << "Vida restante del tanque " << i << ": " << tanques[i]->obtenerVida() << "%" << std::endl;
 
-                    // Verificar si el tanque debe ser eliminado
                     if (!tanques[i]->estaVivo()) {
                         std::cout << "El tanque " << i << " ha sido destruido!" << std::endl;
-                        tanques[i] = nullptr;  // Eliminar el tanque (marcarlo como nulo)
+                        tanques[i] = nullptr;  // Marcar el tanque como destruido
                     }
 
                     colisionDetectada = true;
@@ -151,29 +141,22 @@ void GrafoWidget::moverBala() {
             }
         }
 
-        // Si hay colisión con un tanque, terminar el turno
-        if (colisionDetectada) {
-            balaActual->setActiva(false);  // Marcar la bala como inactiva
-            balaTimer->stop();  // Detener el temporizador de movimiento de la bala
-            siguienteTurno(false, -10); // Cambiar al siguiente turno
-            return;  // Terminar el movimiento
-        }
-
-        // Comprobar colisiones con obstáculos
-        if (!balaActual->estaActiva()) {  // Si la bala se desactivó por colisión con un obstáculo
-            balaTimer->stop();  // Detener el temporizador de movimiento de la bala
-            siguienteTurno(false, -10);  // Cambiar al siguiente turno
+        // Si hay colisión con un tanque o si la bala ha terminado el camino, cambiar de turno
+        if (colisionDetectada || balaActual->haTerminadoCamino()) {
+            balaActual->setActiva(false);
+            balaTimer->stop();
+            siguienteTurno(false,-10);
             return;
         }
 
-        // Si la bala ha terminado su camino sin colisión
-        if (balaActual->haTerminadoCamino()) {
-            std::cout << "Bala ha llegado al destino sin colisión." << std::endl;
-            balaTimer->stop();  // Detener el temporizador
-            siguienteTurno(false, -10);  // Cambiar al siguiente turno
+        // Comprobar colisiones con obstáculos
+        if (!balaActual->estaActiva()) {
+            balaTimer->stop();  // Detener el temporizador de movimiento de la bala
+            siguienteTurno(false,-10);   // Cambiar al siguiente turno
+            return;
         }
 
-        // Aseguramos la actualización de la pantalla en cada paso
+        // Actualizar la interfaz después de cada movimiento
         update();
     }
 }

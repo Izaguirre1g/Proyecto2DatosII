@@ -32,6 +32,7 @@ Tank_Attack_autogen/timestamp: \
 	/home/jose/Proyecto2DatosII/Tank_Attack/mainwindow.cpp \
 	/home/jose/Proyecto2DatosII/Tank_Attack/mainwindow.h \
 	/home/jose/Proyecto2DatosII/Tank_Attack/resource.qrc \
+	/home/jose/Qt/6.7.2/gcc_64/include/QtCore/QObject \
 	/home/jose/Qt/6.7.2/gcc_64/include/QtCore/QTimer \
 	/home/jose/Qt/6.7.2/gcc_64/include/QtCore/q20functional.h \
 	/home/jose/Qt/6.7.2/gcc_64/include/QtCore/q20memory.h \

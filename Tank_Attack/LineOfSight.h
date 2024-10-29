@@ -10,6 +10,9 @@ public:
     // Método principal para verificar si hay línea de vista entre dos nodos
     bool tieneLineaVista(int nodoInicial, int nodoFinal);
 
+    // Método para obtener el siguiente nodo en la línea de vista hacia el nodo objetivo
+    int obtenerSiguienteNodoEnLinea(int nodoInicial, int nodoFinal);
+
 private:
     Grafo* grafo;
 

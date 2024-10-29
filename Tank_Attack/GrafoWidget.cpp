@@ -103,21 +103,18 @@ void GrafoWidget::moverBala() {
         // Actualizamos la interfaz antes de verificar colisiones
         update();  // Esto asegura que la bala se dibuje en su nueva posición
 
-        // Comprobar colisiones con los tanques
-        Tanque* tanques[8] = {tanqueRojo1, tanqueRojo2, tanqueAmarillo1, tanqueAmarillo2,
-                              tanqueAzul1, tanqueAzul2, tanqueCeleste1, tanqueCeleste2};
+        // Comprobar colisiones con los tanques en cada paso del movimiento de la bala
+        Tanque* tanques[8] = {tanqueRojo1, tanqueAmarillo1, tanqueAzul1, tanqueCeleste1,
+                              tanqueRojo2, tanqueAmarillo2, tanqueAzul2, tanqueCeleste2};
 
         bool colisionDetectada = false;  // Nueva variable para detectar colisiones
 
         for (int i = 0; i < 8; ++i) {
-            int xTanque = grafo->getPosicionX(tanques[i]->obtenerNodoActual());
-            int yTanque = grafo->getPosicionY(tanques[i]->obtenerNodoActual());
+            if (tanques[i] != nullptr && tanques[i]->estaVivo()) {
+                int xTanque = grafo->getPosicionX(tanques[i]->obtenerNodoActual());
+                int yTanque = grafo->getPosicionY(tanques[i]->obtenerNodoActual());
 
-            if (balaActual->verificarColisionConTanque(xTanque, yTanque)) {
-                //std::cout << "¡Colisión detectada con el tanque " << i << "!" << std::endl;
-
-                if (tanques[i] != nullptr && tanques[i]->estaVivo()) {
-
+                if (balaActual->verificarColisionConTanque(xTanque, yTanque)) {
                     // Variable para manejar la vida que se va a reducir
                     int vidaReducida = 0;
 
@@ -128,7 +125,7 @@ void GrafoWidget::moverBala() {
                         std::cout << "Poder de ataque activado. 120% de vida reducida." << std::endl;
                     } else {
                         // Reducir la vida del tanque según el color
-                        if (i == 4 || i == 5 || i == 6 || i == 7) {
+                        if (i == 2 || i == 3 || i == 6 || i == 7) {
                             // Tanques azules y celestes (vida disminuye 25%)
                             vidaReducida = 25;
                         } else {
@@ -149,32 +146,38 @@ void GrafoWidget::moverBala() {
                         tanques[i] = nullptr;  // Eliminar el tanque (marcarlo como nulo)
                     }
 
-                    // Marcar que se ha detectado una colisión
                     colisionDetectada = true;
                 }
-
-                // No rompemos el bucle inmediatamente, dejamos que se actualice la pantalla
             }
         }
 
-        // Si hay colisión, gestionamos el final del turno tras la actualización
+        // Si hay colisión con un tanque, terminar el turno
         if (colisionDetectada) {
             balaActual->setActiva(false);  // Marcar la bala como inactiva
             balaTimer->stop();  // Detener el temporizador de movimiento de la bala
+            siguienteTurno(false, -10); // Cambiar al siguiente turno
+            return;  // Terminar el movimiento
+        }
+
+        // Comprobar colisiones con obstáculos
+        if (!balaActual->estaActiva()) {  // Si la bala se desactivó por colisión con un obstáculo
+            balaTimer->stop();  // Detener el temporizador de movimiento de la bala
             siguienteTurno(false, -10);  // Cambiar al siguiente turno
+            return;
         }
 
         // Si la bala ha terminado su camino sin colisión
-        if (balaActual->haTerminadoCamino() && !colisionDetectada) {
+        if (balaActual->haTerminadoCamino()) {
             std::cout << "Bala ha llegado al destino sin colisión." << std::endl;
             balaTimer->stop();  // Detener el temporizador
-            siguienteTurno(false, -10);   // Cambiar al siguiente turno
+            siguienteTurno(false, -10);  // Cambiar al siguiente turno
         }
 
         // Aseguramos la actualización de la pantalla en cada paso
         update();
     }
 }
+
 
 
 

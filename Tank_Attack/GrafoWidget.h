@@ -61,7 +61,9 @@ private:
 
     int powerUpPendienteJugador1 = 0;
     int powerUpPendienteJugador2 = 0;
-
+    bool turnoDobleActivo = false; // Indica si el doble turno está activo en el turno actual
+    bool dobleTurnoPendienteJugador1 = false;  // Estado de doble turno pendiente para Jugador 1
+    bool dobleTurnoPendienteJugador2 = false;  // Estado de doble turno pendiente para Jugador 2
 
 
     bool dobleTurno = false;  // Indica si el doble turno está activo

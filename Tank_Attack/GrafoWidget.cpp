@@ -458,16 +458,30 @@ void GrafoWidget::keyPressEvent(QKeyEvent *event) {
                     powerUpPendienteJugador2 = powerUp;
                 }
 
-                std::cout << "Power-up " << powerUp << " pendiente para el Jugador " << jugadorActual + 1 << std::endl;
+                // Mensaje del power-up asignado
+                QString mensajePowerUp;
+                switch (powerUp) {
+                case 1: mensajePowerUp = "Doble Turno"; break;
+                case 2: mensajePowerUp = "Precisión de Movimiento"; break;
+                case 3: mensajePowerUp = "Precisión de Ataque"; break;
+                case 4: mensajePowerUp = "Poder de Ataque"; break;
+                }
+                std::cout << "Power-up obtenido: " << mensajePowerUp.toStdString() << " para el Jugador " << jugadorActual + 1 << std::endl;
+
+                // Mostrar el mensaje en la interfaz
+                if (jugadorActual == 0) textoCambiante1 = "Power-up: " + mensajePowerUp;
+                else textoCambiante2 = "Power-up: " + mensajePowerUp;
 
                 accionRealizada = true;  // Marcar acción como realizada
                 siguienteTurno(false, -10);  // Cambiar turno
+                update();
                 return;
             }
         }
     }
     QWidget::keyPressEvent(event);
 }
+
 
 
 //Se encarga de mostrar el camino de aristas
@@ -896,14 +910,26 @@ void GrafoWidget::moverTanqueActual() {
 }*/
 
 
-void GrafoWidget::siguienteTurno(bool dobleturnoActivado, int contadorTurnos) {
+// Variables de estado globales para manejar doble turno
+bool dobleturnoActivado = false;  // Se activa cuando el jugador obtiene el power-up de doble turno
+bool dobleturnoPendiente = false; // Indica que queda un segundo turno para el jugador actual
+
+void GrafoWidget::siguienteTurno(bool activarDobleTurno, int contadorTurnos) {
     // Limpiar el camino del tanque en turno actual antes de pasar al siguiente turno
     Tanque* tanqueActual = obtenerTanqueActual();
     if (tanqueActual != nullptr && tanqueActual->estaVivo()) {
         tanqueActual->limpiarCamino();
     }
 
-    // Cambiar de turno
+    // Comprobar si el doble turno está pendiente
+    if (dobleturnoPendiente) {
+        std::cout << "Segundo turno consecutivo para el jugador " << jugadorActual + 1 << std::endl;
+        dobleturnoPendiente = false; // Doble turno completado, se desactiva
+        update();
+        return; // Mantener el turno del mismo jugador
+    }
+
+    // Cambiar de turno cuando no hay doble turno pendiente
     turnoActual = (turnoActual + 1) % 8;
     jugadorActual = (turnoActual % 2 == 0) ? 0 : 1;
 
@@ -913,26 +939,28 @@ void GrafoWidget::siguienteTurno(bool dobleturnoActivado, int contadorTurnos) {
         switch (powerUpAplicar) {
         case 1:  // Doble turno
             dobleturnoActivado = true;
-            std::cout << "Aplicando Power-Up Doble Turno al Jugador " << jugadorActual + 1 << std::endl;
+            dobleturnoPendiente = true; // Activa el segundo turno consecutivo
+            std::cout << "Power-Up activado: Doble Turno para el Jugador " << jugadorActual + 1 << std::endl;
             break;
         case 2:  // Precisión de movimiento
-            std::cout << "Aplicando Power-Up Precisión de Movimiento al Jugador " << jugadorActual + 1 << std::endl;
-            // Aplicar efecto
+            std::cout << "Power-Up activado: Precisión de Movimiento para el Jugador " << jugadorActual + 1 << std::endl;
+            // Aplicar el efecto correspondiente aquí
             break;
         case 3:  // Precisión de ataque
             precisionDeAtaqueActivado = true;
-            std::cout << "Aplicando Power-Up Precisión de Ataque al Jugador " << jugadorActual + 1 << std::endl;
+            std::cout << "Power-Up activado: Precisión de Ataque para el Jugador " << jugadorActual + 1 << std::endl;
             break;
         case 4:  // Poder de ataque
             poderDeAtaqueActivado = true;
-            std::cout << "Aplicando Power-Up Poder de Ataque al Jugador " << jugadorActual + 1 << std::endl;
+            std::cout << "Power-Up activado: Poder de Ataque para el Jugador " << jugadorActual + 1 << std::endl;
             break;
         }
-        // Limpiar el power-up pendiente
+        // Limpiar el power-up pendiente para el próximo turno
         if (jugadorActual == 0) powerUpPendienteJugador1 = 0;
         else powerUpPendienteJugador2 = 0;
     }
 
+    // Reiniciar los estados para el nuevo turno
     nodoInicial = -1;
     nodoFinal = -1;
     seleccionInicial = true;
@@ -942,6 +970,7 @@ void GrafoWidget::siguienteTurno(bool dobleturnoActivado, int contadorTurnos) {
     std::cout << "Cambio al turno del tanque: " << turnoActual << " (Jugador " << jugadorActual + 1 << ")" << std::endl;
     update();
 }
+
 
     /*
     // Dibujar los nodos

@@ -58,6 +58,12 @@ private:
     QTimer* balaTimer;  // Temporizador para manejar el movimiento de las balas
 
 
+
+    int powerUpPendienteJugador1 = 0;
+    int powerUpPendienteJugador2 = 0;
+
+
+
     bool dobleTurno = false;  // Indica si el doble turno está activo
     int turnoJugadorDoble = -1;  // 0 para jugador de turnos pares, 1 para jugador de turnos impares
     bool seleccionInicial;

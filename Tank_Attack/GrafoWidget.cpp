@@ -312,53 +312,6 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
 
 
     }
-    // Configurar el tipo de letra
-    QFont font = painter.font();
-    font.setPointSize(32);  // Tamaño de letra grande para el mensaje
-    font.setBold(true);     // Hacer el texto negrita
-    painter.setFont(font);
-
-    // Dibujar el mensaje de bienvenida
-    painter.setPen(Qt::cyan);  // Color para el texto
-    QString powerups_text = "Power-ups!";
-    painter.drawText(1040, 40, powerups_text);  // Centrando el texto
-
-    font.setPointSize(16);// Tamaño de letra más pequeño
-    painter.setFont(font);// Aplicar el nuevo tamaño de letra
-    QString jugador1="Jugador 1";
-    painter.drawText(1090, 80, jugador1);
-
-    QString jugador2="Jugador 2";
-    painter.drawText(1090, 290, jugador2);
-
-    // Definir el rectángulo donde se dibujará el texto cambiante
-    QRect rectanguloTexto1(1000, 100, 300, 100);  // (x, y, ancho, alto)
-
-    // Dibujar el rectángulo
-    painter.setBrush(Qt::lightGray);  // Color de fondo del rectángulo
-    painter.drawRect(rectanguloTexto1);
-
-    // Configurar el tipo de letra
-
-    font.setPointSize(16);  // Tamaño de letra para el texto
-    painter.setFont(font);
-
-    // Establecer el color del texto
-    painter.setPen(Qt::black);
-
-    // Dibujar el texto en el centro del rectángulo
-    painter.drawText(rectanguloTexto1, Qt::AlignCenter, textoCambiante1);
-
-    QRect rectanguloTexto2(1000, 300, 300, 100);  // Otra posición (x, y, ancho, alto)
-    painter.setBrush(Qt::lightGray);  // Color de fondo
-    painter.drawRect(rectanguloTexto2);  // Dibujar el segundo rectángulo
-
-    font.setPointSize(16);  // Tamaño de letra más pequeño para el segundo cuadro
-    painter.setFont(font);
-    painter.setPen(Qt::black);  // Color del texto
-    painter.drawText(rectanguloTexto2, Qt::AlignCenter, textoCambiante2);  // Dibujar el texto en el segundo rectángulo
-
-
 }
 
 

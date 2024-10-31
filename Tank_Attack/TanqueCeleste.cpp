@@ -10,11 +10,15 @@ TanqueCeleste::TanqueCeleste(Grafo* grafo, int nodoInicial) : Tanque(grafo, nodo
 
 // Método principal para mover el tanque
 void TanqueCeleste::mover() {
-    // Decidir si moverse con BFS o con movimiento aleatorio
-    if (rand() % 2 == 0) {  // 50% de probabilidad de moverse aleatoriamente
-        std::cout << "Movimiento aleatorio de celeste" << std::endl;
-        moverAleatoriamenteConValidacion();  // Mover de forma aleatoria con validaciones
-    } else {  // 50% de probabilidad de moverse con BFS
+    // Determinar si el movimiento será con BFS o aleatorio basado en el power-up de precisión
+    bool usarBFS = (precisionDeMovimientoActivado) ? (rand() % 10 < 9) : (rand() % 2 == 0);
+
+    if (precisionDeMovimientoActivado) {
+        std::cout << "Power-up de precisión activado: Probabilidad aumentada de usar BFS" << std::endl;
+    }
+
+
+    if (usarBFS) {  // Movimiento con BFS
         std::cout << "Movimiento mediante BFS de celeste" << std::endl;
         if (nodoObjetivo != -1) {
             // Verificar si el nodo objetivo está bloqueado
@@ -27,8 +31,15 @@ void TanqueCeleste::mover() {
             bfs(*grafo, nodoActual, nodoObjetivo, camino, longitudCamino);
             indiceCamino = 0;  // Reiniciar el índice del camino
         }
+    } else {  // Movimiento aleatorio
+        std::cout << "Movimiento aleatorio de celeste" << std::endl;
+        moverAleatoriamenteConValidacion();  // Mover de forma aleatoria con validaciones
     }
+
+    // Desactivar el power-up de precisión de movimiento después de usarlo en el turno
+    precisionDeMovimientoActivado = false;
 }
+
 
 // Función que selecciona una posición aleatoria dentro de un radio definido
 int TanqueCeleste::obtenerPosicionAleatoriaEnRadio(int radio) {

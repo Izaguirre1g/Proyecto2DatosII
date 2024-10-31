@@ -12,7 +12,6 @@ private:
     int indiceCamino;  // Índice del nodo actual en el camino
     bool activa;  // Indica si la bala está en movimiento
     int contadorRebotes;  // Contador para el número de rebotes (nuevo)
-
 public:
     Bala(int xInicial, int yInicial, int xObjetivo, int yObjetivo, int camino[], int longitud);
     ~Bala();  // Destructor para liberar memoria
@@ -20,6 +19,7 @@ public:
     void mover();  // Mueve la bala
     void avanzarCaminoPaso(Grafo* grafo);  // Avanza al siguiente nodo
     bool haTerminadoCamino();  // Verifica si la bala ha llegado al final del camino
+    void limpiarCamino();  // Limpia el camino de la bala
 
     int getX() const;
     int getY() const;

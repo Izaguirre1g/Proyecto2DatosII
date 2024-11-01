@@ -20,6 +20,7 @@ public:
 
 private slots:
     void finalizarJuego();  // Slot que cierra la ventana y muestra el mensaje
+    void mostrarMensajeYSalir(const QString &ganador);
 
 private:
     Ui::MainWindow *ui;

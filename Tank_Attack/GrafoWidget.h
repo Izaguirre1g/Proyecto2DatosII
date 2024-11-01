@@ -34,6 +34,8 @@ public:
     void consumeAction();
 
     int* obtenerCaminoAEstrella(int nodoInicial, int nodoFinal, int& longitudCamino);
+
+    QString determinarGanador();  // Método para determinar el ganador al finalizar el tiempo
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
@@ -41,6 +43,9 @@ protected:
 private slots:
     void moverTanquePasoAPaso();
     void moverBala();  // Mover la bala cada vez que el temporizador lo indique
+
+signals:
+    void juegoFinalizado(const QString &ganador); // Señal para indicar que el juego ha terminado /////////////////////////
 
 private:
     Grafo* grafo;
@@ -86,6 +91,9 @@ private:
 
 
     bool poderDeAtaqueActivado;  // Variable para indicar si el poder de ataque está activo
+
+    bool precisionDeMovimientoActivado;  // Variable para indicar si el power-up de precisión de movimiento está activo
+
 
 
 

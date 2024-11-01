@@ -26,6 +26,7 @@ private:
     void finalizarMovimientoYTurno();
     void continuarMovimiento();
     void moverAleatoriamenteConValidacion();
+    bool precisionDeMovimientoActivado;
 };
 
 #endif

@@ -27,6 +27,7 @@ private:
     void esperarYPasarLineaVista();
     void continuarMovimiento();
     void moverAleatoriamenteConValidacion();
+    bool precisionDeMovimientoActivado;
     //void continuarCaminoDijkstra();
 };
 

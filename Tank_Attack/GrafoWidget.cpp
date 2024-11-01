@@ -8,6 +8,8 @@
 #include <cmath>
 #include <iostream>
 #include <QKeyEvent>
+#include <QMessageBox>  // Incluir para mostrar el mensaje
+
 using namespace std;
 
 GrafoWidget::GrafoWidget(QWidget *parent)
@@ -178,18 +180,13 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
     int espaciado = 50;  // Espaciado entre nodos
     int numNodos = (ancho / espaciado) * (alto / espaciado);  // Número total de nodos
 
-    // Definir el rango central donde los obstáculos pueden aparecer
-    int anchoLateral = ancho / 4;  // Dividimos el ancho en 4 partes, los laterales ocupan 1/4 cada uno
-    int margenIzquierdo = anchoLateral;           // Empieza donde termina la franja izquierda
-    int margenDerecho = ancho - anchoLateral;     // Termina donde empieza la franja derecha
-
     // Dibujar el fondo
     QPixmap background(":Imagenes/battlefield.jpg");
     if (!background.isNull()) {
         painter.drawPixmap(0, 0, width(), height(), background);
     }
 
-    // Dibujar obstáculos (nodos bloqueados) solo en la franja central
+    // Dibujar obstáculos (nodos bloqueados) en cualquier parte del mapa
     painter.setBrush(Qt::black);  // Color negro para los obstáculos
     painter.setPen(Qt::NoPen);    // Sin borde para los obstáculos
 
@@ -198,16 +195,14 @@ void GrafoWidget::paintEvent(QPaintEvent *event) {
             int x = grafo->getPosicionX(i);  // Obtener posición X del nodo
             int y = grafo->getPosicionY(i);  // Obtener posición Y del nodo
 
-            // Verificar si el nodo está dentro de la franja central
-            if (x >= margenIzquierdo && x <= margenDerecho) {
-                int tamanoObstaculo = 40;  // Ajusta el tamaño del obstáculo según sea necesario
+            int tamanoObstaculo = 40;  // Ajusta el tamaño del obstáculo según sea necesario
 
-                // Dibujar un cuadrado para representar el obstáculo
-                QRect cuadrado(x - tamanoObstaculo / 2, y - tamanoObstaculo / 2, tamanoObstaculo, tamanoObstaculo);
-                painter.drawRect(cuadrado);
-            }
+            // Dibujar un cuadrado para representar el obstáculo en cualquier parte del mapa
+            QRect cuadrado(x - tamanoObstaculo / 2, y - tamanoObstaculo / 2, tamanoObstaculo, tamanoObstaculo);
+            painter.drawRect(cuadrado);
         }
     }
+
 
     QPen pen;
 
@@ -467,6 +462,18 @@ void GrafoWidget::dibujarTanque(Tanque* tanque, QPixmap& imagenTanque, QPainter&
 
     // Dibuja la imagen del tanque
     painter.drawPixmap(x - imagenTanque.width() / 2, y - imagenTanque.height() / 2, imagenTanque);
+
+    // Dibujar contorno alrededor del tanque si es el tanque en turno
+    if (tanque == obtenerTanqueActual()) {
+        QPen pen(Qt::green);  // Color verde para el contorno
+        pen.setWidth(4);      // Ancho del contorno
+        painter.setPen(pen);
+        painter.setBrush(Qt::NoBrush);
+        // Dibuja un rectángulo que rodea el tanque en turno
+        painter.drawRect(x - imagenTanque.width() / 2 - 2, y - imagenTanque.height() / 2 - 2,
+                         imagenTanque.width() + 4, imagenTanque.height() + 4);
+    }
+
 
     // Obtener la vida del tanque y dibujarla encima del tanque
     int vida = tanque->obtenerVida();  // Obtener el porcentaje de vida del tanque
@@ -863,6 +870,34 @@ void GrafoWidget::moverTanqueActual() {
 }*/
 
 
+QString GrafoWidget::determinarGanador() {
+    int tanquesVivosJugador1 = 0;
+    int tanquesVivosJugador2 = 0;
+
+    // Contar tanques vivos del Jugador 1
+    if (tanqueRojo1 && tanqueRojo1->estaVivo()) ++tanquesVivosJugador1;
+    if (tanqueRojo2 && tanqueRojo2->estaVivo()) ++tanquesVivosJugador1;
+    if (tanqueAzul1 && tanqueAzul1->estaVivo()) ++tanquesVivosJugador1;
+    if (tanqueAzul2 && tanqueAzul2->estaVivo()) ++tanquesVivosJugador1;
+
+    // Contar tanques vivos del Jugador 2
+    if (tanqueAmarillo1 && tanqueAmarillo1->estaVivo()) ++tanquesVivosJugador2;
+    if (tanqueAmarillo2 && tanqueAmarillo2->estaVivo()) ++tanquesVivosJugador2;
+    if (tanqueCeleste1 && tanqueCeleste1->estaVivo()) ++tanquesVivosJugador2;
+    if (tanqueCeleste2 && tanqueCeleste2->estaVivo()) ++tanquesVivosJugador2;
+
+    // Determinar el ganador
+    if (tanquesVivosJugador1 > tanquesVivosJugador2) {
+        return "Jugador 1";
+    } else if (tanquesVivosJugador2 > tanquesVivosJugador1) {
+        return "Jugador 2";
+    } else {
+        return "Empate";
+    }
+}
+
+
+
 // Variables de estado globales para manejar doble turno
 bool dobleturnoActivado = false;  // Se activa cuando el jugador obtiene el power-up de doble turno
 bool dobleturnoPendiente = false; // Indica que queda un segundo turno para el jugador actual
@@ -882,9 +917,35 @@ void GrafoWidget::siguienteTurno(bool activarDobleTurno, int contadorTurnos) {
         return; // Mantener el turno del mismo jugador
     }
 
-    // Cambiar de turno cuando no hay doble turno pendiente
-    turnoActual = (turnoActual + 1) % 8;
-    jugadorActual = (turnoActual % 2 == 0) ? 0 : 1;
+    // Bucle para pasar automáticamente al siguiente tanque vivo
+    do {
+        turnoActual = (turnoActual + 1) % 8;
+        jugadorActual = (turnoActual % 2 == 0) ? 0 : 1;
+        tanqueActual = obtenerTanqueActual();
+    } while (tanqueActual == nullptr || !tanqueActual->estaVivo());  // Continuar hasta encontrar un tanque vivo
+
+    // Verificar si alguno de los jugadores ya no tiene tanques vivos
+    int tanquesVivosJugador1 = 0;
+    int tanquesVivosJugador2 = 0;
+
+    if (tanqueRojo1 && tanqueRojo1->estaVivo()) ++tanquesVivosJugador1;
+    if (tanqueRojo2 && tanqueRojo2->estaVivo()) ++tanquesVivosJugador1;
+    if (tanqueAzul1 && tanqueAzul1->estaVivo()) ++tanquesVivosJugador1;
+    if (tanqueAzul2 && tanqueAzul2->estaVivo()) ++tanquesVivosJugador1;
+
+    if (tanqueAmarillo1 && tanqueAmarillo1->estaVivo()) ++tanquesVivosJugador2;
+    if (tanqueAmarillo2 && tanqueAmarillo2->estaVivo()) ++tanquesVivosJugador2;
+    if (tanqueCeleste1 && tanqueCeleste1->estaVivo()) ++tanquesVivosJugador2;
+    if (tanqueCeleste2 && tanqueCeleste2->estaVivo()) ++tanquesVivosJugador2;
+
+    if (tanquesVivosJugador1 == 0 || tanquesVivosJugador2 == 0) {
+        QString ganador = (tanquesVivosJugador1 > tanquesVivosJugador2) ? "Jugador 1" : "Jugador 2";
+        emit juegoFinalizado(ganador);  // Emitir la señal en lugar de cerrar la ventana /////////////////
+        /*QMessageBox::information(this, "Juego Finalizado", "El ganador es: " + ganador);  // Mostrar mensaje
+        close();*/
+        // Aquí podrías llamar a una función para finalizar el juego, mostrar el mensaje de victoria, etc.
+        return; // Salir de la función para detener el juego
+    }
 
     // Activar el power-up pendiente para el jugador actual
     int powerUpAplicar = (jugadorActual == 0) ? powerUpPendienteJugador1 : powerUpPendienteJugador2;
@@ -923,7 +984,6 @@ void GrafoWidget::siguienteTurno(bool activarDobleTurno, int contadorTurnos) {
     std::cout << "Cambio al turno del tanque: " << turnoActual << " (Jugador " << jugadorActual + 1 << ")" << std::endl;
     update();
 }
-
 
     /*
     // Dibujar los nodos

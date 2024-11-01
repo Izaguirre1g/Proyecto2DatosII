@@ -10,20 +10,28 @@ TanqueAmarillo::TanqueAmarillo(Grafo* grafo, int nodoInicial) : Tanque(grafo, no
 
 // Método principal para mover el tanque
 void TanqueAmarillo::mover() {
-    // Decidir si moverse con Dijkstra o con movimiento aleatorio
-    if (rand() % 5 < 4) {  // 80% de probabilidad de moverse mediante Dijkstra
+    // Determinar si el movimiento será con Dijkstra o aleatorio basado en el power-up de precisión
+    bool usarDijkstra = (precisionDeMovimientoActivado) ? (rand() % 10 < 9) : (rand() % 5 < 4);
+
+    if (precisionDeMovimientoActivado) {
+        std::cout << "Power-up de precisión activado: Probabilidad aumentada de usar Dijkstra" << std::endl;
+    }
+
+    if (usarDijkstra) {  // Movimiento con Dijkstra
         std::cout << "Movimiento mediante Dijkstra de amarillo" << std::endl;
+
         if (nodoObjetivo != -1) {
             if (grafo->nodosBloqueados[nodoObjetivo]) {
                 std::cerr << "El nodo objetivo está bloqueado. No se puede mover el tanque amarillo." << std::endl;
                 return;
             }
+
             camino = new int[grafo->obtenerNumNodos()];
             longitudCamino = 0;
             dijkstra(*grafo, nodoActual, nodoObjetivo, camino, longitudCamino);
             indiceCamino = 0;  // Reiniciar el índice del camino
         }
-    } else {  // 20% de probabilidad de moverse con movimiento aleatorio
+    } else {  // Movimiento aleatorio
         std::cout << "Movimiento aleatorio de amarillo" << std::endl;
 
         LineOfSight los(grafo);
@@ -38,6 +46,9 @@ void TanqueAmarillo::mover() {
             moverAleatoriamenteConValidacion();  // Mover de forma aleatoria con validaciones
         }
     }
+
+    // Desactivar el power-up de precisión de movimiento después de usarlo en el turno
+    precisionDeMovimientoActivado = false;
 }
 
 // Función que selecciona una posición aleatoria dentro de un radio definido

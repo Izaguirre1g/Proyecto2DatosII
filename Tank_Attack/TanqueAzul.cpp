@@ -14,7 +14,7 @@ void TanqueAzul::mover() {
     bool usarBFS = (precisionDeMovimientoActivado) ? (rand() % 10 < 9) : (rand() % 2 == 0);
 
     if (precisionDeMovimientoActivado) {
-        std::cout << "Power-up de precisión activado: Probabilidad aumentada de usar BFS" << std::endl;
+        //std::cout << "Power-up de precisión activado: Probabilidad aumentada de usar BFS" << std::endl;
     }
 
     if (usarBFS) {  // Movimiento con BFS

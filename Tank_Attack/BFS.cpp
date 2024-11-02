@@ -63,10 +63,10 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode, int* camino, in
         int nodoActual = cola.front();
         cola.pop();
 
-        std::cout << "Nodo actual: " << nodoActual << " (Distancia: " << distancias[nodoActual] << ")\n";
+        //std::cout << "Nodo actual: " << nodoActual << " (Distancia: " << distancias[nodoActual] << ")\n";
 
         if (nodoActual == destinationNode) {
-            std::cout << "Destino alcanzado en BFS\n";
+            //std::cout << "Destino alcanzado en BFS\n";
             break;
         }
 
@@ -87,7 +87,7 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode, int* camino, in
         std::cerr << "No se pudo alcanzar el nodo destino desde el nodo inicial.\n";
         longitudCamino = 0;  // No se encontró camino
     } else {
-        std::cout << "Camino al nodo " << destinationNode << ":\n";
+        //std::cout << "Camino al nodo " << destinationNode << ":\n";
         int indice = 0;
 
         // Reconstruir el camino desde el destino al nodo inicial
@@ -105,8 +105,10 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode, int* camino, in
 
         // Imprimir el camino
         for (int i = 0; i < indice; ++i) {
-            std::cout << camino[i] << " ";
+            //std::cout << camino[i] << " ";
         }
-        std::cout << "\n";
+
+
+        //std::cout << "\n";
     }
 }

@@ -29,7 +29,7 @@ void Tanque::limpiarCamino() {
     }
     longitudCamino = 0;
     indiceCamino = 0;
-    std::cout << "Camino limpiado para el tanque en nodo " << nodoActual << std::endl;
+    //std::cout << "Camino limpiado para el tanque en nodo " << nodoActual << std::endl;
 }
 
 void Tanque::reducirVida(int cantidad) {

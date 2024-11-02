@@ -61,7 +61,7 @@ bool LineOfSight::hayObstaculosEnLinea(int linea[][2], int puntos) {
 
         // Verificar si el nodo cercano está bloqueado
         if (grafo->esNodoBloqueado(nodoCercano)) {
-            std::cout << "Obstáculo encontrado en el nodo: " << nodoCercano << std::endl;
+            //std::cout << "Obstáculo encontrado en el nodo: " << nodoCercano << std::endl;
             return true;  // Hay un obstáculo
         }
     }

@@ -14,7 +14,7 @@ void TanqueAmarillo::mover() {
     bool usarDijkstra = (precisionDeMovimientoActivado) ? (rand() % 10 < 9) : (rand() % 5 < 4);
 
     if (precisionDeMovimientoActivado) {
-        std::cout << "Power-up de precisión activado: Probabilidad aumentada de usar Dijkstra" << std::endl;
+        //std::cout << "Power-up de precisión activado: Probabilidad aumentada de usar Dijkstra" << std::endl;
     }
 
     if (usarDijkstra) {  // Movimiento con Dijkstra
@@ -109,7 +109,7 @@ bool TanqueAmarillo::avanzarLoMasLejosPosibleConLineaVista() {
 
     // Verificar si el tanque ya ha alcanzado su objetivo
     if (nodoActual == nodoObjetivo) {
-        std::cout << "El tanque ha llegado al nodo objetivo: " << nodoObjetivo << std::endl;
+        //std::cout << "El tanque ha llegado al nodo objetivo: " << nodoObjetivo << std::endl;
         finalizarMovimientoYTurno();  // Finalizar el turno cuando llegue al objetivo
         return false;  // No continuar el movimiento
     }
@@ -132,7 +132,7 @@ bool TanqueAmarillo::avanzarLoMasLejosPosibleConLineaVista() {
             return false;  // Romper el ciclo
         }
 
-        std::cout << "Avanzando al siguiente nodo: " << siguienteNodo << std::endl;
+        //std::cout << "Avanzando al siguiente nodo: " << siguienteNodo << std::endl;
         nodoActual = siguienteNodo;
         emit actualizarInterfaz();  // Actualizar la interfaz
 
@@ -150,7 +150,7 @@ bool TanqueAmarillo::avanzarLoMasLejosPosibleConLineaVista() {
 // Función para detectar colisiones
 bool TanqueAmarillo::detectarColision(int siguienteNodo) {
     if (grafo->esNodoBloqueado(siguienteNodo)) {
-        std::cout << "Obstáculo encontrado en el nodo: " << siguienteNodo << ". Deteniéndose antes." << std::endl;
+        //std::cout << "Obstáculo encontrado en el nodo: " << siguienteNodo << ". Deteniéndose antes." << std::endl;
         return true;  // Se detectó una colisión
     }
     return false;  // No hay colisión

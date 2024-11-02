@@ -190,7 +190,7 @@ void Grafo::bloquearNodosIntermedios(int nodo) {
             int nodoIntermedio = encontrarNodoCercano(x1 + (dx * 25), y1 + (dy * 25));  // Mitad de la distancia
             if (nodoIntermedio != -1 && !nodosBloqueados[nodoIntermedio]) {
                 nodosBloqueados[nodoIntermedio] = true;
-                std::cout << "Nodo intermedio bloqueado entre " << nodo << " y " << nodoCercano << std::endl;
+                //std::cout << "Nodo intermedio bloqueado entre " << nodo << " y " << nodoCercano << std::endl;
             }
         }
     }

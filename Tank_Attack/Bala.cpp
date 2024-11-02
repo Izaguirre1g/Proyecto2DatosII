@@ -51,12 +51,12 @@ void Bala::avanzarCaminoPaso(Grafo* grafo) {
 
         // Rebote en obstáculos
         if (grafo->esNodoBloqueado(nodoSiguiente)) {
-            std::cout << "¡Colisión con obstáculo detectada!" << std::endl;
+            //std::cout << "¡Colisión con obstáculo detectada!" << std::endl;
             velocidadActual = velocidadReduccion;
 
             int dx = grafo->getPosicionX(nodoSiguiente) - x;
             int dy = grafo->getPosicionY(nodoSiguiente) - y;
-            const int distanciaRebote = 30;
+            const int distanciaRebote = 15;
 
             if (dx != 0) x += (dx > 0 ? -distanciaRebote : distanciaRebote);
             if (dy != 0) y += (dy > 0 ? -distanciaRebote : distanciaRebote);
@@ -139,3 +139,4 @@ bool Bala::verificarColisionConTanque(int xTanque, int yTanque, float radioColis
     // Verificar si la distancia es menor al radio de colisión
     return distancia <= radioColision;
 }
+

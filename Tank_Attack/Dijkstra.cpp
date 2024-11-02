@@ -63,7 +63,7 @@ void dijkstra(Grafo& grafo, int inicio, int destino, int* &camino, int &longitud
         }
 
         if (minNodo == -1) {
-            std::cerr << "Error: No se puede continuar, no hay nodos accesibles.\n";
+            //std::cerr << "Error: No se puede continuar, no hay nodos accesibles.\n";
             break;  // Todos los nodos accesibles ya están procesados
         }
 

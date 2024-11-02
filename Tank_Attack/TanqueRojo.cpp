@@ -14,7 +14,7 @@ void TanqueRojo::mover() {
     bool usarDijkstra = (precisionDeMovimientoActivado) ? (rand() % 10 < 9) : (rand() % 5 < 4);
 
     if (precisionDeMovimientoActivado) {
-        std::cout << "Power-up de precisión activado: Probabilidad aumentada de usar Dijkstra" << std::endl;
+        //std::cout << "Power-up de precisión activado: Probabilidad aumentada de usar Dijkstra" << std::endl;
     }
 
     if (usarDijkstra) {  // Movimiento con Dijkstra

@@ -42,8 +42,8 @@ MainWindow::MainWindow(Grafo* grafo, QWidget *parent)
 MainWindow::~MainWindow() {}
 
 void MainWindow::mostrarMensajeYSalir(const QString &ganador) { //BORRAR /////////////////////////
-    QMessageBox::information(this, "Juego Finalizado", "El ganador es: " + ganador);  // Mostrar mensaje
-    close();  // Cerrar la ventana principal
+    QMessageBox::information(this, "Juego Finalizado", "El ganador es: " + ganador);  // Muestra el mensaje en pantalla
+    close();  // Cierra la ventana principal
 }
 
 void MainWindow::finalizarJuego() {
@@ -51,8 +51,8 @@ void MainWindow::finalizarJuego() {
     GrafoWidget* grafoWidget = qobject_cast<GrafoWidget*>(centralWidget());
 
     if (grafoWidget) {
-        QString ganador = grafoWidget->determinarGanador();  // Obtener el nombre del ganador
-        QMessageBox::information(this, "Juego Finalizado", "El ganador es: " + ganador);  // Mostrar mensaje
+        QString ganador = grafoWidget->determinarGanador();  //Obtiene el nombre del ganador
+        QMessageBox::information(this, "Juego Finalizado", "El ganador es: " + ganador);  //Muestra un mensaje
         close();
     }
 }

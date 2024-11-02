@@ -13,19 +13,19 @@ using namespace std;
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-    // Inicializar el generador de números aleatorios
+    //Inicializa el generador de números aleatorios
     srand(static_cast<unsigned>(time(0)));
 
-    // Calcular la cantidad de nodos que caben en un área de 1050x720 con espaciado de 30
+    //Calcula la cantidad de nodos que caben en un área de 1050x720 con espaciado de 30
     int ancho = 1050;
     int alto = 720;
     int espaciado = 50;
     int numNodos = (ancho / espaciado) * (alto / espaciado);  // Número total de nodos
 
-    // Crear un grafo con el número calculado de nodos
+    //Crea un grafo con el número calculado de nodos
     Grafo* grafo = new Grafo(numNodos);
 
-    // Generar la matriz de nodos en el espacio
+    //Genera la matriz de nodos en el espacio
     grafo->generarMatriz(ancho, alto, espaciado);
 
     int numObstaculos = 20;  // El número de obstáculos que deseas

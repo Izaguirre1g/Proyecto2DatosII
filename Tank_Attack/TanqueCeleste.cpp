@@ -10,7 +10,7 @@ TanqueCeleste::TanqueCeleste(Grafo* grafo, int nodoInicial) : Tanque(grafo, nodo
 
 // Método principal para mover el tanque
 void TanqueCeleste::mover() {
-    // Determinar si el movimiento será con BFS o aleatorio basado en el power-up de precisión
+    // Determina si el movimiento será con BFS o aleatorio basado en el power-up de precisión
     bool usarBFS = (precisionDeMovimientoActivado) ? (rand() % 10 < 9) : (rand() % 2 == 0);
 
     if (precisionDeMovimientoActivado) {
@@ -36,7 +36,7 @@ void TanqueCeleste::mover() {
         moverAleatoriamenteConValidacion();  // Mover de forma aleatoria con validaciones
     }
 
-    // Desactivar el power-up de precisión de movimiento después de usarlo en el turno
+    // Desactiva el power-up de precisión de movimiento después de usarlo en el turno
     precisionDeMovimientoActivado = false;
 }
 
@@ -46,7 +46,7 @@ int TanqueCeleste::obtenerPosicionAleatoriaEnRadio(int radio) {
     int nodoAleatorio;
     int intentos = 0;
     do {
-        // Generar una posición aleatoria dentro del radio
+        // Genera una posición aleatoria dentro del radio
         int xAleatorio = grafo->getPosicionX(nodoActual) + (rand() % (radio * 2 + 1)) - radio;
         int yAleatorio = grafo->getPosicionY(nodoActual) + (rand() % (radio * 2 + 1)) - radio;
         nodoAleatorio = grafo->encontrarNodoCercano(xAleatorio, yAleatorio);
@@ -67,12 +67,12 @@ void TanqueCeleste::moverAleatoriamenteConValidacion() {
 
     if (nuevoNodo != -1 && nodoActual != nuevoNodo) {
         std::cout << "Posición aleatoria encontrada. Nodo: " << nuevoNodo << std::endl;
-        nodoActual = nuevoNodo;  // Actualizar la posición del tanque
-        emit actualizarInterfaz();  // Forzar la actualización de la interfaz
+        nodoActual = nuevoNodo;  // Actualiza la posición del tanque
+        emit actualizarInterfaz();  // Forza la actualización de la interfaz
 
-        // Pausar brevemente para permitir que el movimiento aleatorio sea visible
+        // Pausa brevemente para permitir que el movimiento aleatorio sea visible
         QTimer::singleShot(200, this, [this]() {
-            continuarMovimiento();  // Continuar el movimiento después de una pausa
+            continuarMovimiento();  // Continua el movimiento después de una pausa
         });
     } else {
         // Si no se encontró una posición válida, intentar el movimiento con línea de vista
@@ -84,10 +84,10 @@ void TanqueCeleste::moverAleatoriamenteConValidacion() {
 // Función para continuar el movimiento sin pausa
 void TanqueCeleste::continuarMovimiento() {
     if (!avanzarLoMasLejosPosibleConLineaVista()) {
-        finalizarMovimientoYTurno();  // Finalizar el turno si no puede avanzar más
+        finalizarMovimientoYTurno();  // Finaliza el turno si no puede avanzar más
     } else {
         QTimer::singleShot(100, this, [this]() {
-            continuarMovimiento();  // Continuar el ciclo de movimiento
+            continuarMovimiento();  // Continua el ciclo de movimiento
         });
     }
 }
@@ -97,10 +97,10 @@ bool TanqueCeleste::avanzarLoMasLejosPosibleConLineaVista() {
     LineOfSight los(grafo);
     int siguienteNodo;
 
-    // Verificar si el tanque ya ha alcanzado su objetivo
+    // Verifica si el tanque ya ha alcanzado su objetivo
     if (nodoActual == nodoObjetivo) {
         std::cout << "El tanque ha llegado al nodo objetivo: " << nodoObjetivo << std::endl;
-        finalizarMovimientoYTurno();  // Finalizar el turno cuando llegue al objetivo
+        finalizarMovimientoYTurno();  // Finaliza el turno cuando llegue al objetivo
         return false;  // No continuar el movimiento
     }
 
@@ -108,32 +108,32 @@ bool TanqueCeleste::avanzarLoMasLejosPosibleConLineaVista() {
     if (los.tieneLineaVista(nodoActual, nodoObjetivo)) {
         std::cout << "Línea de vista despejada. Avanzando al nodo objetivo: " << nodoObjetivo << std::endl;
         nodoActual = nodoObjetivo;
-        emit actualizarInterfaz();  // Actualizar la interfaz
-        finalizarMovimientoYTurno();  // Finalizar el turno
-        return false;  // Detener el movimiento una vez que llega al objetivo
+        emit actualizarInterfaz();  // Actualiza la interfaz
+        finalizarMovimientoYTurno();  // Finaliza el turno
+        return false;  // Detiene el movimiento una vez que llega al objetivo
     } else {
-        // Obtener el siguiente nodo más cercano en la dirección hacia el objetivo
+        //Obtiene el siguiente nodo más cercano en la dirección hacia el objetivo
         siguienteNodo = los.obtenerSiguienteNodoEnLinea(nodoActual, nodoObjetivo);
 
         // Detección de colisión
         if (detectarColision(siguienteNodo)) {
             std::cout << "Movimiento detenido debido a un obstáculo. Finalizando turno..." << std::endl;
-            finalizarMovimientoYTurno();  // Finalizar el turno
-            return false;  // Romper el ciclo
+            finalizarMovimientoYTurno();  //Finaliza el turno
+            return false;  //Rompe el ciclo
         }
 
         std::cout << "Avanzando al siguiente nodo: " << siguienteNodo << std::endl;
         nodoActual = siguienteNodo;
-        emit actualizarInterfaz();  // Actualizar la interfaz
+        emit actualizarInterfaz();  //Actualiza la interfaz
 
-        // Agregar lógica para evitar ciclos infinitos
+
         if (nodoActual == siguienteNodo) {
             std::cerr << "Ciclo detectado. Finalizando el turno para evitar bucles infinitos." << std::endl;
             finalizarMovimientoYTurno();
             return false;
         }
 
-        return true;  // Continuar el movimiento
+        return true;  //Continua el movimiento
     }
 }
 
@@ -149,7 +149,7 @@ bool TanqueCeleste::detectarColision(int siguienteNodo) {
 // Función para finalizar el movimiento y cambiar de turno
 void TanqueCeleste::finalizarMovimientoYTurno() {
     std::cout << "Finalizando el movimiento y cambiando turno..." << std::endl;
-    emit actualizarInterfaz();  // Actualizar la interfaz
+    emit actualizarInterfaz();  // Actualiza la interfaz
 }
 
 // Función para avanzar paso a paso en el camino

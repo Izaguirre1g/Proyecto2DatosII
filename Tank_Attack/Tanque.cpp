@@ -12,7 +12,7 @@ void Tanque::setNodoObjetivo(int nodoObjetivo) {
     this->nodoObjetivo = nodoObjetivo;
 }
 
-// Implementación de los nuevos métodos
+
 int* Tanque::getCamino() const {
     return camino;  // Retorna el camino calculado
 }
@@ -22,7 +22,7 @@ int Tanque::getLongitudCamino() const {
 }
 
 void Tanque::limpiarCamino() {
-    // Liberar memoria del camino y reiniciar los parámetros
+    //Libera memoria del camino y reiniciar los parámetros
     if (camino) {
         delete[] camino;  // Liberar el arreglo de camino si existe
         camino = nullptr;
@@ -38,7 +38,6 @@ void Tanque::reducirVida(int cantidad) {
     if (vida <= 0) {
         std::cout << "El tanque ha sido destruido!" << std::endl;
         validaExistenciaTanque(-2);
-        // Aquí puedes agregar la lógica de eliminación o destrucción del tanque
     }
 }
 

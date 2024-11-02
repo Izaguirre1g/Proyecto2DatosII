@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cmath>
 
-// Constructor
+//Constructor
 Bala::Bala(int xInicial, int yInicial, int xObjetivo, int yObjetivo, int camino[], int longitud)
     : x(xInicial), y(yInicial), xObjetivo(xObjetivo), yObjetivo(yObjetivo), activa(true), longitudCamino(longitud), indiceCamino(0) {
     // Copiar el camino
@@ -13,7 +13,7 @@ Bala::Bala(int xInicial, int yInicial, int xObjetivo, int yObjetivo, int camino[
     }
 }
 
-// Destructor para liberar la memoria del camino
+//Destructor para liberar la memoria del camino
 Bala::~Bala() {
     if (camino) {
         delete[] camino;
@@ -25,8 +25,7 @@ Bala::~Bala() {
 void Bala::mover() {
     if (indiceCamino < longitudCamino) {
         int nodoSiguiente = camino[indiceCamino];
-        // Aquí se asume que el `grafo` se pasa en la función de avanzar, y se calculan x, y del nodo
-        // Lo moveremos en `avanzarCaminoPaso`
+
     }
 }
 
@@ -49,7 +48,7 @@ void Bala::avanzarCaminoPaso(Grafo* grafo) {
     if (indiceCamino < longitudCamino - 1) {
         int nodoSiguiente = camino[indiceCamino + 1];
 
-        // Rebote en obstáculos
+        //Rebote en obstáculos
         if (grafo->esNodoBloqueado(nodoSiguiente)) {
             std::cout << "¡Colisión con obstáculo detectada!" << std::endl;
             velocidadActual = velocidadReduccion;
@@ -90,7 +89,7 @@ void Bala::avanzarCaminoPaso(Grafo* grafo) {
 
 
 
-// Verificar si la bala ha llegado al final del camino
+// Verifica si la bala ha llegado al final del camino
 bool Bala::haTerminadoCamino() {
     return indiceCamino >= longitudCamino-1;
 }
@@ -105,17 +104,17 @@ int Bala::getY() const {
     return y;
 }
 
-// Obtener el índice actual en el camino
+// Obtiene el índice actual en el camino
 int Bala::getIndiceActual() const {
     return indiceCamino;
 }
 
-// Obtener la longitud total del camino
+// Obtiene la longitud total del camino
 int Bala::getLongitudCamino() const {
     return longitudCamino;
 }
 
-// Obtener el array del camino de la bala
+// Obtiene el array del camino de la bala
 int* Bala::getCamino() {
     return camino;
 }
@@ -131,12 +130,12 @@ void Bala::setActiva(bool estado) {
 }
 
 bool Bala::verificarColisionConTanque(int xTanque, int yTanque, float radioColision) {
-    // Calcular la distancia entre la posición de la bala y el tanque
+    //Calcula la distancia entre la posición de la bala y el tanque
     int dx = xTanque - x;
     int dy = yTanque - y;
     float distancia = std::sqrt(dx * dx + dy * dy);
 
-    // Verificar si la distancia es menor al radio de colisión
+    //Verifica si la distancia es menor al radio de colisión
     return distancia <= radioColision;
 }
 

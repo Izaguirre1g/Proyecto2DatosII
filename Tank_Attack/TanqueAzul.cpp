@@ -35,12 +35,12 @@ void TanqueAzul::mover() {
         moverAleatoriamenteConValidacion();  // Mover de forma aleatoria con validaciones
     }
 
-    // Desactivar el power-up de precisión de movimiento después de usarlo en el turno
+    // Desactiva el power-up de precisión de movimiento después de usarlo en el turno
     precisionDeMovimientoActivado = false;
 }
 
 
-// Función que selecciona una posición aleatoria dentro de un radio definido
+//Función que selecciona una posición aleatoria dentro de un radio definido
 int TanqueAzul::obtenerPosicionAleatoriaEnRadio(int radio) {
     int nodoAleatorio;
     int intentos = 0;
@@ -54,24 +54,24 @@ int TanqueAzul::obtenerPosicionAleatoriaEnRadio(int radio) {
         if (intentos++ > 10 || nodoAleatorio == nodoActual) {
             return -1;
         }
-    } while (grafo->esNodoBloqueado(nodoAleatorio));  // Asegurarse de que el nodo no esté bloqueado
+    } while (grafo->esNodoBloqueado(nodoAleatorio));  //Asegurarse de que el nodo no esté bloqueado
 
     return nodoAleatorio;
 }
 
-// Mueve el tanque aleatoriamente con validaciones y luego continúa el movimiento con línea de vista
+//Mueve el tanque aleatoriamente con validaciones y luego continúa el movimiento con línea de vista
 void TanqueAzul::moverAleatoriamenteConValidacion() {
     int radioMovimiento = 150;  // Radio para el movimiento aleatorio
     int nuevoNodo = obtenerPosicionAleatoriaEnRadio(radioMovimiento);
 
     if (nuevoNodo != -1 && nodoActual != nuevoNodo) {
         std::cout << "Posición aleatoria encontrada. Nodo: " << nuevoNodo << std::endl;
-        nodoActual = nuevoNodo;  // Actualizar la posición del tanque
-        emit actualizarInterfaz();  // Forzar la actualización de la interfaz
+        nodoActual = nuevoNodo;  // Actualiza la posición del tanque
+        emit actualizarInterfaz();  // Fuerza la actualización de la interfaz
 
-        // Pausar brevemente para permitir que el movimiento aleatorio sea visible
+        // Hace pausas para permitir que el movimiento aleatorio sea visible
         QTimer::singleShot(200, this, [this]() {
-            continuarMovimiento();  // Continuar el movimiento después de una pausa
+            continuarMovimiento();  // Continua el movimiento después de una pausa
         });
     } else {
         // Si no se encontró una posición válida, intentar el movimiento con línea de vista
@@ -103,27 +103,27 @@ bool TanqueAzul::avanzarLoMasLejosPosibleConLineaVista() {
         return false;  // No continuar el movimiento
     }
 
-    // Verificar si hay línea de vista hacia el nodo objetivo desde la posición actual
+    // Verifica si hay línea de vista hacia el nodo objetivo desde la posición actual
     if (los.tieneLineaVista(nodoActual, nodoObjetivo)) {
         std::cout << "Línea de vista despejada. Avanzando al nodo objetivo: " << nodoObjetivo << std::endl;
         nodoActual = nodoObjetivo;
         emit actualizarInterfaz();  // Actualizar la interfaz
-        finalizarMovimientoYTurno();  // Finalizar el turno
+        finalizarMovimientoYTurno();  //Finaliza el turno
         return false;  // Detener el movimiento una vez que llega al objetivo
     } else {
-        // Obtener el siguiente nodo más cercano en la dirección hacia el objetivo
+        // Obtiene el siguiente nodo más cercano en la dirección hacia el objetivo
         siguienteNodo = los.obtenerSiguienteNodoEnLinea(nodoActual, nodoObjetivo);
 
         // Detección de colisión
         if (detectarColision(siguienteNodo)) {
             std::cout << "Movimiento detenido debido a un obstáculo. Finalizando turno..." << std::endl;
-            finalizarMovimientoYTurno();  // Finalizar el turno
-            return false;  // Romper el ciclo
+            finalizarMovimientoYTurno();  //Finaliza el turno
+            return false;  //Rompe el ciclo
         }
 
         std::cout << "Avanzando al siguiente nodo: " << siguienteNodo << std::endl;
         nodoActual = siguienteNodo;
-        emit actualizarInterfaz();  // Actualizar la interfaz
+        emit actualizarInterfaz();  // Actualiza la interfaz
 
         // Agregar lógica para evitar ciclos infinitos
         if (nodoActual == siguienteNodo) {
@@ -132,7 +132,7 @@ bool TanqueAzul::avanzarLoMasLejosPosibleConLineaVista() {
             return false;
         }
 
-        return true;  // Continuar el movimiento
+        return true;  // Continua el movimiento
     }
 }
 
@@ -154,7 +154,7 @@ void TanqueAzul::finalizarMovimientoYTurno() {
 // Función para avanzar paso a paso en el camino
 void TanqueAzul::avanzarCaminoPaso() {
     if (indiceCamino < longitudCamino) {
-        nodoActual = camino[indiceCamino];  // Mover al siguiente nodo en el camino
+        nodoActual = camino[indiceCamino];  // Mueve al siguiente nodo en el camino
         indiceCamino++;
     }
 }

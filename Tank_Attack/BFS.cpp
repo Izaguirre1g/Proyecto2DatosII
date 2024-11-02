@@ -90,20 +90,20 @@ void bfs(const Grafo& grafo, int startNode, int destinationNode, int* camino, in
         std::cout << "Camino al nodo " << destinationNode << ":\n";
         int indice = 0;
 
-        // Reconstruir el camino desde el destino al nodo inicial
+        //Reconstruye el camino desde el destino al nodo inicial
         for (int v = destinationNode; v != -1; v = predecesores[v]) {
             camino[indice++] = v;
         }
 
-        // Invertir el camino para que vaya desde el inicio hasta el destino
+        //Invierte el camino para que vaya desde el inicio hasta el destino
         for (int i = 0; i < indice / 2; ++i) {
             std::swap(camino[i], camino[indice - 1 - i]);
         }
 
-        // Actualizar la longitud del camino
+        //Actualiza la longitud del camino
         longitudCamino = indice;
 
-        // Imprimir el camino
+        //Muestra el camino
         for (int i = 0; i < indice; ++i) {
             std::cout << camino[i] << " ";
         }

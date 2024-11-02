@@ -151,21 +151,21 @@ bool TanqueAmarillo::avanzarLoMasLejosPosibleConLineaVista() {
 bool TanqueAmarillo::detectarColision(int siguienteNodo) {
     if (grafo->esNodoBloqueado(siguienteNodo)) {
         std::cout << "Obstáculo encontrado en el nodo: " << siguienteNodo << ". Deteniéndose antes." << std::endl;
-        return true;  // Se detectó una colisión
+        return true;  //Se detectó una colisión
     }
-    return false;  // No hay colisión
+    return false;  //No hay colisión
 }
 
 // Función para finalizar el movimiento y cambiar de turno
 void TanqueAmarillo::finalizarMovimientoYTurno() {
     std::cout << "Finalizando el movimiento y cambiando turno..." << std::endl;
-    emit actualizarInterfaz();  // Actualizar la interfaz
+    emit actualizarInterfaz();  // Actualiza la interfaz
 }
 
-// Función para avanzar paso a paso en el camino
+//Función para avanzar paso a paso en el camino
 void TanqueAmarillo::avanzarCaminoPaso() {
     if (indiceCamino < longitudCamino) {
-        nodoActual = camino[indiceCamino];  // Mover al siguiente nodo en el camino
+        nodoActual = camino[indiceCamino];  // Moverse al siguiente nodo en el camino
         indiceCamino++;
     }
 }
@@ -176,7 +176,7 @@ bool TanqueAmarillo::haTerminadoCamino() {
 
 int TanqueAmarillo::getNodoSiguiente() {
     if (indiceCamino < longitudCamino) {
-        return camino[indiceCamino];  // Devolver el siguiente nodo en el camino
+        return camino[indiceCamino];  // Devuelve el siguiente nodo en el camino
     }
     return -1;  // No hay más nodos en el camino
 }

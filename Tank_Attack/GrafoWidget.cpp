@@ -104,7 +104,7 @@ void GrafoWidget::moverBala() {
 
         update();  //Actualiza la interfaz en cada paso
 
-        //Obtener el tanque que dispara la bala (para evitar autocolisión)
+        //Obtiene el tanque que dispara la bala (para evitar autocolisión)
         Tanque* tanqueAtacante = obtenerTanqueActual();
 
         //Arreglo de tanques
@@ -159,7 +159,7 @@ void GrafoWidget::moverBala() {
             return;
         }
 
-        // Actualizar la interfaz después de cada movimiento
+        // Actualiza la interfaz después de cada movimiento
         update();
     }
 }

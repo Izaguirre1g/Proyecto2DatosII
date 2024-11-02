@@ -95,3 +95,16 @@
 4	18	1730519598483546828	/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/mocs_compilation.cpp	f75b7902dc5f8f4d
 19	456	1730519598498546780	CMakeFiles/Tank_Attack.dir/Grafo.cpp.o	5b8e07601be69e2e
 456	864	1730519598935545373	Tank_Attack	ac10573888e09be3
+3	19	1730528098802294273	Tank_Attack_autogen/timestamp	f75b7902dc5f8f4d
+3	19	1730528098802294273	Tank_Attack_autogen/mocs_compilation.cpp	f75b7902dc5f8f4d
+3	19	1730528098802294273	/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/timestamp	f75b7902dc5f8f4d
+3	19	1730528098802294273	/home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-RelWithDebInfo/Tank_Attack_autogen/mocs_compilation.cpp	f75b7902dc5f8f4d
+20	599	1730528098819294904	CMakeFiles/Tank_Attack.dir/Dijkstra.cpp.o	f1e5226fda28e007
+19	667	1730528098818294868	CMakeFiles/Tank_Attack.dir/Grafo.cpp.o	5b8e07601be69e2e
+23	701	1730528098822295016	CMakeFiles/Tank_Attack.dir/BFS.cpp.o	5266d63100a053fd
+25	746	1730528098824295090	CMakeFiles/Tank_Attack.dir/Bala.cpp.o	8c4cec44861bb368
+29	841	1730528098828295239	CMakeFiles/Tank_Attack.dir/LineOfSight.cpp.o	3f86532a0719d291
+19	1717	1730528098818294868	CMakeFiles/Tank_Attack.dir/Tank_Attack_autogen/mocs_compilation.cpp.o	98cf615affac9ce2
+19	2223	1730528098818294868	CMakeFiles/Tank_Attack.dir/mainwindow.cpp.o	b3804443e23413b
+20	2303	1730528098819294904	CMakeFiles/Tank_Attack.dir/GrafoWidget.cpp.o	f262fc84e037516a
+2303	2708	1730528101102379224	Tank_Attack	ac10573888e09be3

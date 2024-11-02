@@ -149,7 +149,7 @@ int Grafo::obtenerPeso(int nodo1, int nodo2) const {
 }
 
 
-// Generar obstáculos aleatorios en el mapa con restricciones para evitar los bordes
+//Genera obstáculos aleatorios en el mapa con restricciones para evitar los bordes
 void Grafo::asignarObstaculosAleatorios(int numObstaculos) {
     int margen = 5;  // Distancia mínima del borde
     int asignados = 0;
@@ -182,15 +182,15 @@ void Grafo::bloquearNodosIntermedios(int nodo) {
     int x1 = getPosicionX(nodo);
     int y1 = getPosicionY(nodo);
 
-    // Explorar las 8 direcciones alrededor del nodo
+    //Explora las 8 direcciones alrededor del nodo
     for (int i = 0; i < 8; ++i) {
         int dx = direcciones[i][0];
         int dy = direcciones[i][1];
 
-        // Verificar si hay un obstáculo cercano en la dirección actual
+        //Verifica si hay un obstáculo cercano en la dirección actual
         int nodoCercano = encontrarNodoCercano(x1 + dx * 50, y1 + dy * 50);  // Ajustamos el espaciado
         if (nodoCercano != -1 && nodosBloqueados[nodoCercano]) {
-            // Bloquear el nodo intermedio entre el nodo actual y el nodo cercano bloqueado
+            //Bloquea el nodo intermedio entre el nodo actual y el nodo cercano bloqueado
             int nodoIntermedio = encontrarNodoCercano(x1 + (dx * 25), y1 + (dy * 25));  // Mitad de la distancia
             if (nodoIntermedio != -1 && !nodosBloqueados[nodoIntermedio]) {
                 nodosBloqueados[nodoIntermedio] = true;

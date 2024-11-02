@@ -1,9 +1,12 @@
 #include "Grafo.h"
 #include <cmath>
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
 
 Grafo::Grafo(int n) : numNodos(n) {
-    // Inicializar la matriz de adyacencia
+    srand(static_cast<unsigned>(time(0)));
+    //Matriz de adyacencia
     matrizAdyacencia = new int*[numNodos];
     for (int i = 0; i < numNodos; ++i) {
         matrizAdyacencia[i] = new int[numNodos];
@@ -12,7 +15,7 @@ Grafo::Grafo(int n) : numNodos(n) {
         }
     }
 
-    // Inicializar las posiciones X e Y de los nodos
+    //Las posiciones X e Y de los nodos
     posicionesX = new int[numNodos];
     posicionesY = new int[numNodos];
 
@@ -29,18 +32,20 @@ void Grafo::asignarPosicion(int nodo, int x, int y) {
     }
 }
 
-void Grafo::conectarNodos(int nodo1, int nodo2, int peso) {
+void Grafo::conectarNodos(int nodo1, int nodo2) {
     if (nodo1 >= 0 && nodo1 < numNodos && nodo2 >= 0 && nodo2 < numNodos) {
+        int peso = 1 + rand() % 500;  // Peso aleatorio entre 1 y 10
         matrizAdyacencia[nodo1][nodo2] = peso;
     } else {
         std::cout << "Nodos fuera de rango.\n";
     }
 }
+
 bool Grafo::esNodoBloqueado(int nodo) const {
     return nodosBloqueados[nodo];  // Retorna true si el nodo está bloqueado
 }
 
-// Generar los nodos como una matriz en un área dada y conectarlos en 8 direcciones
+// Genera los nodos como una matriz en un área dada y conectarlos en 8 direcciones
 void Grafo::generarMatriz(int ancho, int alto, int espaciado) {
     int filas = alto / espaciado;
     int columnas = ancho / espaciado;
@@ -48,45 +53,46 @@ void Grafo::generarMatriz(int ancho, int alto, int espaciado) {
 
     for (int i = 0; i < filas; ++i) {
         for (int j = 0; j < columnas; ++j) {
-            if (nodo >= numNodos) break;  // Evitar desbordamiento de nodos
+            if (nodo >= numNodos) break;
             int x = j * espaciado;
             int y = i * espaciado;
             asignarPosicion(nodo, x, y);
 
             // Conectar con el nodo de la izquierda
             if (j > 0) {
-                conectarNodos(nodo, nodo - 1, 1);
-                conectarNodos(nodo - 1, nodo, 1);  // Conexión bidireccional
+                conectarNodos(nodo, nodo - 1);
+                conectarNodos(nodo - 1, nodo);  // Conexión bidireccional
             }
 
             // Conectar con el nodo de arriba
             if (i > 0) {
-                conectarNodos(nodo, nodo - columnas, 1);
-                conectarNodos(nodo - columnas, nodo, 1);  // Conexión bidireccional
+                conectarNodos(nodo, nodo - columnas);
+                conectarNodos(nodo - columnas, nodo);  // Conexión bidireccional
             }
 
             // Conectar en las 4 direcciones diagonales
             if (i > 0 && j > 0) {  // Arriba-izquierda
-                conectarNodos(nodo, nodo - columnas - 1, 1);
-                conectarNodos(nodo - columnas - 1, nodo, 1);
+                conectarNodos(nodo, nodo - columnas - 1);
+                conectarNodos(nodo - columnas - 1, nodo);
             }
             if (i > 0 && j < columnas - 1) {  // Arriba-derecha
-                conectarNodos(nodo, nodo - columnas + 1, 1);
-                conectarNodos(nodo - columnas + 1, nodo, 1);
+                conectarNodos(nodo, nodo - columnas + 1);
+                conectarNodos(nodo - columnas + 1, nodo);
             }
             if (i < filas - 1 && j > 0) {  // Abajo-izquierda
-                conectarNodos(nodo, nodo + columnas - 1, 1);
-                conectarNodos(nodo + columnas - 1, nodo, 1);
+                conectarNodos(nodo, nodo + columnas - 1);
+                conectarNodos(nodo + columnas - 1, nodo);
             }
             if (i < filas - 1 && j < columnas - 1) {  // Abajo-derecha
-                conectarNodos(nodo, nodo + columnas + 1, 1);
-                conectarNodos(nodo + columnas + 1, nodo, 1);
+                conectarNodos(nodo, nodo + columnas + 1);
+                conectarNodos(nodo + columnas + 1, nodo);
             }
 
             nodo++;
         }
     }
 }
+
 
 int Grafo::encontrarNodoCercano(int x, int y) {
     int nodoCercano = -1;

@@ -1,0 +1,2 @@
+set(__QT_DEPLOY_TARGET_Tank_Attack_FILE /home/jose/Proyecto2DatosII/Tank_Attack/build/Desktop_Qt_6_7_2-Debug/Tank_Attack)
+set(__QT_DEPLOY_TARGET_Tank_Attack_TYPE EXECUTABLE)
